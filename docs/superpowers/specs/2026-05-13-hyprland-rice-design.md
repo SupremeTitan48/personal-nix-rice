@@ -90,10 +90,10 @@ scripts/                 # not nix — helper shell scripts
 | Input | Source | Reason |
 |---|---|---|
 | `nixpkgs` | `nixos-unstable` | Latest Hyprland, NVIDIA drivers, matugen, all components |
-| `home-manager` | `follows nixpkgs` | Eliminates nixpkgs version skew |
-| `hyprland` | Hyprland official flake | Compositor may lag nixpkgs-unstable by weeks; NVIDIA is sensitive to version |
-| `hyprlock` | `follows hyprland` | Must match compositor version |
-| `hypridle` | `follows hyprland` | Must match compositor version |
+| `home-manager` | `github:nix-community/home-manager`, `follows nixpkgs` | Eliminates nixpkgs version skew |
+| `hyprland` | `github:hyprwm/Hyprland` | Compositor may lag nixpkgs-unstable by weeks; NVIDIA is sensitive to version |
+| `hyprlock` | `github:hyprwm/hyprlock`, `follows nixpkgs` | Separate project, pin alongside hyprland manually; must stay compatible |
+| `hypridle` | `github:hyprwm/hypridle`, `follows nixpkgs` | Same — separate project, keep version in sync with hyprland manually |
 
 `allowUnfree = true` required at the flake level for Google Chrome and NVIDIA drivers.
 
@@ -195,7 +195,7 @@ Icons: `Papirus-Dark` (clean, well-maintained, dark-friendly)
 
 ### Kitty Terminal
 
-- **Font:** `JetBrains Mono` (or `Monaspace Neon` for more character — TBD)
+- **Font:** `JetBrains Mono` (clean, widely tested on NixOS, great ligature support)
 - **Font size:** 13pt
 - **Background:** `rgba(13,15,20,0.85)` — slightly transparent so wallpaper bleeds through if window is floating
 - **Padding:** `window_padding_width 12`
@@ -302,7 +302,7 @@ QT_QPA_PLATFORM = wayland
 | `Super+N` | swaync notification center toggle |
 | `Super+Q` | Close window |
 | `Super+F` | Toggle fullscreen |
-| `Super+V` | Toggle floating |
+| `Super+Shift+Space` | Toggle floating |
 | `Super+1..9` | Switch workspace |
 | `Super+Shift+1..9` | Move window to workspace |
 | `Super+H/J/K/L` | Focus window (vim-style) |
