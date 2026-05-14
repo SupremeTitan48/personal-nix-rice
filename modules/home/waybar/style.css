@@ -80,8 +80,24 @@ window#waybar.hidden {
   padding: 0 8px;
 }
 
+/* Window title */
+#window {
+  color: @muted;
+  font-size: 12px;
+  padding: 0 8px;
+  font-style: italic;
+}
+
+/* Media player */
+#mpris {
+  color: @on_surface;
+  padding: 0 8px;
+  font-size: 12px;
+}
+
 /* Right modules — shared style */
 #cpu,
+#memory,
 #temperature,
 #pulseaudio,
 #network,
@@ -92,10 +108,20 @@ window#waybar.hidden {
 }
 
 #cpu:hover,
+#memory:hover,
 #temperature:hover,
 #pulseaudio:hover,
 #network:hover {
   color: @on_surface;
+}
+
+#memory.warning {
+  color: @error;
+}
+
+#memory.critical {
+  color: @error;
+  font-weight: bold;
 }
 
 #temperature.critical {

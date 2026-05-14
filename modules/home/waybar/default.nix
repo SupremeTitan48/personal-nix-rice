@@ -16,9 +16,15 @@
       exclusive = true;
       passthrough = false;
 
-      modules-left = [ "hyprland/workspaces" ];
-      modules-center = [ "clock" ];
-      modules-right = [ "cpu" "temperature" "pulseaudio" "network" "tray" ];
+      modules-left = [ "hyprland/workspaces" "hyprland/window" ];
+      modules-center = [ "mpris" "clock" ];
+      modules-right = [ "memory" "cpu" "temperature" "pulseaudio" "network" "tray" ];
+
+      "hyprland/window" = {
+        format = "{}";
+        max-length = 50;
+        separate-outputs = true;
+      };
 
       "hyprland/workspaces" = {
         format = "{icon}";
@@ -33,6 +39,28 @@
           "2" = [];
           "3" = [];
         };
+      };
+
+      "mpris" = {
+        format = "{player_icon} {title}";
+        format-paused = "{status_icon} {title}";
+        player-icons = {
+          default = "▶";
+          mpv = "🎵";
+        };
+        status-icons = {
+          paused = "⏸";
+        };
+        max-length = 40;
+        ignored-players = [ "firefox" ];
+      };
+
+      "memory" = {
+        interval = 5;
+        format = " {}%";
+        tooltip-format = "{used:0.1f}G / {total:0.1f}G";
+        warning = 80;
+        critical = 95;
       };
 
       clock = {
