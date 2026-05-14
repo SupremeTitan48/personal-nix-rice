@@ -27,5 +27,10 @@
   # Allow sudo for wheel group
   security.sudo.wheelNeedsPassword = true;
 
+  zramSwap = {
+    enable = true;
+    memoryPercent = 25;
+  };
+
   system.stateVersion = "24.11";
 }

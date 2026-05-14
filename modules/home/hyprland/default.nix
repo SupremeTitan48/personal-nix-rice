@@ -12,7 +12,7 @@
     enable = true;
     package = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprland;
     xwayland.enable = true;
-    systemd.enable = true;
+    systemd.enable = false;  # UWSM manages the systemd session instead
 
     settings = {
       # NVIDIA Wayland env vars — required for RTX 3070
