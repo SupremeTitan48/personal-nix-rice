@@ -20,6 +20,8 @@
       # Gaming: no blur, no rounding for performance
       "noblur, class:^(steam_app_.*)$"
       "noanim, class:^(steam_app_.*)$"
+      "noshadow, class:^(steam_app_.*)$"
+      "norounding, class:^(steam_app_.*)$"
       "immediate, class:^(steam_app_.*)$"
 
       # Steam main window
@@ -29,6 +31,13 @@
       # Gamescope: fullscreen, no decoration
       "fullscreen, class:^(gamescope)$"
       "noblur, class:^(gamescope)$"
+      "noshadow, class:^(gamescope)$"
+      "norounding, class:^(gamescope)$"
+
+      # Idle inhibit for fullscreen windows and games
+      "idleinhibit fullscreen, fullscreen:1"
+      "idleinhibit fullscreen, class:^(steam_app_.*)$"
+      "idleinhibit fullscreen, class:^(gamescope)$"
     ];
 
   };

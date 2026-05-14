@@ -63,6 +63,13 @@
 
       # Clipboard history
       "$mod, V, exec, cliphist list | rofi -dmenu -p '󰅇 Clipboard' | cliphist decode | wl-copy"
+
+      # Resize submap
+      "$mod, R, submap, resize"
+
+      # Special workspace (scratchpad)
+      "$mod, grave, togglespecialworkspace, magic"
+      "$mod SHIFT, grave, movetoworkspace, special:magic"
     ];
 
     bindm = [
@@ -72,14 +79,21 @@
     ];
 
     bindel = [
-      # Volume (with repeat)
-      ", XF86AudioRaiseVolume, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+"
-      ", XF86AudioLowerVolume, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"
+      # Volume (with repeat) — via swayosd for OSD feedback
+      ", XF86AudioRaiseVolume, exec, swayosd-client --output-volume raise"
+      ", XF86AudioLowerVolume, exec, swayosd-client --output-volume lower"
+      # Brightness
+      ", XF86MonBrightnessUp, exec, swayosd-client --brightness raise"
+      ", XF86MonBrightnessDown, exec, swayosd-client --brightness lower"
+      # Mouse scroll on workspaces
+      "$mod, mouse_down, workspace, e+1"
+      "$mod, mouse_up, workspace, e-1"
     ];
 
     bindl = [
       # Media keys (no repeat)
-      ", XF86AudioMute, exec, wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"
+      ", XF86AudioMute, exec, swayosd-client --output-volume mute-toggle"
+      ", XF86AudioMicMute, exec, swayosd-client --input-volume mute-toggle"
       ", XF86AudioPlay, exec, playerctl play-pause"
       ", XF86AudioNext, exec, playerctl next"
       ", XF86AudioPrev, exec, playerctl previous"

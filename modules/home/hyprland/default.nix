@@ -22,7 +22,6 @@
         "GBM_BACKEND,nvidia-drm"
         "__GLX_VENDOR_LIBRARY_NAME,nvidia"
         "NVD_BACKEND,direct"
-        "WLR_NO_HARDWARE_CURSORS,1"
         "ELECTRON_OZONE_PLATFORM_HINT,auto"
         "MOZ_ENABLE_WAYLAND,1"
         "QT_QPA_PLATFORM,wayland"
@@ -37,7 +36,7 @@
         "col.active_border" = "rgba(5b9cf6ff)";   # overwritten by matugen at login
         "col.inactive_border" = "rgba(ffffff1a)";
         resize_on_border = true;
-        allow_tearing = false;
+        allow_tearing = true;
         layout = "dwindle";
       };
 
@@ -60,6 +59,10 @@
           xray = false;
           ignore_opacity = false;
         };
+      };
+
+      cursor = {
+        no_hardware_cursors = true;
       };
 
       input = {
@@ -97,7 +100,7 @@
 
       # Autostart
       exec-once = [
-        "swww-daemon & sleep 1 && swww img ${config.home.homeDirectory}/wallpapers/default.jpg --transition-type none"
+        "swww-daemon & swww wait-ready && swww img ${config.home.homeDirectory}/wallpapers/default.jpg --transition-type fade --transition-duration 1 --transition-fps 60"
         "${pkgs.matugen}/bin/matugen image ${config.home.homeDirectory}/wallpapers/default.jpg --mode dark"
         "${pkgs.waybar}/bin/waybar"
         "${pkgs.swaynotificationcenter}/bin/swaync"
@@ -110,6 +113,20 @@
 
   wayland.windowManager.hyprland.extraConfig = ''
     source = ~/.cache/matugen/hyprland-colors.conf
+
+    # Resize submap
+    submap = resize
+    binde = , right, resizeactive, 20 0
+    binde = , left, resizeactive, -20 0
+    binde = , up, resizeactive, 0 -20
+    binde = , down, resizeactive, 0 20
+    binde = , l, resizeactive, 20 0
+    binde = , h, resizeactive, -20 0
+    binde = , k, resizeactive, 0 -20
+    binde = , j, resizeactive, 0 20
+    bind = , escape, submap, reset
+    bind = , return, submap, reset
+    submap = reset
   '';
 
   # hypridle config (idle → lock → suspend)
@@ -117,9 +134,10 @@
     enable = true;
     settings = {
       general = {
-        lock_cmd = "hyprlock";
-        before_sleep_cmd = "hyprlock";
+        lock_cmd = "pidof hyprlock || hyprlock";
+        before_sleep_cmd = "loginctl lock-session";
         after_sleep_cmd = "hyprctl dispatch dpms on";
+        ignore_dbus_inhibit = false;
       };
       listener = [
         { timeout = 300; on-timeout = "hyprlock"; }
