@@ -2,7 +2,7 @@
 # Rofi script-mode: lists wallpapers, runs change-wallpaper on selection
 WALLPAPER_DIR="${HOME}/wallpapers"
 
-if [[ -z "${ROFI_RETV:-}" ]]; then
+if [[ "${ROFI_RETV:-0}" -eq 0 ]]; then
   # First call: list available wallpapers
   find "$WALLPAPER_DIR" -type f \( -name "*.jpg" -o -name "*.png" -o -name "*.jpeg" -o -name "*.webp" \) \
     | sort \
