@@ -1,5 +1,5 @@
 {
-  description = "jkoch NixOS configuration";
+  description = "NixOS desktop configuration";
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
@@ -37,6 +37,8 @@
   let
     system = "x86_64-linux";
     pkgs = nixpkgs.legacyPackages.${system};
+    # Load the single file a newcomer must fill in before their first build.
+    userConfig = import ./user-config.nix;
   in
   {
     formatter = nixpkgs.lib.genAttrs [ "x86_64-linux" ] (system:
@@ -59,7 +61,8 @@
 
     nixosConfigurations.desktop = nixpkgs.lib.nixosSystem {
       inherit system;
-      specialArgs = { inherit inputs; };
+      # userConfig is available in every NixOS module as a function argument.
+      specialArgs = { inherit inputs userConfig; };
       modules = [
         ./hosts/desktop/default.nix
         hyprland.nixosModules.default
@@ -67,13 +70,13 @@
         {
           home-manager.useGlobalPkgs = true;
           home-manager.useUserPackages = true;
-          home-manager.extraSpecialArgs = { inherit inputs; };
-          # Provide hyprlock and hypridle HM modules to all users
+          # userConfig is available in every Home Manager module as a function argument.
+          home-manager.extraSpecialArgs = { inherit inputs userConfig; };
           home-manager.sharedModules = [
             hyprlock.homeManagerModules.hyprlock
             hypridle.homeManagerModules.hypridle
           ];
-          home-manager.users.jkoch = import ./home/jkoch/default.nix;
+          home-manager.users.${userConfig.username} = import ./home/user/default.nix;
         }
       ];
     };

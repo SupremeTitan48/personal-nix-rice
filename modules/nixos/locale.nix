@@ -1,7 +1,7 @@
 # modules/nixos/locale.nix
-{ config, pkgs, lib, ... }:
+{ config, pkgs, lib, userConfig, ... }:
 {
-  time.timeZone = "America/Chicago";
+  time.timeZone = userConfig.timezone;
 
   i18n.defaultLocale = "en_US.UTF-8";
   i18n.extraLocaleSettings = {

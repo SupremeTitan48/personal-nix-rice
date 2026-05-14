@@ -1,0 +1,45 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  check:
+    name: Evaluate NixOS configuration
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install Nix
+        uses: cachix/install-nix-action@v27
+        with:
+          extra_nix_config: |
+            experimental-features = nix-command flakes
+            accept-flake-config = true
+
+      # Use Cachix so subsequent runs hit the binary cache instead of rebuilding.
+      - name: Set up Cachix
+        uses: cachix/cachix-action@v14
+        with:
+          name: hyprland
+          # Add your own Cachix cache here if you have one:
+          # authToken: ${{ secrets.CACHIX_AUTH_TOKEN }}
+
+      # Validate flake structure and Nix syntax.
+      - name: Flake check (syntax + module evaluation)
+        run: nix flake check --no-build --show-trace
+
+      # Fully evaluate the NixOS closure without building any derivations.
+      # This catches option-type errors, missing packages, and import issues.
+      - name: Dry-run build (full evaluation)
+        run: |
+          nix build \
+            .#nixosConfigurations.desktop.config.system.build.toplevel \
+            --dry-run \
+            --show-trace \
+            2>&1 | head -100

@@ -1,11 +1,13 @@
 # modules/nixos/nvidia.nix
-{ config, pkgs, lib, ... }:
+{ config, pkgs, lib, userConfig, ... }:
 {
   hardware.nvidia = {
     modesetting.enable = true;
     powerManagement.enable = true;
     powerManagement.finegrained = false;
-    open = true;                          # RTX 3070 is Ampere — fully supported by open kernel module
+    # open = true  → RTX 30xx (Ampere) and newer only
+    # open = false → GTX / RTX 20xx / older — set in user-config.nix
+    open = userConfig.nvidiaOpen;
     nvidiaSettings = true;
     package = config.boot.kernelPackages.nvidiaPackages.stable;
   };

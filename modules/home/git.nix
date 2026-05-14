@@ -1,10 +1,10 @@
 # modules/home/git.nix
-{ pkgs, config, ... }:
+{ pkgs, config, userConfig, ... }:
 {
   programs.git = {
     enable = true;
-    userName = "Jackson Koch";
-    userEmail = "jacksongkoch@icloud.com";
+    userName  = userConfig.gitName;
+    userEmail = userConfig.gitEmail;
 
     delta = {
       enable = true;

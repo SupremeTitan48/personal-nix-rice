@@ -1,5 +1,5 @@
 # hosts/desktop/default.nix
-{ config, pkgs, inputs, ... }:
+{ config, pkgs, inputs, userConfig, ... }:
 {
   imports = [
     ./hardware.nix
@@ -13,13 +13,14 @@
     ../../modules/nixos/portal.nix
     ../../modules/nixos/gaming.nix
     ../../modules/nixos/display-manager.nix
+    ../../modules/nixos/auto-upgrade.nix
   ];
 
   nixpkgs.config.allowUnfree = true;
 
-  users.users.jkoch = {
+  users.users.${userConfig.username} = {
     isNormalUser = true;
-    description = "Jackson Koch";
+    description = userConfig.gitName;
     extraGroups = [ "wheel" "networkmanager" "video" "audio" "gamemode" "input" ];
     shell = pkgs.fish;
   };
