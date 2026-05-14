@@ -16,9 +16,11 @@
     # Pull the flake directly from GitHub — no local clone needed.
     flake = "${userConfig.repoUrl}#desktop";
 
-    # Also update flake inputs (nixpkgs, hyprland, etc.) on each run so the
-    # system stays current with upstream fixes.
-    flags = [ "--update-input" "nixpkgs" "--commit-lock-file" ];
+    # Also update nixpkgs input on each run so the system stays current.
+    # Note: --commit-lock-file is intentionally omitted — the flake is pulled
+    # from a remote GitHub URL, not a local git checkout, so there is no repo
+    # to commit into and the flag would cause nixos-rebuild to fail.
+    flags = [ "--update-input" "nixpkgs" ];
 
     # Run once per hour; random delay spreads load if multiple machines share
     # the same repo.

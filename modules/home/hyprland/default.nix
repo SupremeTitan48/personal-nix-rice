@@ -19,7 +19,7 @@
 
     settings = {
       # NVIDIA Wayland env vars moved to ~/.config/uwsm/env-hyprland
-      # so they propagate to D-Bus activated services. See home/jkoch/default.nix.
+      # so they propagate to D-Bus activated services. See home/user/default.nix.
       env = [];
 
       general = {
@@ -100,8 +100,11 @@
         "ignorezero, wlogout"
       ];
 
-      # Autostart
+      # Autostart — all exec-once entries live here to avoid list-override conflicts.
+      # Home Manager's Hyprland module merges the settings attrset by key, so a
+      # second module assigning settings."exec-once" would overwrite this list.
       exec-once = [
+        # Core desktop
         "bash -c 'swww-daemon & swww wait-ready && swww img ${config.home.homeDirectory}/wallpapers/default.jpg --transition-type fade --transition-duration 1 --transition-fps 60'"
         "${pkgs.matugen}/bin/matugen image ${config.home.homeDirectory}/wallpapers/default.jpg --mode dark"
         "${pkgs.waybar}/bin/waybar"
@@ -112,6 +115,10 @@
         "nwg-dock-hyprland -nolauncher -f -i 28 -mb 2"
         "wl-paste --type text --watch cliphist --max-items 750 store"
         "wl-paste --type image --watch cliphist --max-items 750 store"
+        # Scratchpads — pre-spawned silently so first toggle is instant
+        "[workspace special:term silent] kitty --class=kitty-scratch"
+        "[workspace special:obsidian silent] obsidian"
+        "[workspace special:monitor silent] mission-center"
       ];
     };
   };

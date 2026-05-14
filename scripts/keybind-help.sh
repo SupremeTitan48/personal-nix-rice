@@ -19,7 +19,6 @@ Super + Ctrl + L        Lock screen immediately
 ── Scratchpads ───────────────────────────────────────
 Super + Alt + T         Terminal scratchpad
 Super + Alt + O         Obsidian notes scratchpad
-Super + Alt + F         File manager scratchpad
 Super + Alt + M         System monitor scratchpad
 ── Windows ───────────────────────────────────────────
 Super + Q               Close window

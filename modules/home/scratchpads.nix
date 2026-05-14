@@ -1,15 +1,20 @@
 # modules/home/scratchpads.nix — named scratchpad workspaces
 #
 # Scratchpads live on hidden special workspaces and slide in over any workspace
-# when toggled. They remember position between calls. Pre-spawned at login so
-# the first toggle is instant.
+# when toggled. They remember size and position between calls.
 #
-# Binds (Super+Alt+<key>):
+# Binds (Super+Alt+<key>, defined in keybinds.nix):
 #   T — terminal (kitty)
 #   O — Obsidian notes
 #   M — system monitor (Mission Center)
-{ ... }:
+#
+# exec-once pre-spawn entries live in hyprland/default.nix — assigning
+# settings."exec-once" in a second module would overwrite the main list.
+{ pkgs, ... }:
 {
+  # mission-center must be installed; it is exec-once'd in hyprland/default.nix
+  home.packages = [ pkgs.mission-center ];
+
   wayland.windowManager.hyprland.settings = {
     # windowrulev2 required for size/center rules (windowrule only supports float/workspace)
     windowrulev2 = [
@@ -32,14 +37,4 @@
       "center, class:(io.missioncenter.MissionCenter)"
     ];
   };
-
-  # Pre-spawn scratchpads silently at login so the first toggle is instant.
-  # Thunar is intentionally excluded — it is single-instance and does not support
-  # a custom --class flag, making scratchpad workspace assignment unreliable.
-  # Use Super+E to open Thunar in the normal workspace instead.
-  wayland.windowManager.hyprland.settings."exec-once" = [
-    "[workspace special:term silent] kitty --class=kitty-scratch"
-    "[workspace special:obsidian silent] obsidian"
-    "[workspace special:monitor silent] mission-center"
-  ];
 }
