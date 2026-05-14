@@ -341,14 +341,14 @@ cp ~/Pictures/some-image.jpg ~/wallpapers/
 
 ```bash
 cd /etc/nixos
-nix flake update         # bump all inputs (Hyprland, nixpkgs, etc.)
+sudo nix flake update    # bump all inputs (Hyprland, nixpkgs, etc.)
 nrs                      # alias: sudo nixos-rebuild switch --flake .#desktop
 ```
 
 To update only one input:
 
 ```bash
-nix flake update hyprland
+sudo nix flake update hyprland
 nrs
 ```
 
@@ -527,10 +527,10 @@ modules/
       default.nix                 # swww daemon autostart
     git.nix                       # git identity (from user-config), delta, ssh, gpg
     terminal.nix                  # kitty, fish, tide prompt, fzf, zoxide, atuin
-    theme.nix                     # GTK/Qt, cursor, icons
+    theme.nix                     # GTK theme, cursor, icons
     notifications.nix             # swaync config + matugen-integrated CSS
     nightlight.nix                # wlsunset (coords from user-config)
-    apps.nix                      # Chrome, VSCodium, hyprpicker, utilities
+    apps.nix                      # Chrome, VSCodium, OBS, KeePassXC, utilities
     gaming.nix                    # Heroic, ProtonUp-Qt, MangoHud config
     filemanager.nix               # Thunar + MIME type associations
     clipboard.nix                 # wl-clipboard + cliphist history
@@ -545,11 +545,11 @@ modules/
 home/
   user/
     default.nix                   # Home Manager entry point (username from user-config)
-                                  # (home/jkoch/ removed — superseded by home/user/)
 
-wallpapers/                       # wallpaper images; default.jpg used on first boot
+wallpapers/                       # created by install.sh — add your images here
 scripts/
   change-wallpaper.sh             # swww + matugen + component reload pipeline
+  keybind-help.sh                 # searchable keybind reference via rofi (Super+/)
 ```
 
 ---
