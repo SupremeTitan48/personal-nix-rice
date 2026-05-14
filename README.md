@@ -28,7 +28,7 @@ A daily-driver NixOS + Hyprland desktop built for stability, rollback safety, an
 
 ## How the color pipeline works
 
-This is the core idea of the rice. Every color on the desktop — window borders, the bar, the launcher, the terminal, the lock screen, notifications — is derived from a single wallpaper image at runtime. Changing the wallpaper recolors everything in about one second.
+Every color on the desktop — window borders, bar, launcher, terminal, lock screen, notifications — is derived from a single wallpaper image at runtime. Changing the wallpaper recolors everything in about one second.
 
 ```
 wallpaper image
@@ -57,10 +57,10 @@ On first login, before you've ever set a wallpaper, stub color files are written
 
 ## Prerequisites
 
-- NixOS installed (any recent version — you will switch to unstable)
+- NixOS installed (any recent version — the config will switch to unstable)
 - Git
 - A dark wallpaper image (`.jpg` or `.png`)
-- NVIDIA GPU (RTX series) — other GPUs need changes to `modules/nixos/nvidia.nix`
+- NVIDIA GPU (RTX series) — other GPUs need changes, see [Non-NVIDIA GPUs](#non-nvidia-gpus)
 
 ---
 
@@ -68,100 +68,142 @@ On first login, before you've ever set a wallpaper, stub color files are written
 
 ### Step 1 — Clone the repo
 
-Clone it wherever you keep your NixOS config. `/etc/nixos` is the standard location, but `~/nix-config` or similar also works fine.
-
 ```bash
 sudo git clone https://github.com/SupremeTitan48/personal-nix-rice /etc/nixos
 cd /etc/nixos
 ```
 
-### Step 2 — Generate your hardware config
+### Step 2 — Run the installer
 
-The placeholder `hosts/desktop/hardware.nix` must be replaced with your actual hardware configuration. Run this on your target machine:
+```bash
+sudo bash install.sh
+```
+
+The installer will ask you:
+
+| Prompt | Example |
+|---|---|
+| Linux username | `alice` |
+| Full name (for git) | `Alice Smith` |
+| Email (for git) | `alice@example.com` |
+| Timezone | `Europe/London` |
+| Latitude / Longitude | `51.5` / `-0.1` |
+| Monitor string | `DP-1,2560x1440@240,0x0,1` |
+| NVIDIA open kernel module | `true` (RTX 30xx+) or `false` (older) |
+| GitHub repo URL for auto-upgrade | `github:yourusername/personal-nix-rice` |
+
+It then:
+1. Writes your answers to `user-config.nix`
+2. Generates `hosts/desktop/hardware.nix` for your machine
+3. Creates `~/wallpapers/` and reminds you to add a wallpaper
+4. Pins all flake inputs in `flake.lock`
+5. Runs `nixos-rebuild switch` to activate everything
+
+### Step 3 — Add a wallpaper
+
+Drop a dark image into `~/wallpapers/default.jpg` before (or just after) the build:
+
+```bash
+cp ~/your-wallpaper.jpg ~/wallpapers/default.jpg
+```
+
+Dark images produce better glassmorphism results — surface colors are already near-black so contrast ratios work out naturally.
+
+### Step 4 — Log in
+
+Reboot, select **Hyprland** in the SDDM session picker, and log in. On first login matugen generates your color palette from the default wallpaper and reloads all components.
+
+---
+
+## Manual configuration (if not using install.sh)
+
+All personal values live in one file — `user-config.nix` at the repo root. Edit it directly, then rebuild:
+
+```nix
+{
+  username   = "yourusername";
+  gitName    = "Your Name";
+  gitEmail   = "you@example.com";
+  timezone   = "America/Chicago";
+  latitude   = "41.8";
+  longitude  = "-87.6";
+  monitor    = "DP-1,2560x1440@240,0x0,1";
+  nvidiaOpen = true;
+  repoUrl    = "github:yourusername/personal-nix-rice";
+}
+```
+
+You also need to generate hardware config for your machine:
 
 ```bash
 nixos-generate-config --show-hardware-config | sudo tee hosts/desktop/hardware.nix
-```
-
-This generates UUIDs for your partitions, detects your CPU/GPU, and sets the correct filesystem options. Do not skip this step — the placeholder will not boot on your machine.
-
-### Step 3 — Set your username
-
-The config is set up for user `jkoch`. To use a different username, replace it throughout:
-
-```bash
-# Preview what would change
-grep -r "jkoch" --include="*.nix" -l
-
-# Replace (adjust to your username)
-find . -name "*.nix" -exec sed -i 's/jkoch/yourusername/g' {} +
-```
-
-Also rename the home directory:
-
-```bash
-mv home/jkoch home/yourusername
-```
-
-### Step 4 — Set your timezone
-
-Edit `modules/nixos/locale.nix`:
-
-```nix
-time.timeZone = "America/Chicago";  # find yours: timedatectl list-timezones
-i18n.defaultLocale = "en_US.UTF-8";
-```
-
-### Step 5 — Add a default wallpaper
-
-Matugen needs an image to derive colors from on first boot. Drop a dark wallpaper into the repo:
-
-```bash
-cp ~/your-wallpaper.jpg wallpapers/default.jpg
-```
-
-Any image format works (jpg, png, webp). Dark images produce better glassmorphism results since the surface colors are already near-black.
-
-### Step 6 — Apply the configuration
-
-```bash
 sudo nixos-rebuild switch --flake /etc/nixos#desktop
 ```
 
-This will take a while on the first run — it builds the kernel, Hyprland, and all packages from source or downloads them from the binary cache. Subsequent updates are much faster.
+---
 
-### Step 7 — Log in
+## CI / CD
 
-Reboot (or log out), select **Hyprland** in the SDDM session picker, and log in.
+### Continuous integration (GitHub Actions)
 
-On first login:
-- The wallpaper loads from `~/wallpapers/default.jpg`
-- matugen generates your color palette
-- All components reload with the derived colors
+Every push and pull request to `main` runs `.github/workflows/check.yml`, which:
+1. Runs `nix flake check --no-build` — catches syntax and module evaluation errors
+2. Runs a dry-run build — fully evaluates the NixOS closure without building any packages
+
+Broken configs are blocked from reaching `main` before they can affect a live system.
+
+### Continuous deployment (auto-upgrade)
+
+When `repoUrl` is set in `user-config.nix`, a systemd timer on the live machine pulls from GitHub every hour and runs `nixos-rebuild switch` automatically. A failed build never breaks the running system — NixOS only switches atomically on success, and always keeps previous generations for rollback.
+
+The CD flow:
+```
+push to main → CI validates → systemd timer fires (within 1 hour) → live system rebuilds
+```
+
+To disable auto-upgrade, set `repoUrl = ""` in `user-config.nix`.
 
 ---
 
 ## Verify your monitor connector
 
-Before or after logging in, check your monitor's connector name:
+The monitor string defaults to `DP-1`. After first boot, check your actual connector:
 
 ```bash
-# From a TTY or SSH session:
+# From a TTY or SSH:
 wlr-randr
 
 # Or from within Hyprland:
 hyprctl monitors
 ```
 
-Look for a line like `DP-1`, `HDMI-A-1`, `DP-3`, etc. If it's not `DP-1`, update `modules/home/hyprland/monitors.nix`:
+If your connector is different (e.g. `HDMI-A-1`), update `monitor` in `user-config.nix` and rebuild:
+
+```bash
+# Edit user-config.nix, then:
+nrs
+```
+
+To add a second monitor, edit `modules/home/hyprland/monitors.nix` and add another line to the list:
 
 ```nix
-monitor = [
-  "DP-1, 2560x1440@240, 0x0, 1"   # change DP-1 to your connector
+wayland.windowManager.hyprland.settings.monitor = [
+  userConfig.monitor
+  "HDMI-A-1,1920x1080@60,2560x0,1"   # positioned to the right
 ];
 ```
 
-Then rebuild: `nrs`
+---
+
+## Non-NVIDIA GPUs
+
+The config assumes NVIDIA. For AMD or Intel:
+
+1. Remove `../../modules/nixos/nvidia.nix` from `hosts/desktop/default.nix` imports
+2. In `modules/home/apps.nix`, change mpv's `hwdec=nvdec` → `hwdec=auto`
+3. In `modules/home/hyprland/default.nix`, remove the `cursor.no_hardware_cursors` workaround and the NVIDIA env vars
+4. In `modules/nixos/boot.nix`, remove the `nvidia-drm.modeset=1` kernel params
+5. In `home/user/default.nix`, remove the NVIDIA entries from `uwsm/env-hyprland`
 
 ---
 
@@ -243,7 +285,7 @@ Total time: ~1 second.
 change-wallpaper ~/Pictures/some-image.jpg
 ```
 
-You can use any image on the filesystem — it doesn't need to live in `~/wallpapers/`. To add it to the picker, copy it there:
+The image doesn't need to live in `~/wallpapers/`. To add it to the picker:
 
 ```bash
 cp ~/Pictures/some-image.jpg ~/wallpapers/
@@ -254,12 +296,12 @@ cp ~/Pictures/some-image.jpg ~/wallpapers/
 ## Updating
 
 ```bash
-cd ~/personal-nix-rice   # or wherever the repo lives
-nix flake update         # bumps all inputs (Hyprland, nixpkgs, etc.)
-nrs                      # alias for: sudo nixos-rebuild switch --flake .#desktop
+cd /etc/nixos
+nix flake update         # bump all inputs (Hyprland, nixpkgs, etc.)
+nrs                      # alias: sudo nixos-rebuild switch --flake .#desktop
 ```
 
-To update only a specific input (e.g. Hyprland without touching nixpkgs):
+To update only one input:
 
 ```bash
 nix flake update hyprland
@@ -279,58 +321,37 @@ sudo nixos-rebuild switch --switch-generation <N>
 
 ## Customization
 
+### All personal settings
+
+Edit `user-config.nix` at the repo root — this is the only file you need to touch for personal preferences. Rebuild after any change: `nrs`
+
 ### Gaps, borders, rounding
 
 `modules/home/hyprland/default.nix`:
 
 ```nix
 general = {
-  gaps_in = 6;       # gap between windows
-  gaps_out = 12;     # gap between windows and screen edge
-  border_size = 2;   # window border thickness
+  gaps_in = 6;
+  gaps_out = 12;
+  border_size = 2;
 };
-
 decoration = {
-  rounding = 12;     # corner radius
+  rounding = 12;
 };
 ```
 
 ### Animations
 
-`modules/home/hyprland/animations.nix` — timing curves and durations for window open/close, workspace switch, etc.
-
-### Adding a second monitor
-
-`modules/home/hyprland/monitors.nix` — add a second `monitor =` line:
-
-```nix
-monitor = [
-  "DP-1, 2560x1440@240, 0x0, 1"
-  "HDMI-A-1, 1920x1080@60, 2560x0, 1"  # positioned to the right
-];
-```
+`modules/home/hyprland/animations.nix` — timing curves and durations.
 
 ### Waybar layout
 
-`modules/home/waybar/default.nix` — the `modules-left`, `modules-center`, `modules-right` lists control what appears in the bar.
-
-### Night light
-
-`modules/home/nightlight.nix` — update the coordinates for your location:
-
-```nix
-services.wlsunset = {
-  latitude = "41.8";   # your latitude
-  longitude = "-87.6"; # your longitude
-  temperature.day = 6500;
-  temperature.night = 3500;
-};
-```
+`modules/home/waybar/default.nix` — `modules-left`, `modules-center`, `modules-right`.
 
 ### Adding packages
 
-- System packages (available to all users, in PATH): `hosts/desktop/default.nix` → `environment.systemPackages`
-- User packages: `home/jkoch/default.nix` → `home.packages`
+- System-wide: `hosts/desktop/default.nix` → `environment.systemPackages`
+- User packages: `home/user/default.nix` → `home.packages`
 
 ---
 
@@ -338,17 +359,17 @@ services.wlsunset = {
 
 ### Black screen after login
 
-Usually an NVIDIA issue. Drop to a TTY (`Ctrl+Alt+F2`) and check:
+Drop to a TTY (`Ctrl+Alt+F2`) and check:
 
 ```bash
 journalctl -b -u display-manager
-hyprctl instances   # should show a running instance
+hyprctl instances
 ```
 
 Common fixes:
 - Verify `hardware.nvidia.modesetting.enable = true` in `modules/nixos/nvidia.nix`
 - Verify `nvidia-drm.modeset=1` is in `boot.kernelParams` in `modules/nixos/boot.nix`
-- Try switching between `hardware.nvidia.open = true` and `open = false`
+- Toggle `nvidiaOpen` in `user-config.nix` between `true` and `false` and rebuild
 
 ### Cursor invisible or flickering
 
@@ -361,7 +382,7 @@ cursor = {
 };
 ```
 
-Both options should already be set. If the cursor is still broken, verify the `XCURSOR_THEME` and `XCURSOR_SIZE` vars are in `~/.config/uwsm/env-hyprland`.
+Both should already be set. Also verify `XCURSOR_THEME` and `XCURSOR_SIZE` are in `~/.config/uwsm/env-hyprland`.
 
 ### Waybar not loading / blank bar
 
@@ -374,8 +395,6 @@ Usually a CSS syntax error from a matugen color file. Check `~/.cache/matugen/wa
 
 ### Screen sharing not working
 
-Both portals must be running:
-
 ```bash
 systemctl --user status xdg-desktop-portal-hyprland
 systemctl --user status xdg-desktop-portal-gtk
@@ -385,14 +404,11 @@ If either is failed: `systemctl --user restart xdg-desktop-portal`
 
 ### Colors not updating after wallpaper change
 
-The color pipeline requires matugen to be in PATH. Verify:
-
 ```bash
 which matugen
 matugen image ~/wallpapers/default.jpg --mode dark
+ls ~/.cache/matugen/
 ```
-
-Then check `~/.cache/matugen/` for the generated files.
 
 ### Audio not working
 
@@ -401,43 +417,46 @@ systemctl --user status pipewire pipewire-pulse wireplumber
 pactl info   # should show PipeWire as the server
 ```
 
-### Git commits failing (no identity)
+### Auto-upgrade not working
 
-The `programs.git` config sets your identity. If you changed the username in Step 3, also update `modules/home/git.nix`:
-
-```nix
-programs.git = {
-  userName = "Your Name";
-  userEmail = "your@email.com";
-};
+```bash
+systemctl status nixos-upgrade.service
+journalctl -u nixos-upgrade.service
 ```
 
-Then rebuild: `nrs`
+Ensure `repoUrl` in `user-config.nix` is set to a **public** GitHub repo. Private repos require SSH key configuration on the system.
 
 ---
 
 ## File structure
 
 ```
-flake.nix                         # flake inputs + system definition
+user-config.nix                   # ← edit this first (username, git, timezone, monitor, etc.)
+install.sh                        # interactive first-time setup script
+flake.nix                         # flake inputs + NixOS system definition
 flake.lock                        # pinned input versions
+
+.github/
+  workflows/
+    check.yml                     # CI: nix flake check + dry-run build on every PR
 
 hosts/
   desktop/
     default.nix                   # host entry — imports all NixOS modules
-    hardware.nix                  # REPLACE with nixos-generate-config output
+    hardware.nix                  # auto-generated by install.sh (nixos-generate-config)
 
 modules/
-  nixos/                          # system-level NixOS configuration
+  nixos/                          # system-level NixOS modules
     nvidia.nix                    # open kernel module, modesetting, VAAPI
     boot.nix                      # systemd-boot, kernel params, linuxPackages_latest
     audio.nix                     # PipeWire + WirePlumber, low-latency config
     gaming.nix                    # Steam, Gamemode, Gamescope, MangoHud, sysctl
     portal.nix                    # xdg-desktop-portal (screencasting + file picker)
     display-manager.nix           # SDDM Wayland + sddm-astronaut theme
+    auto-upgrade.nix              # hourly CD — pulls from repoUrl and rebuilds
     nix.nix                       # Cachix, GC, store optimise, registry pin
     fonts.nix                     # system-wide font packages
-    locale.nix                    # timezone, locale, keyboard layout
+    locale.nix                    # timezone (from user-config), locale, keyboard
     network.nix                   # NetworkManager, Bluetooth, systemd-resolved
 
   home/                           # Home Manager (per-user configuration)
@@ -446,7 +465,7 @@ modules/
       keybinds.nix                # all keybind declarations
       rules.nix                   # window rules, workspace assignments
       animations.nix              # animation curves and timings
-      monitors.nix                # monitor declarations (update connector name)
+      monitors.nix                # monitor string (from user-config)
     waybar/
       default.nix                 # module layout + config
       style.css                   # floating pill CSS, glassmorphism
@@ -460,11 +479,11 @@ modules/
       rofi-wallpaper.sh           # wallpaper picker script for rofi
     swww/
       default.nix                 # swww daemon autostart
-    git.nix                       # git identity, delta diffs, ssh, gpg
+    git.nix                       # git identity (from user-config), delta, ssh, gpg
     terminal.nix                  # kitty, fish, tide prompt, fzf, zoxide, atuin
     theme.nix                     # GTK/Qt, cursor, icons
     notifications.nix             # swaync config + matugen-integrated CSS
-    nightlight.nix                # wlsunset blue light filter
+    nightlight.nix                # wlsunset (coords from user-config)
     apps.nix                      # Chrome, VSCodium, hyprpicker, utilities
     gaming.nix                    # Heroic, ProtonUp-Qt, MangoHud config
     filemanager.nix               # Thunar + MIME type associations
@@ -473,8 +492,8 @@ modules/
     matugen.nix                   # matugen config, templates, activation hook
 
 home/
-  jkoch/
-    default.nix                   # imports all home modules for this user
+  user/
+    default.nix                   # Home Manager entry point (username from user-config)
 
 wallpapers/                       # wallpaper images; default.jpg used on first boot
 scripts/
