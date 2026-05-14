@@ -70,6 +70,16 @@ On first login, before you've ever set a wallpaper, stub color files are written
 
 ## Installation
 
+### Step 0 — Download NixOS
+
+Use the **minimal ISO** (not the desktop/GNOME ISO).
+
+> **Why minimal?** This config installs its own Hyprland desktop from scratch. The desktop ISO ships GNOME, which you'll never use — it adds ~1 GB of packages that get replaced immediately. The minimal ISO boots straight to a TTY where you run the installer.
+
+Download from **nixos.org/download** → scroll to *NixOS: the Linux distribution* → pick **Minimal ISO image** for x86_64.
+
+After flashing to a USB (`dd`, Rufus, Etcher, etc.) and booting, you'll land at a root shell prompt. Continue below.
+
 ### Step 1 — Clone the repo
 
 ```bash
