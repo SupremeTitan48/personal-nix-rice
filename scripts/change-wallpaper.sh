@@ -26,7 +26,7 @@ pkill -SIGUSR2 waybar 2>/dev/null || true
 hyprctl reload 2>/dev/null || true
 
 # 5. Restart swaync to pick up updated CSS (CSS is dynamic via matugen)
-pkill swaync 2>/dev/null || true; sleep 0.3; swaync &
+systemctl --user restart swaync 2>/dev/null || (pkill swaync 2>/dev/null; sleep 0.3; swaync &)
 
 # 6. Reload kitty (USR1 = hot-reload config in all running kitty instances)
 pkill -USR1 kitty 2>/dev/null || true

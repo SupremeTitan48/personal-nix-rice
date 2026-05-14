@@ -35,6 +35,10 @@ in
     [[templates]]
     input_path = "${config.xdg.configHome}/matugen/templates/swaync-colors.css"
     output_path = "${cacheDir}/swaync-colors.css"
+
+    [[templates]]
+    input_path = "${config.xdg.configHome}/matugen/templates/hyprlock-colors.conf"
+    output_path = "${cacheDir}/hyprlock-colors.conf"
   '';
 
   # Deploy templates into ~/.config/matugen/templates/
@@ -50,6 +54,8 @@ in
     "${templateDir}/gtk-colors.css";
   xdg.configFile."matugen/templates/swaync-colors.css".source =
     "${templateDir}/swaync-colors.css";
+  xdg.configFile."matugen/templates/hyprlock-colors.conf".source =
+    "${templateDir}/hyprlock-colors.conf";
 
   # Run matugen on first login (generates cache from default wallpaper)
   home.activation.matugenInit = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
@@ -126,6 +132,16 @@ EOF
 @define-color on_surface     #e8e8f0;
 @define-color on_surface_variant #9898a8;
 @define-color outline        rgba(255,255,255,0.10);
+EOF
+    fi
+    if [ ! -f "$CACHE/hyprlock-colors.conf" ]; then
+      cat > "$CACHE/hyprlock-colors.conf" << 'EOF'
+$accent = rgb(5b9cf6)
+$accent_bg = rgba(5b9cf633)
+$text = rgb(e8e8f0)
+$text_muted = rgb(9898a8)
+$surface = rgb(181c24)
+$error = rgb(ff6e6e)
 EOF
     fi
     if [ ! -f "$CACHE/gtk-colors.css" ]; then

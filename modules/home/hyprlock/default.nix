@@ -5,6 +5,11 @@
     enable = true;
     package = inputs.hyprlock.packages.${pkgs.stdenv.hostPlatform.system}.hyprlock;
 
+    # Source matugen-generated color variables before the rest of the config
+    extraConfig = ''
+      source = ${config.home.homeDirectory}/.cache/matugen/hyprlock-colors.conf
+    '';
+
     settings = {
       general = {
         disable_loading_bar = true;
@@ -32,7 +37,7 @@
         {
           monitor = "";
           text = ''cmd[update:1000] echo "<b>$(date +"%H:%M")</b>"'';
-          color = "rgba(232, 232, 240, 1.0)";
+          color = "$text";
           font_size = 80;
           font_family = "JetBrains Mono Bold";
           shadow_passes = 2;
@@ -44,7 +49,7 @@
         {
           monitor = "";
           text = ''cmd[update:60000] echo "$(date +"%A, %B %d")"'';
-          color = "rgba(152, 152, 168, 1.0)";
+          color = "$text_muted";
           font_size = 18;
           font_family = "JetBrains Mono";
           position = "0, 40";
@@ -64,15 +69,15 @@
           dots_center = true;
           dots_rounding = -1;
           outer_color = "rgba(255, 255, 255, 0.15)";
-          inner_color = "rgba(13, 15, 20, 0.7)";
-          font_color = "rgba(232, 232, 240, 1.0)";
+          inner_color = "$surface";
+          font_color = "$text";
           fade_on_empty = true;
           fade_timeout = 1000;
           placeholder_text = ''<span foreground="##9898a8">󰌾  Password</span>'';
           hide_input = false;
           rounding = 25;
-          check_color = "rgba(91, 156, 246, 1.0)";
-          fail_color = "rgba(242, 139, 130, 1.0)";
+          check_color = "$accent";
+          fail_color = "$error";
           fail_text = ''<i>$FAIL <b>($ATTEMPTS)</b></i>'';
           fail_transition = 300;
           capslock_color = "rgba(251, 188, 5, 1.0)";
