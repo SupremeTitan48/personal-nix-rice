@@ -71,8 +71,7 @@
       "$mod CTRL, L, exec, hyprlock"
 
       # Clipboard history
-      "$mod, V, exec, cliphist list | rofi -dmenu -p '󰅇 Clipboard' | cliphist decode | wl-copy"
-
+      "$mod, V, exec, bash -c 'cliphist list | rofi -dmenu -p \"󰅇 Clipboard\" | cliphist decode | wl-copy'"
 
       # Resize submap
       "$mod, R, submap, resize"

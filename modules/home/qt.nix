@@ -14,9 +14,11 @@
     };
   };
 
-  # qt6ct: GUI configurator for advanced Qt6 theming (fonts, icon theme, etc.)
+  # Both Qt5 and Qt6 Kvantum plugins needed — kdePackages covers Qt6 apps,
+  # libsForQt5 covers legacy Qt5 apps (KeePassXC, older utilities, etc.)
   home.packages = with pkgs; [
     qt6ct
     libsForQt5.qt5ct
+    libsForQt5.qtstyleplugin-kvantum
   ];
 }
