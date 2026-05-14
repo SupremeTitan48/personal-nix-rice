@@ -73,6 +73,9 @@
       # Clipboard history
       "$mod, V, exec, cliphist list | rofi -dmenu -p '󰅇 Clipboard' | cliphist decode | wl-copy"
 
+      # Emoji picker
+      "$mod, Period, exec, rofimoji --action type --skin-tone neutral"
+
       # Resize submap
       "$mod, R, submap, resize"
 

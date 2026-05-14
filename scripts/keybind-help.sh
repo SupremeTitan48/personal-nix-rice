@@ -44,8 +44,9 @@ Alt + Tab               Window switcher (rofi)
 Print                   Screenshot → file
 Super + Print           Screenshot region → annotate
 Super + Shift + Print   Screenshot region → file
-── Clipboard ─────────────────────────────────────────
+── Clipboard & Emoji ──────────────────────────────────
 Super + V               Clipboard history
+Super + .               Emoji picker
 ── Color ─────────────────────────────────────────────
 (hyprpicker in terminal) Pick any screen color
 ── Media ─────────────────────────────────────────────

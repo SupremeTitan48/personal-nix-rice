@@ -18,6 +18,11 @@
     claude-code        # Claude AI CLI — run `claude` in terminal (requires allowUnfree)
     inputs.claude-desktop.packages.${pkgs.stdenv.hostPlatform.system}.claude-desktop
 
+    obs-studio        # screen recording and streaming
+    keepassxc         # local password manager (no cloud dependency)
+    rofimoji          # rofi-based emoji picker (Super + .)
+    gnome-disk-utility # GUI disk/partition management and SMART data
+
     imv              # lightweight Wayland image viewer
     hyprpicker         # screen color picker
     wlr-randr          # runtime monitor management

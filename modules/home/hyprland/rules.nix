@@ -58,6 +58,29 @@
 
       # Mission Center: float when launched as scratchpad
       "float, class:(io.missioncenter.MissionCenter)"
+
+      # KeePassXC: float dialogs, keep main window tiling
+      "float, class:(org.keepassxc.KeePassXC), title:(.*- KeePassXC$)"
+      "float, class:(org.keepassxc.KeePassXC), title:(.*Access Request.*)"
+
+      # GNOME Disk Utility
+      "float, class:(gnome-disks)"
+      "size 70% 70%, class:(gnome-disks)"
+      "center, class:(gnome-disks)"
+
+      # Rofimoji emoji picker
+      "float, class:(rofimoji)"
+      "center, class:(rofimoji)"
+
+      # OBS Studio: float settings/scene/source dialogs
+      "float, class:(com.obsproject.Studio), title:(.*Properties.*)"
+      "float, class:(com.obsproject.Studio), title:(.*Settings.*)"
+      "float, class:(com.obsproject.Studio), title:(.*Filters.*)"
+
+      # Seahorse (keyring manager)
+      "float, class:(seahorse)"
+      "size 60% 65%, class:(seahorse)"
+      "center, class:(seahorse)"
     ];
 
     workspace = [

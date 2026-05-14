@@ -14,6 +14,8 @@
     ../../modules/nixos/gaming.nix
     ../../modules/nixos/display-manager.nix
     ../../modules/nixos/auto-upgrade.nix
+    ../../modules/nixos/keyring.nix
+    ../../modules/nixos/printing.nix
   ];
 
   nixpkgs.config.allowUnfree = true;
