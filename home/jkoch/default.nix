@@ -10,6 +10,7 @@
     ../../modules/home/matugen.nix
     ../../modules/home/theme.nix
     ../../modules/home/terminal.nix
+    ../../modules/home/git.nix
     ../../modules/home/notifications.nix
     ../../modules/home/filemanager.nix
     ../../modules/home/clipboard.nix
@@ -55,11 +56,11 @@
   '';
 
   # Base packages not covered by specific modules
+  # Note: fd is in terminal.nix (fzf backend), bat declared via programs.bat
   home.packages = with pkgs; [
     wget
     curl
     ripgrep
-    fd
     unzip
     zip
     htop

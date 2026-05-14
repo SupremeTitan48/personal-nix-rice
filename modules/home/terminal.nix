@@ -52,10 +52,26 @@
 
     plugins = [
       { name = "tide"; src = pkgs.fishPlugins.tide.src; }
+      { name = "fzf-fish"; src = pkgs.fishPlugins.fzf-fish.src; }
+      { name = "done"; src = pkgs.fishPlugins.done.src; }
     ];
+
+    # Abbreviations expand inline — better than aliases for discoverability
+    shellAbbrs = {
+      ls = "eza --icons --color=always --group-directories-first";
+      ll = "eza -la --icons --color=always --group-directories-first";
+      lt = "eza --tree --icons --color=always --level 2";
+      cat = "bat --style=auto";
+      nrs = "sudo nixos-rebuild switch --flake $FLAKE_DIR#desktop";
+      nrt = "sudo nixos-rebuild test --flake $FLAKE_DIR#desktop";
+      wp = "change-wallpaper";
+    };
 
     interactiveShellInit = ''
       set -g fish_greeting ""
+
+      # any-nix-shell: keep fish when entering nix-shell / nix develop
+      ${pkgs.any-nix-shell}/bin/any-nix-shell fish --info-right | source
 
       # --- Tide prompt layout ---
       set -g tide_left_prompt_items os pwd git
@@ -118,21 +134,55 @@
       set -g fish_color_escape yellow
       set -g fish_color_selection --background=brblack
       set -g fish_pager_color_selected_background --background=brblack
-
-      # --- Aliases ---
-      alias ls 'eza --icons --color=always --group-directories-first'
-      alias ll 'eza -la --icons --color=always --group-directories-first'
-      alias lt 'eza --tree --icons --color=always --level 2'
-      alias cat 'bat --style=auto'
-      alias nrs 'sudo nixos-rebuild switch --flake ${config.home.homeDirectory}/personal-nix-rice#desktop'
-      alias nrt 'sudo nixos-rebuild test --flake ${config.home.homeDirectory}/personal-nix-rice#desktop'
-      alias wp 'change-wallpaper'
     '';
+  };
+
+  programs.fzf = {
+    enable = true;
+    enableFishIntegration = true;
+    defaultOptions = [ "--height 40%" "--layout=reverse" "--border" "--color=dark" ];
+  };
+
+  programs.zoxide = {
+    enable = true;
+    enableFishIntegration = true;
+  };
+
+  programs.atuin = {
+    enable = true;
+    enableFishIntegration = true;
+    settings = {
+      auto_sync = false;
+      update_check = false;
+      style = "compact";
+      history_filter = [ "^nrs" "^nrt" ];
+    };
+  };
+
+  programs.bat = {
+    enable = true;
+    config.theme = "TwoDark";
+  };
+
+  programs.nix-index = {
+    enable = true;
+    enableFishIntegration = true;
+  };
+
+  # command-not-found conflicts with nix-index's own handler
+  programs.command-not-found.enable = false;
+
+  home.sessionVariables = {
+    EDITOR = "nvim";
+    VISUAL = "code";
+    FLAKE_DIR = "${config.home.homeDirectory}/personal-nix-rice";
+    MANPAGER = "sh -c 'col -bx | bat -l man -p'";
   };
 
   home.packages = with pkgs; [
     eza
-    bat
+    fd               # fzf works better with fd as the finder backend
     playerctl
+    any-nix-shell
   ];
 }
