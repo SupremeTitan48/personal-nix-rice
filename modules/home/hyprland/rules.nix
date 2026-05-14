@@ -39,6 +39,25 @@
       "idleinhibit fullscreen, fullscreen:1"
       "idleinhibit fullscreen, class:(steam_app_.*)"
       "idleinhibit fullscreen, class:(gamescope)"
+
+      # wlogout: fullscreen overlay, no animations, no blur bleed
+      "float, class:(wlogout)"
+      "fullscreen, class:(wlogout)"
+      "noanim, class:(wlogout)"
+
+      # Obsidian: slight transparency, treat as normal tiling app
+      "opacity 0.97 0.95, class:(obsidian)"
+
+      # Claude desktop
+      "opacity 0.97 0.95, class:(claude)"
+      "float, class:(claude), title:(.*Preferences.*)"
+
+      # nwg-look: float the settings window
+      "float, class:(nwg-look)"
+      "center, class:(nwg-look)"
+
+      # Mission Center: float when launched as scratchpad
+      "float, class:(io.missioncenter.MissionCenter)"
     ];
 
     workspace = [

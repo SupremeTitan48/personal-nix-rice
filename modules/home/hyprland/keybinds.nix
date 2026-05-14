@@ -1,5 +1,5 @@
 # modules/home/hyprland/keybinds.nix
-{ config, ... }:
+{ config, pkgs, ... }:
 {
   wayland.windowManager.hyprland.settings = {
     "$mod" = "SUPER";
@@ -11,6 +11,16 @@
       "$mod, W, exec, rofi -show wallpaper -modi wallpaper:${config.home.homeDirectory}/.local/bin/rofi-wallpaper"
       "$mod, N, exec, swaync-client -t -sw"
       "$mod, E, exec, thunar"
+      "$mod, D, exec, nwg-dock-hyprland -d"
+
+      # Power menu
+      "$mod, Escape, exec, wlogout -b 5 -c 0 -r 0 -m 2"
+
+      # Keybind cheatsheet
+      "$mod, slash, exec, bash ${config.home.homeDirectory}/.local/bin/keybind-help"
+
+      # Window manager — Alt+Tab window switcher
+      "ALT, Tab, exec, rofi -show window -show-icons"
 
       # Window management
       "$mod, Q, killactive"
@@ -69,7 +79,13 @@
       # Workspace overview (hyprexpo)
       "$mod, grave, hyprexpo:expo, toggle"
 
-      # Special workspace (scratchpad) — moved off grave to avoid conflict with hyprexpo
+      # Named scratchpads
+      "$mod ALT, T, togglespecialworkspace, term"
+      "$mod ALT, O, togglespecialworkspace, obsidian"
+      "$mod ALT, F, togglespecialworkspace, files"
+      "$mod ALT, M, togglespecialworkspace, monitor"
+
+      # Legacy generic scratchpad
       "$mod ALT, grave, togglespecialworkspace, magic"
       "$mod SHIFT, grave, movetoworkspace, special:magic"
     ];

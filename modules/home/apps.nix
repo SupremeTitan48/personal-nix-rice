@@ -1,5 +1,5 @@
 # modules/home/apps.nix
-{ config, pkgs, lib, ... }:
+{ config, pkgs, lib, inputs, ... }:
 {
   programs.mpv = {
     enable = true;
@@ -14,11 +14,17 @@
 
   home.packages = with pkgs; [
     google-chrome
+    obsidian           # markdown notes (requires allowUnfree)
+    claude-code        # Claude AI CLI — run `claude` in terminal (requires allowUnfree)
+    inputs.claude-desktop.packages.${pkgs.stdenv.hostPlatform.system}.claude-desktop
+
     imv              # lightweight Wayland image viewer
     hyprpicker         # screen color picker
     wlr-randr          # runtime monitor management
     mission-center     # GTK4 system monitor
     xdg-utils          # xdg-open, MIME handling
+    nwg-look           # GTK theme / cursor / icons GUI (Wayland-compatible)
+    wlogout            # power menu overlay
 
     # VSCodium with Wayland flags
     (vscodium.override {

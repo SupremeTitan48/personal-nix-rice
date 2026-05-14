@@ -19,6 +19,9 @@
     ../../modules/home/apps.nix
     ../../modules/home/gaming.nix
     ../../modules/home/nightlight.nix
+    ../../modules/home/wlogout.nix
+    ../../modules/home/dock.nix
+    ../../modules/home/scratchpads.nix
   ];
 
   home.username    = userConfig.username;

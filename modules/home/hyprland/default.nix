@@ -84,7 +84,7 @@
         animate_manual_resizes = false;
       };
 
-      # Layer blur rules (waybar, rofi, swaync get blur from Hyprland)
+      # Layer blur rules (waybar, rofi, swaync, dock, wlogout get blur from Hyprland)
       layerrule = [
         "blur, waybar"
         "ignorezero, waybar"
@@ -94,6 +94,10 @@
         "ignorezero, swaync-notification-window"
         "blur, swaync-control-center"
         "ignorezero, swaync-control-center"
+        "blur, gtk-layer-shell"      # nwg-dock
+        "ignorezero, gtk-layer-shell"
+        "blur, wlogout"
+        "ignorezero, wlogout"
       ];
 
       # Autostart
@@ -105,6 +109,7 @@
         "${pkgs.hyprpolkitagent}/libexec/hyprpolkitagent"
         "nm-applet --indicator"
         "swayosd-server"
+        "nwg-dock-hyprland -nolauncher -f -i 28 -mb 2"
         "wl-paste --type text --watch cliphist --max-items 750 store"
         "wl-paste --type image --watch cliphist --max-items 750 store"
       ];
@@ -157,6 +162,12 @@
     };
   };
 
+  # Install keybind-help script to ~/.local/bin/
+  home.file.".local/bin/keybind-help" = {
+    source = ../../../scripts/keybind-help.sh;
+    executable = true;
+  };
+
   # Packages for exec-once entries
   # Note: swww is in swww/default.nix; wl-clipboard/cliphist in clipboard.nix; matugen in matugen.nix
   home.packages = with pkgs; [
@@ -164,5 +175,6 @@
     networkmanagerapplet
     swayosd
     brightnessctl
+    playerctl   # media key support (play/pause/next/prev)
   ];
 }
