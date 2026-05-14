@@ -175,6 +175,6 @@
     networkmanagerapplet
     swayosd
     brightnessctl
-    playerctl   # media key support (play/pause/next/prev)
+    # playerctl lives in terminal.nix (already declared there)
   ];
 }

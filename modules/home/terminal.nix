@@ -175,7 +175,7 @@
   home.sessionVariables = {
     EDITOR = "nvim";
     VISUAL = "code";
-    FLAKE_DIR = "${config.home.homeDirectory}/personal-nix-rice";
+    FLAKE_DIR = "/etc/nixos";  # install.sh clones the repo here
     MANPAGER = "sh -c 'col -bx | bat -l man -p'";
   };
 

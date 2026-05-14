@@ -23,6 +23,10 @@ A daily-driver NixOS + Hyprland desktop built for stability, rollback safety, an
 | Night light | wlsunset |
 | Gaming | Steam · Gamemode · Gamescope · MangoHud · Heroic · Lutris |
 | Apps | Google Chrome · VSCodium · Thunar · mpv · imv |
+| Notes | Obsidian |
+| AI | Claude desktop · Claude Code CLI (`claude`) |
+| Dock | nwg-dock-hyprland — auto-hiding bottom dock with pinned apps |
+| Power menu | wlogout — full-screen overlay (lock / logout / suspend / reboot / shutdown) |
 
 ---
 
@@ -219,6 +223,15 @@ The config assumes NVIDIA. For AMD or Intel:
 | `Super + W` | Wallpaper picker → recolors everything |
 | `Super + N` | Notification center toggle |
 | `` Super + ` `` | Workspace overview (hyprexpo) |
+| `Super + D` | Toggle app dock |
+| `Super + /` | Keybind cheatsheet (searchable) |
+
+### Power
+
+| Key | Action |
+|---|---|
+| `Super + Escape` | Power menu (lock / logout / suspend / reboot / shutdown) |
+| `Super + Ctrl + L` | Lock screen immediately |
 
 ### Windows
 
@@ -244,11 +257,24 @@ The config assumes NVIDIA. For AMD or Intel:
 | `` Super + Alt + ` `` | Toggle scratchpad workspace |
 | `` Super + Shift + ` `` | Send window to scratchpad |
 
+### Scratchpads (toggle over any workspace)
+
+| Key | Action |
+|---|---|
+| `Super + Alt + T` | Terminal scratchpad (kitty, pre-spawned) |
+| `Super + Alt + O` | Obsidian notes scratchpad |
+| `Super + Alt + M` | System monitor scratchpad (Mission Center) |
+
+### Window switcher
+
+| Key | Action |
+|---|---|
+| `Alt + Tab` | Window switcher (rofi) |
+
 ### System
 
 | Key | Action |
 |---|---|
-| `Super + Ctrl + L` | Lock screen |
 | `Super + V` | Clipboard history (cliphist → rofi) |
 | `Print` | Screenshot fullscreen → saved to `~/Pictures/screenshots/` |
 | `Super + Print` | Screenshot region → open in satty for annotation |
@@ -490,10 +516,14 @@ modules/
     clipboard.nix                 # wl-clipboard + cliphist history
     screenshot.nix                # grimblast + satty annotation
     matugen.nix                   # matugen config, templates, activation hook
+    wlogout.nix                   # power menu layout + glassmorphism CSS
+    dock.nix                      # nwg-dock-hyprland pinned apps + style
+    scratchpads.nix               # named scratchpads (terminal, Obsidian, monitor)
 
 home/
   user/
     default.nix                   # Home Manager entry point (username from user-config)
+                                  # (home/jkoch/ removed — superseded by home/user/)
 
 wallpapers/                       # wallpaper images; default.jpg used on first boot
 scripts/

@@ -1,5 +1,5 @@
 # modules/home/hyprland/keybinds.nix
-{ config, pkgs, ... }:
+{ config, ... }:
 {
   wayland.windowManager.hyprland.settings = {
     "$mod" = "SUPER";
@@ -82,7 +82,6 @@
       # Named scratchpads
       "$mod ALT, T, togglespecialworkspace, term"
       "$mod ALT, O, togglespecialworkspace, obsidian"
-      "$mod ALT, F, togglespecialworkspace, files"
       "$mod ALT, M, togglespecialworkspace, monitor"
 
       # Legacy generic scratchpad
