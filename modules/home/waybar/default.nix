@@ -23,14 +23,8 @@
       "hyprland/workspaces" = {
         format = "{icon}";
         format-icons = {
-          "1" = "●";
-          "2" = "●";
-          "3" = "●";
-          "4" = "●";
-          "5" = "●";
           default = "○";
           active = "●";
-          empty = "○";
         };
         on-click = "activate";
         sort-by-number = true;
@@ -55,8 +49,8 @@
 
       temperature = {
         format = " {temperatureC}°C";
-        hwmon-path-abs = "/sys/devices/platform/coretemp.0/hwmon";
-        input-filename = "temp1_input";
+        # AMD Ryzen uses k10temp driver — thermal-zone is portable across boards
+        thermal-zone = 0;
         critical-threshold = 80;
         format-critical = " {temperatureC}°C";
         interval = 5;
