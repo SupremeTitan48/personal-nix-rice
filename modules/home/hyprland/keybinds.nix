@@ -67,8 +67,11 @@
       # Resize submap
       "$mod, R, submap, resize"
 
-      # Special workspace (scratchpad)
-      "$mod, grave, togglespecialworkspace, magic"
+      # Workspace overview (hyprexpo)
+      "$mod, grave, hyprexpo:expo, toggle"
+
+      # Special workspace (scratchpad) — moved off grave to avoid conflict with hyprexpo
+      "$mod ALT, grave, togglespecialworkspace, magic"
       "$mod SHIFT, grave, movetoworkspace, special:magic"
     ];
 

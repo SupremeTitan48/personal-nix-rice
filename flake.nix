@@ -10,6 +10,12 @@
     };
 
     hyprland.url = "github:hyprwm/Hyprland";
+    hyprland.inputs.nixpkgs.follows = "nixpkgs";
+
+    hyprland-plugins = {
+      url = "github:hyprwm/hyprland-plugins";
+      inputs.hyprland.follows = "hyprland";
+    };
 
     hyprlock = {
       url = "github:hyprwm/hyprlock";
@@ -22,7 +28,7 @@
     };
   };
 
-  outputs = { self, nixpkgs, home-manager, hyprland, hyprlock, hypridle, ... }@inputs:
+  outputs = { self, nixpkgs, home-manager, hyprland, hyprland-plugins, hyprlock, hypridle, ... }@inputs:
   let
     system = "x86_64-linux";
     pkgs = nixpkgs.legacyPackages.${system};

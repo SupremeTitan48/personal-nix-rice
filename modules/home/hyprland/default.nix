@@ -11,6 +11,9 @@
   wayland.windowManager.hyprland = {
     enable = true;
     package = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprland;
+    plugins = [
+      inputs.hyprland-plugins.packages.${pkgs.stdenv.hostPlatform.system}.hyprexpo
+    ];
     xwayland.enable = true;
     systemd.enable = false;  # UWSM manages the systemd session instead
 
@@ -46,13 +49,16 @@
           enabled = true;
           size = 8;
           passes = 2;
-          xray = false;
+          xray = true;  # wallpaper bleed-through for glassmorphism
           ignore_opacity = false;
         };
       };
 
       cursor = {
         no_hardware_cursors = true;
+        allow_dumb_copy = true;
+        theme = "Bibata-Modern-Ice";
+        size = 24;
       };
 
       input = {
@@ -73,6 +79,9 @@
         disable_splash_rendering = true;
         mouse_move_enables_dpms = true;
         key_press_enables_dpms = true;
+        vrr = 2;  # fullscreen-only VRR — safer with NVIDIA multi-monitor setups
+        animate_mouse_windowdragging = false;
+        animate_manual_resizes = false;
       };
 
       # Layer blur rules (waybar, rofi, swaync get blur from Hyprland)
@@ -104,6 +113,17 @@
 
   wayland.windowManager.hyprland.extraConfig = ''
     source = ~/.cache/matugen/hyprland-colors.conf
+
+    plugin:hyprexpo {
+      columns = 3
+      gap_size = 8
+      bg_col = rgb(0d0f14)
+      workspace_method = first 1
+      enable_gesture = true
+      gesture_fingers = 3
+      gesture_distance = 300
+      gesture_positive = true
+    }
 
     # Resize submap
     submap = resize
