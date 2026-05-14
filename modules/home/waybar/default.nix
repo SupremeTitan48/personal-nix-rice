@@ -81,7 +81,10 @@
       };
     }];
 
-    # CSS is written separately to leverage matugen's @import
-    style = builtins.readFile ./style.css;
+    # Replace hardcoded home path so config is portable across users
+    style = builtins.replaceStrings
+      [ "/home/jkoch" ]
+      [ config.home.homeDirectory ]
+      (builtins.readFile ./style.css);
   };
 }

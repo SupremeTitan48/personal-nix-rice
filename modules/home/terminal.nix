@@ -56,7 +56,7 @@ in
     # Colors come from matugen — imported at runtime
     extraConfig = ''
       # Include matugen-generated color scheme
-      include /home/jkoch/.cache/matugen/kitty-colors.conf
+      include ${config.home.homeDirectory}/.cache/matugen/kitty-colors.conf
     '';
   };
 
@@ -138,8 +138,8 @@ in
       alias ll 'eza -la --icons --color=always --group-directories-first'
       alias lt 'eza --tree --icons --color=always --level 2'
       alias cat 'bat --style=auto'
-      alias nrs 'sudo nixos-rebuild switch --flake ~/personal-nix-rice#desktop'
-      alias nrt 'sudo nixos-rebuild test --flake ~/personal-nix-rice#desktop'
+      alias nrs 'sudo nixos-rebuild switch --flake ${config.home.homeDirectory}/personal-nix-rice#desktop'
+      alias nrt 'sudo nixos-rebuild test --flake ${config.home.homeDirectory}/personal-nix-rice#desktop'
       alias wp 'change-wallpaper'
     '';
   };

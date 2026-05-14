@@ -17,6 +17,11 @@
       font = "JetBrains Mono 12";
     };
 
-    theme = ./style.rasi;
   };
+
+  # Deploy style with home directory interpolated (theme option copies verbatim)
+  xdg.configFile."rofi/style.rasi".text = builtins.replaceStrings
+    [ "/home/jkoch" ]
+    [ config.home.homeDirectory ]
+    (builtins.readFile ./style.rasi);
 }
