@@ -1,0 +1,118 @@
+/* modules/home/waybar/style.css */
+/* Waybar floating pill — glassmorphism style */
+/* Fallbacks defined first; matugen @import overrides them when cache exists.
+   GTK CSS processes @import content before the surrounding file's declarations,
+   so placing @import AFTER @define-color means the import wins. */
+
+/* Fallback colors (used if matugen cache hasn't been written yet) */
+@define-color accent         #5b9cf6;
+@define-color accent_container #1a3a6e;
+@define-color on_accent      #ffffff;
+@define-color surface        #181c24;
+@define-color surface_variant #242836;
+@define-color on_surface     #e8e8f0;
+@define-color muted          #9898a8;
+@define-color error          #f28b82;
+
+/* matugen overrides — written by activation hook before first login */
+@import "/home/jkoch/.cache/matugen/waybar-colors.css";
+
+* {
+  font-family: "JetBrains Mono", "Font Awesome 6 Free", monospace;
+  font-size: 13px;
+  min-height: 0;
+  border: none;
+  border-radius: 0;
+}
+
+window#waybar {
+  background: rgba(13, 15, 20, 0.65);
+  border: 1px solid rgba(255, 255, 255, 0.10);
+  border-radius: 30px;
+  color: @on_surface;
+  transition: background 0.3s ease;
+}
+
+window#waybar.hidden {
+  opacity: 0.2;
+}
+
+.modules-left,
+.modules-center,
+.modules-right {
+  padding: 0 8px;
+}
+
+/* Workspaces */
+#workspaces {
+  padding: 0 4px;
+}
+
+#workspaces button {
+  padding: 4px 6px;
+  color: @muted;
+  background: transparent;
+  font-size: 10px;
+  transition: color 0.2s ease;
+  min-width: 16px;
+}
+
+#workspaces button.active {
+  color: @accent;
+  font-size: 12px;
+}
+
+#workspaces button.empty {
+  color: rgba(255, 255, 255, 0.2);
+}
+
+#workspaces button:hover {
+  background: rgba(255, 255, 255, 0.06);
+  border-radius: 12px;
+  color: @on_surface;
+}
+
+/* Clock */
+#clock {
+  font-weight: 600;
+  font-size: 14px;
+  color: @on_surface;
+  padding: 0 8px;
+}
+
+/* Right modules — shared style */
+#cpu,
+#temperature,
+#pulseaudio,
+#network,
+#tray {
+  color: @muted;
+  padding: 0 6px;
+  transition: color 0.2s ease;
+}
+
+#cpu:hover,
+#temperature:hover,
+#pulseaudio:hover,
+#network:hover {
+  color: @on_surface;
+}
+
+#temperature.critical {
+  color: @error;
+}
+
+#pulseaudio.muted {
+  color: @muted;
+}
+
+/* Tray */
+#tray > .passive {
+  -gtk-icon-effect: dim;
+}
+
+#tray > .needs-attention {
+  -gtk-icon-effect: highlight;
+  background-color: @accent_container;
+  border-radius: 8px;
+}
