@@ -56,7 +56,7 @@
 
       cursor = {
         no_hardware_cursors = true;
-        allow_dumb_copy = true;
+        use_cpu_buffer = true;
         theme = "Bibata-Modern-Ice";
         size = 24;
       };

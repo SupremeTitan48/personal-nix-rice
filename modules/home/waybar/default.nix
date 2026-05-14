@@ -18,7 +18,7 @@
 
       modules-left = [ "hyprland/workspaces" "hyprland/window" ];
       modules-center = [ "mpris" "clock" ];
-      modules-right = [ "custom/gpu" "memory" "cpu" "temperature" "disk" "mpris" "pulseaudio" "network" "tray" ];
+      modules-right = [ "custom/gpu" "memory" "cpu" "temperature" "disk" "pulseaudio" "network" "tray" ];
 
       "hyprland/window" = {
         format = "{}";

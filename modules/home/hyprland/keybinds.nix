@@ -16,8 +16,7 @@
       "$mod, Q, killactive"
       "$mod, F, fullscreen, 0"
       "$mod SHIFT, Space, togglefloating"
-      "$mod, P, pseudo"
-      "$mod, T, togglesplit"
+      "$mod, T, layoutmsg, togglesplit"
 
       # Focus (vim-style)
       "$mod, H, movefocus, l"
