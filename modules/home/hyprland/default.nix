@@ -104,7 +104,9 @@
         "${pkgs.matugen}/bin/matugen image ${config.home.homeDirectory}/wallpapers/default.jpg --mode dark"
         "${pkgs.waybar}/bin/waybar"
         "${pkgs.swaynotificationcenter}/bin/swaync"
-        "${pkgs.polkit_gnome}/libexec/polkit-gnome-authentication-agent-1"
+        "${pkgs.hyprpolkitagent}/libexec/hyprpolkitagent"
+        "nm-applet --indicator"
+        "swayosd-server"
         "wl-paste --type text --watch cliphist store"
         "wl-paste --type image --watch cliphist store"
       ];
@@ -146,7 +148,12 @@
     };
   };
 
-  # polkit_gnome needed for exec-once authentication agent
+  # Packages for exec-once entries
   # Note: swww is in swww/default.nix; wl-clipboard/cliphist in clipboard.nix; matugen in matugen.nix
-  home.packages = [ pkgs.polkit_gnome ];
+  home.packages = with pkgs; [
+    hyprpolkitagent
+    networkmanagerapplet
+    swayosd
+    brightnessctl
+  ];
 }

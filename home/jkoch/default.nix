@@ -16,11 +16,25 @@
     ../../modules/home/screenshot.nix
     ../../modules/home/apps.nix
     ../../modules/home/gaming.nix
+    ../../modules/home/nightlight.nix
   ];
 
   home.username = "jkoch";
   home.homeDirectory = "/home/jkoch";
   home.stateVersion = "24.11";
+
+  xdg.userDirs = {
+    enable = true;
+    createDirectories = true;
+    desktop = null;        # no Desktop folder
+    documents = "${config.home.homeDirectory}/Documents";
+    download = "${config.home.homeDirectory}/Downloads";
+    music = "${config.home.homeDirectory}/Music";
+    pictures = "${config.home.homeDirectory}/Pictures";
+    videos = "${config.home.homeDirectory}/Videos";
+    publicShare = null;
+    templates = null;
+  };
 
   programs.home-manager.enable = true;
 
