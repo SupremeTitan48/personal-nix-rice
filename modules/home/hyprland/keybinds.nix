@@ -54,9 +54,9 @@
       "$mod SHIFT, 9, movetoworkspace, 9"
 
       # Screenshots
-      ", Print, exec, grimblast copy output"
-      "$mod, Print, exec, grimblast copy area"
-      "$mod SHIFT, Print, exec, grimblast save area ~/Pictures/screenshots/$(date +%Y%m%d-%H%M%S).png"
+      ", Print, exec, grimblast --notify save output"
+      "$mod, Print, exec, grimblast --notify copy area | satty --filename -"
+      "$mod SHIFT, Print, exec, grimblast --notify save area ~/Pictures/screenshots/$(date +%Y%m%d-%H%M%S).png"
 
       # Lock screen
       "$mod CTRL, L, exec, hyprlock"

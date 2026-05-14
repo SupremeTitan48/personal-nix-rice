@@ -1,8 +1,8 @@
 # modules/home/screenshot.nix
 # grimblast is Hyprland's wrapper around grim+slurp for screenshots.
 # Keybinds are in hyprland/keybinds.nix:
-#   Print          → grimblast copy output   (fullscreen to clipboard)
-#   Super+Print    → grimblast copy area     (region to clipboard)
+#   Print          → grimblast save output   (fullscreen to file with notify)
+#   Super+Print    → grimblast copy area | satty  (region → satty for annotation)
 #   Super+Shift+Print → grimblast save area  (region to file)
 { config, pkgs, lib, ... }:
 {
@@ -10,6 +10,7 @@
     grimblast
     grim
     slurp
+    satty              # screenshot annotation tool
   ];
 
   # Ensure screenshots directory exists

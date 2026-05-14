@@ -4,6 +4,7 @@
   home.packages = with pkgs; [
     adw-gtk3
     bibata-cursors
+    hyprcursor
     papirus-icon-theme
     libsForQt5.qtstyleplugin-kvantum
     libsForQt5.qt5ct

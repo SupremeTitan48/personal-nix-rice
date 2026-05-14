@@ -3,6 +3,10 @@
 {
   home.packages = with pkgs; [
     google-chrome
+    hyprpicker         # screen color picker
+    wlr-randr          # runtime monitor management
+    mission-center     # GTK4 system monitor
+    xdg-utils          # xdg-open, MIME handling
 
     # VSCodium with Wayland flags
     (vscodium.override {
