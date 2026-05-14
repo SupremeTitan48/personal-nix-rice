@@ -4,8 +4,18 @@
   services.displayManager.sddm = {
     enable = true;
     wayland.enable = true;
-    theme = "";                          # plain SDDM for now; rice separately later
-    settings.Theme.CursorTheme = "Bibata-Modern-Ice";
+    theme = "sddm-astronaut";
+    package = pkgs.sddm;
+    extraPackages = with pkgs; [
+      bibata-cursors
+      sddm-astronaut
+    ];
+    settings = {
+      Theme = {
+        CursorTheme = "Bibata-Modern-Ice";
+        CursorSize = 24;
+      };
+    };
   };
 
   # Hyprland with UWSM session management
