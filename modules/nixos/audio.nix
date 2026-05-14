@@ -1,6 +1,10 @@
 # modules/nixos/audio.nix
-{ config, pkgs, lib, ... }:
+{ config, pkgs, lib, inputs, ... }:
 {
+  imports = [
+    inputs.nix-gaming.nixosModules.pipewireLowLatency
+  ];
+
   # Disable PulseAudio (replaced by PipeWire)
   hardware.pulseaudio.enable = false;
 
@@ -13,4 +17,6 @@
     pulse.enable = true;
     wireplumber.enable = true;
   };
+
+  nix-gaming.pipewireLowLatency.enable = true;
 }

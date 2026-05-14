@@ -1,10 +1,16 @@
 # modules/nixos/gaming.nix
-{ config, pkgs, lib, ... }:
+{ config, pkgs, lib, inputs, ... }:
 {
+  imports = [
+    inputs.nix-gaming.nixosModules.platformOptimizations
+  ];
+
+  nix-gaming.platformOptimizations.enable = true;
+
   programs.steam = {
     enable = true;
     remotePlay.openFirewall = true;
-    dedicatedServer.openFirewall = true;
+    dedicatedServer.openFirewall = false;  # desktop rig, not a game server
     # Use system Gamescope for Steam sessions
     gamescopeSession.enable = true;
   };
@@ -13,11 +19,18 @@
     enable = true;
     settings = {
       general = {
-        renice = -10;
         softrealtime = "auto";
+        renice = -10;
         ioprio = 0;
       };
-      # gpu block omitted: NVIDIA clock tuning is card-specific (add nv_core_clock_mhz_offset when profiled)
+      cpu = {
+        governor = "performance";
+      };
+      gpu = {
+        apply_gpu_optimisations = "accept-responsibility";
+        gpu_device = 0;
+        nv_powermizer_mode = 1;
+      };
     };
   };
 
@@ -35,4 +48,16 @@
   security.pam.loginLimits = [
     { domain = "@gamemode"; type = "-"; item = "nice"; value = "-10"; }
   ];
+
+  # Kernel parameters for gaming performance
+  boot.kernel.sysctl = {
+    "vm.max_map_count" = 2147483642;   # required for some games (e.g. Elden Ring, DXVK)
+    "vm.swappiness" = 10;
+    "vm.dirty_ratio" = 10;
+    "vm.dirty_background_ratio" = 5;
+    "net.core.rmem_max" = 134217728;
+    "net.core.wmem_max" = 134217728;
+  };
+
+  powerManagement.cpuFreqGovernor = "schedutil";
 }

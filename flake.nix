@@ -26,9 +26,14 @@
       url = "github:hyprwm/hypridle";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    nix-gaming = {
+      url = "github:fufexan/nix-gaming";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
-  outputs = { self, nixpkgs, home-manager, hyprland, hyprland-plugins, hyprlock, hypridle, ... }@inputs:
+  outputs = { self, nixpkgs, home-manager, hyprland, hyprland-plugins, hyprlock, hypridle, nix-gaming, ... }@inputs:
   let
     system = "x86_64-linux";
     pkgs = nixpkgs.legacyPackages.${system};
@@ -36,6 +41,20 @@
   {
     formatter = nixpkgs.lib.genAttrs [ "x86_64-linux" ] (system:
       nixpkgs.legacyPackages.${system}.nixfmt-rfc-style
+    );
+
+    devShells = nixpkgs.lib.genAttrs [ "x86_64-linux" ] (system:
+      let pkgs = nixpkgs.legacyPackages.${system};
+      in {
+        default = pkgs.mkShell {
+          packages = with pkgs; [
+            nixfmt-rfc-style
+            nil           # Nix LSP
+            statix        # Nix linter
+            deadnix       # dead code finder
+          ];
+        };
+      }
     );
 
     nixosConfigurations.desktop = nixpkgs.lib.nixosSystem {
