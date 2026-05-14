@@ -21,7 +21,6 @@
     imv              # lightweight Wayland image viewer
     hyprpicker         # screen color picker
     wlr-randr          # runtime monitor management
-    mission-center     # GTK4 system monitor
     xdg-utils          # xdg-open, MIME handling
     nwg-look           # GTK theme / cursor / icons GUI (Wayland-compatible)
     wlogout            # power menu overlay

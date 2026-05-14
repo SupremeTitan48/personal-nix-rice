@@ -64,7 +64,7 @@
 
       # Screenshots
       ", Print, exec, grimblast --notify save output"
-      "$mod, Print, exec, grimblast --notify copy area | satty --filename -"
+      "$mod, Print, exec, bash -c 'grimblast --notify copy area | satty --filename -'"
       "$mod SHIFT, Print, exec, grimblast --notify save area ~/Pictures/screenshots/$(date +%Y%m%d-%H%M%S).png"
 
       # Lock screen

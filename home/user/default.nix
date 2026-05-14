@@ -59,6 +59,8 @@
     export HYPRCURSOR_SIZE=24
   '';
 
+  home.sessionPath = [ "$HOME/.local/bin" ];
+
   home.packages = with pkgs; [
     wget
     curl

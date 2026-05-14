@@ -12,6 +12,7 @@ Super + Space           App launcher (rofi)
 Super + E               File manager (Thunar)
 Super + W               Wallpaper picker → recolor all
 Super + N               Notification center
+Super + D               Toggle dock
 Super + `               Workspace overview (hyprexpo)
 ── Power ─────────────────────────────────────────────
 Super + Escape          Power menu (lock/logout/sleep…)
