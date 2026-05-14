@@ -1,0 +1,98 @@
+/* modules/home/rofi/style.rasi */
+/* Glass launcher — inherits matugen colors */
+
+@import "/home/jkoch/.cache/matugen/rofi-colors.rasi"
+
+/* Fallbacks if cache doesn't exist yet */
+* {
+    accent:          #5b9cf6;
+    accent-dim:      #1a3a6e;
+    on-accent:       #ffffff;
+    surface:         #181c24;
+    surface-variant: #242836;
+    on-surface:      #e8e8f0;
+    muted:           #9898a8;
+    error:           #f28b82;
+
+    /* Base settings */
+    background-color: transparent;
+    text-color:       @on-surface;
+    font:             "JetBrains Mono 12";
+}
+
+window {
+    width:            520px;
+    border:           1px solid rgba(255,255,255,0.12);
+    border-radius:    16px;
+    background-color: rgba(13, 15, 20, 0.75);
+    padding:          12px;
+}
+
+mainbox {
+    background-color: transparent;
+    spacing:          8px;
+}
+
+inputbar {
+    background-color: rgba(255, 255, 255, 0.06);
+    border:           1px solid rgba(255,255,255,0.10);
+    border-radius:    12px;
+    padding:          10px 14px;
+    children:         [ prompt, entry ];
+}
+
+prompt {
+    background-color: transparent;
+    text-color:       @accent;
+    padding:          0 6px 0 0;
+}
+
+entry {
+    background-color: transparent;
+    text-color:       @on-surface;
+    cursor-color:     @accent;
+    placeholder:      "Search...";
+    placeholder-color: @muted;
+}
+
+listview {
+    background-color: transparent;
+    lines:            8;
+    columns:          1;
+    spacing:          2px;
+    margin:           6px 0 0 0;
+}
+
+element {
+    background-color: transparent;
+    border-radius:    10px;
+    padding:          10px 12px;
+    orientation:      horizontal;
+    spacing:          10px;
+}
+
+element.selected {
+    background-color: rgba(255,255,255,0.08);
+    text-color:       @on-surface;
+}
+
+element-icon {
+    size:   24px;
+    margin: 0 4px 0 0;
+}
+
+element-text {
+    background-color: transparent;
+    text-color:       inherit;
+    vertical-align:   0.5;
+}
+
+message {
+    background-color: transparent;
+    padding:          6px 0;
+}
+
+textbox {
+    text-color:       @muted;
+    background-color: transparent;
+}
