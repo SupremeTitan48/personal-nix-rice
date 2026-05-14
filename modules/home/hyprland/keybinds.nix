@@ -59,7 +59,7 @@
       "$mod SHIFT, Print, exec, grimblast save area ~/Pictures/screenshots/$(date +%Y%m%d-%H%M%S).png"
 
       # Lock screen
-      "$mod SHIFT, L, exec, hyprlock"
+      "$mod CTRL, L, exec, hyprlock"
 
       # Clipboard history
       "$mod, V, exec, cliphist list | rofi -dmenu -p '󰅇 Clipboard' | cliphist decode | wl-copy"
