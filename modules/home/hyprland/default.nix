@@ -15,19 +15,9 @@
     systemd.enable = false;  # UWSM manages the systemd session instead
 
     settings = {
-      # NVIDIA Wayland env vars — required for RTX 3070
-      env = [
-        "LIBVA_DRIVER_NAME,nvidia"
-        "XDG_SESSION_TYPE,wayland"
-        "GBM_BACKEND,nvidia-drm"
-        "__GLX_VENDOR_LIBRARY_NAME,nvidia"
-        "NVD_BACKEND,direct"
-        "ELECTRON_OZONE_PLATFORM_HINT,auto"
-        "MOZ_ENABLE_WAYLAND,1"
-        "QT_QPA_PLATFORM,wayland"
-        "XCURSOR_THEME,Bibata-Modern-Ice"
-        "XCURSOR_SIZE,24"
-      ];
+      # NVIDIA Wayland env vars moved to ~/.config/uwsm/env-hyprland
+      # so they propagate to D-Bus activated services. See home/jkoch/default.nix.
+      env = [];
 
       general = {
         gaps_in = 6;
@@ -74,7 +64,6 @@
       };
 
       dwindle = {
-        pseudotile = true;
         preserve_split = true;
       };
 
@@ -100,7 +89,7 @@
 
       # Autostart
       exec-once = [
-        "swww-daemon & swww wait-ready && swww img ${config.home.homeDirectory}/wallpapers/default.jpg --transition-type fade --transition-duration 1 --transition-fps 60"
+        "bash -c 'swww-daemon & swww wait-ready && swww img ${config.home.homeDirectory}/wallpapers/default.jpg --transition-type fade --transition-duration 1 --transition-fps 60'"
         "${pkgs.matugen}/bin/matugen image ${config.home.homeDirectory}/wallpapers/default.jpg --mode dark"
         "${pkgs.waybar}/bin/waybar"
         "${pkgs.swaynotificationcenter}/bin/swaync"

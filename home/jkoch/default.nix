@@ -38,6 +38,22 @@
 
   programs.home-manager.enable = true;
 
+  # UWSM env vars — propagated to D-Bus activated services under UWSM.
+  # Hyprland's own env = [] list does NOT reach D-Bus services, so we use this file instead.
+  xdg.configFile."uwsm/env-hyprland".text = ''
+    export LIBVA_DRIVER_NAME=nvidia
+    export XDG_SESSION_TYPE=wayland
+    export __GLX_VENDOR_LIBRARY_NAME=nvidia
+    export NVD_BACKEND=direct
+    export ELECTRON_OZONE_PLATFORM_HINT=auto
+    export MOZ_ENABLE_WAYLAND=1
+    export QT_QPA_PLATFORM=wayland
+    export XCURSOR_THEME=Bibata-Modern-Ice
+    export XCURSOR_SIZE=24
+    export HYPRCURSOR_THEME=Bibata-Modern-Ice
+    export HYPRCURSOR_SIZE=24
+  '';
+
   # Base packages not covered by specific modules
   home.packages = with pkgs; [
     wget
