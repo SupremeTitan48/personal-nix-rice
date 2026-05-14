@@ -128,10 +128,7 @@
     };
   };
 
-  # Packages needed by exec-once and scripts
-  # Note: wl-clipboard and cliphist are in clipboard.nix; matugen is in matugen.nix
-  home.packages = with pkgs; [
-    swww
-    polkit_gnome
-  ];
+  # polkit_gnome needed for exec-once authentication agent
+  # Note: swww is in swww/default.nix; wl-clipboard/cliphist in clipboard.nix; matugen in matugen.nix
+  home.packages = [ pkgs.polkit_gnome ];
 }

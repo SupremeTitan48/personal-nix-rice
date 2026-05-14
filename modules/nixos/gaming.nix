@@ -29,8 +29,6 @@
   environment.systemPackages = with pkgs; [
     mangohud
     lutris
-    heroic                              # Epic/GOG launcher
-    protonup-qt                         # manage Proton-GE versions
   ];
 
   # Allow gamemode to adjust process priorities
