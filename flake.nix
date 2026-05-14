@@ -28,6 +28,10 @@
     pkgs = nixpkgs.legacyPackages.${system};
   in
   {
+    formatter = nixpkgs.lib.genAttrs [ "x86_64-linux" ] (system:
+      nixpkgs.legacyPackages.${system}.nixfmt-rfc-style
+    );
+
     nixosConfigurations.desktop = nixpkgs.lib.nixosSystem {
       inherit system;
       specialArgs = { inherit inputs; };

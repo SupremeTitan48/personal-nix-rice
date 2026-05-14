@@ -4,6 +4,7 @@
   imports = [
     ./hardware.nix
     ../../modules/nixos/boot.nix
+    ../../modules/nixos/nix.nix
     ../../modules/nixos/nvidia.nix
     ../../modules/nixos/audio.nix
     ../../modules/nixos/fonts.nix
@@ -25,12 +26,6 @@
 
   # Allow sudo for wheel group
   security.sudo.wheelNeedsPassword = true;
-
-  # Nix settings
-  nix.settings = {
-    experimental-features = [ "nix-command" "flakes" ];
-    auto-optimise-store = true;
-  };
 
   system.stateVersion = "24.11";
 }
