@@ -1,5 +1,5 @@
 # modules/home/hyprland/keybinds.nix
-{ pkgs, config, ... }:
+{ config, ... }:
 {
   wayland.windowManager.hyprland.settings = {
     "$mod" = "SUPER";

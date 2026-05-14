@@ -31,10 +31,5 @@
       "noblur, class:^(gamescope)$"
     ];
 
-    workspace = [
-      # Assign apps to workspaces (optional — comment out if unwanted)
-      # "1, default:true"
-      # "2, on-created-empty:kitty"
-    ];
   };
 }
