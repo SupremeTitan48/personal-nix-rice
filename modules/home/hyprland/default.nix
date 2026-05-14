@@ -22,6 +22,7 @@
         "GBM_BACKEND,nvidia-drm"
         "__GLX_VENDOR_LIBRARY_NAME,nvidia"
         "NVD_BACKEND,direct"
+        "WLR_NO_HARDWARE_CURSORS,1"
         "ELECTRON_OZONE_PLATFORM_HINT,auto"
         "MOZ_ENABLE_WAYLAND,1"
         "QT_QPA_PLATFORM,wayland"
@@ -50,14 +51,12 @@
           range = 20;
           render_power = 3;
           color = "rgba(00000066)";
-          color_inactive = "rgba(00000033)";
         };
 
         blur = {
           enabled = true;
           size = 8;
           passes = 2;
-          new_optimizations = true;
           xray = false;
           ignore_opacity = false;
         };
@@ -98,26 +97,24 @@
 
       # Autostart
       exec-once = [
-        "swww-daemon"
-        "swww img ${config.home.homeDirectory}/wallpapers/default.jpg --transition-type none"
+        "swww-daemon & sleep 1 && swww img ${config.home.homeDirectory}/wallpapers/default.jpg --transition-type none"
         "${pkgs.matugen}/bin/matugen image ${config.home.homeDirectory}/wallpapers/default.jpg --mode dark"
-        "waybar"
-        "swaync"
+        "${pkgs.waybar}/bin/waybar"
+        "${pkgs.swaynotificationcenter}/bin/swaync"
         "${pkgs.polkit_gnome}/libexec/polkit-gnome-authentication-agent-1"
         "wl-paste --type text --watch cliphist store"
         "wl-paste --type image --watch cliphist store"
-        "hypridle"
       ];
-
-      # Source matugen-generated colors (written on first exec-once above)
-      source = [ "~/.cache/matugen/hyprland-colors.conf" ];
     };
   };
+
+  wayland.windowManager.hyprland.extraConfig = ''
+    source = ~/.cache/matugen/hyprland-colors.conf
+  '';
 
   # hypridle config (idle → lock → suspend)
   services.hypridle = {
     enable = true;
-    package = inputs.hypridle.packages.${pkgs.stdenv.hostPlatform.system}.hypridle;
     settings = {
       general = {
         lock_cmd = "hyprlock";
@@ -134,7 +131,6 @@
   # Packages needed by exec-once and scripts
   home.packages = with pkgs; [
     swww
-    matugen
     polkit_gnome
     wl-clipboard
     cliphist
