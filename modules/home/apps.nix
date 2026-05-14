@@ -20,7 +20,6 @@
 
     obs-studio        # screen recording and streaming
     keepassxc         # local password manager (no cloud dependency)
-    rofimoji          # rofi-based emoji picker (Super + .)
     gnome-disk-utility # GUI disk/partition management and SMART data
 
     imv              # lightweight Wayland image viewer

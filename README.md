@@ -32,10 +32,8 @@ A daily-driver NixOS + Hyprland desktop built for stability, rollback safety, an
 | Qt theming | Kvantum — Qt apps match the glassmorphism aesthetic |
 | Screen recording | OBS Studio (v4l2loopback virtual camera included) |
 | Printing | CUPS + Avahi — auto-discovers network/AirPrint printers |
-| Phone integration | KDE Connect — clipboard sync, notifications, file transfer |
 | Password manager | KeePassXC — local encrypted vault |
 | PDF viewer | Zathura — keyboard-driven, dark-themed |
-| Emoji picker | rofimoji — type emoji anywhere via `Super + .` |
 | Disk management | GNOME Disks — partition, format, SMART health |
 
 ---
@@ -296,7 +294,6 @@ The config assumes NVIDIA. For AMD or Intel:
 | Key | Action |
 |---|---|
 | `Super + V` | Clipboard history (cliphist → rofi) |
-| `Super + .` | Emoji picker (rofimoji → types at cursor) |
 | `Print` | Screenshot fullscreen → saved to `~/Pictures/screenshots/` |
 | `Super + Print` | Screenshot region → open in satty for annotation |
 | `Super + Shift + Print` | Screenshot region → saved directly |

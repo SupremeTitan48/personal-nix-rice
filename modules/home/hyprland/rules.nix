@@ -68,10 +68,6 @@
       "size 70% 70%, class:(gnome-disks)"
       "center, class:(gnome-disks)"
 
-      # Rofimoji emoji picker
-      "float, class:(rofimoji)"
-      "center, class:(rofimoji)"
-
       # OBS Studio: float settings/scene/source dialogs
       "float, class:(com.obsproject.Studio), title:(.*Properties.*)"
       "float, class:(com.obsproject.Studio), title:(.*Settings.*)"

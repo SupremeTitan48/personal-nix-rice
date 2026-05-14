@@ -18,9 +18,5 @@
   };
   services.blueman.enable = true;
 
-  # KDE Connect: phone ↔ desktop clipboard sync, notifications, file transfer, remote input.
-  # Also opens the required firewall ports (1714–1764 TCP/UDP).
-  programs.kdeconnect.enable = true;
-
   networking.firewall.enable = true;
 }
