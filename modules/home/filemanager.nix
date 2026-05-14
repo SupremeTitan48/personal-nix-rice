@@ -17,7 +17,21 @@
   xdg.mimeApps = {
     enable = true;
     defaultApplications = {
-      "inode/directory" = [ "thunar.desktop" ];
+      "inode/directory"          = [ "thunar.desktop" ];
+      "text/html"                = [ "google-chrome.desktop" ];
+      "x-scheme-handler/http"    = [ "google-chrome.desktop" ];
+      "x-scheme-handler/https"   = [ "google-chrome.desktop" ];
+      "x-scheme-handler/about"   = [ "google-chrome.desktop" ];
+      "x-scheme-handler/unknown" = [ "google-chrome.desktop" ];
+      "application/pdf"          = [ "google-chrome.desktop" ];
+      "video/mp4"                = [ "mpv.desktop" ];
+      "video/mkv"                = [ "mpv.desktop" ];
+      "video/webm"               = [ "mpv.desktop" ];
+      "video/x-matroska"         = [ "mpv.desktop" ];
+      "image/jpeg"               = [ "imv.desktop" ];
+      "image/png"                = [ "imv.desktop" ];
+      "image/gif"                = [ "imv.desktop" ];
+      "image/webp"               = [ "imv.desktop" ];
     };
   };
 }

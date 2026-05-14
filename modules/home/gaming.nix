@@ -8,14 +8,23 @@
     heroic
   ];
 
-  # Default Gamescope flags for Wayland + NVIDIA
-  # Usage: gamescope -W 2560 -H 1440 -r 240 --backend drm -- %command%
-  # Add this to Steam launch options per-game.
-  home.file.".config/gamescope-flags".text = ''
-    # Paste these into Steam launch options, replacing %command%:
-    # gamescope -W 2560 -H 1440 -r 240 --backend drm -- %command%
-    #
-    # With MangoHud:
-    # gamescope -W 2560 -H 1440 -r 240 --backend drm -- mangohud %command%
+  # MangoHud declarative config
+  # Toggle HUD in-game: Shift_R+F12 | Toggle logging: Shift_L+F2
+  xdg.configFile."MangoHud/MangoHud.conf".text = ''
+    legacy_layout=0
+    fps
+    frame_timing=1
+    gpu_stats
+    gpu_temp
+    cpu_stats
+    cpu_temp
+    ram
+    vram
+    time
+    fps_limit_method=late
+    toggle_hud=Shift_R+F12
+    toggle_logging=Shift_L+F2
+    output_folder=${config.home.homeDirectory}/Games/MangoHud
+    log_duration=30
   '';
 }
