@@ -29,7 +29,20 @@
 
   zramSwap = {
     enable = true;
-    memoryPercent = 25;
+    memoryPercent = 50;
+    algorithm = "zstd";
+  };
+
+  # Fish shell must be enabled at NixOS level for /etc/shells and PAM integration
+  programs.fish.enable = true;
+
+  # dconf needed by GTK4/libadwaita settings and Home Manager GTK module
+  programs.dconf.enable = true;
+
+  # earlyoom — kill runaway processes before OOM killer kicks in
+  services.earlyoom = {
+    enable = true;
+    freeMemThreshold = 5;
   };
 
   system.stateVersion = "24.11";

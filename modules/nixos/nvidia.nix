@@ -5,7 +5,7 @@
     modesetting.enable = true;
     powerManagement.enable = true;
     powerManagement.finegrained = false;
-    open = false;                         # proprietary blob, not nvidia-open
+    open = true;                          # RTX 3070 is Ampere — fully supported by open kernel module
     nvidiaSettings = true;
     package = config.boot.kernelPackages.nvidiaPackages.stable;
   };
