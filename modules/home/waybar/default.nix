@@ -18,7 +18,7 @@
 
       modules-left = [ "hyprland/workspaces" "hyprland/window" ];
       modules-center = [ "mpris" "clock" ];
-      modules-right = [ "memory" "cpu" "temperature" "pulseaudio" "network" "tray" ];
+      modules-right = [ "custom/gpu" "memory" "cpu" "temperature" "disk" "mpris" "pulseaudio" "network" "tray" ];
 
       "hyprland/window" = {
         format = "{}";
@@ -35,6 +35,13 @@
         on-click = "activate";
         sort-by-number = true;
         # persistent-workspaces removed — Hyprland workspace rules handle persistence
+      };
+
+      "custom/gpu" = {
+        exec = "nvidia-smi --query-gpu=utilization.gpu,temperature.gpu --format=csv,noheader,nounits | awk -F', ' '{printf \" %s%% %s°C\", $1, $2}'";
+        interval = 3;
+        tooltip = false;
+        format = "{}";
       };
 
       "mpris" = {
@@ -72,12 +79,22 @@
       };
 
       temperature = {
-        format = " {temperatureC}°C";
-        # AMD Ryzen uses k10temp driver — thermal-zone is portable across boards
-        thermal-zone = 0;
-        critical-threshold = 80;
-        format-critical = " {temperatureC}°C";
         interval = 5;
+        # AMD Ryzen k10temp — zone 2 is typical for Ryzen on most boards.
+        # If the reading is 0 or wrong, check: cat /sys/class/thermal/thermal_zone*/type
+        # and adjust thermal-zone to match the k10temp entry.
+        thermal-zone = 2;
+        critical-threshold = 85;
+        format-critical = " {temperatureC}°C";
+        format = " {temperatureC}°C";
+        tooltip = true;
+      };
+
+      disk = {
+        interval = 30;
+        format = "󰋊 {percentage_used}%";
+        path = "/";
+        tooltip-format = "{used} / {total}";
       };
 
       pulseaudio = {

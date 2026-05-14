@@ -96,9 +96,11 @@ window#waybar.hidden {
 }
 
 /* Right modules — shared style */
+#custom-gpu,
 #cpu,
 #memory,
 #temperature,
+#disk,
 #pulseaudio,
 #network,
 #tray {
@@ -107,9 +109,11 @@ window#waybar.hidden {
   transition: color 0.2s ease;
 }
 
+#custom-gpu:hover,
 #cpu:hover,
 #memory:hover,
 #temperature:hover,
+#disk:hover,
 #pulseaudio:hover,
 #network:hover {
   color: @on_surface;
