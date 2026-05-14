@@ -1,9 +1,6 @@
 # modules/nixos/nvidia.nix
 { config, pkgs, lib, ... }:
 {
-  # Load nvidia kernel module at boot
-  boot.initrd.kernelModules = [ "nvidia" "nvidia_modeset" "nvidia_uvm" "nvidia_drm" ];
-
   hardware.nvidia = {
     modesetting.enable = true;
     powerManagement.enable = true;

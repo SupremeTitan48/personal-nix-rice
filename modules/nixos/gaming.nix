@@ -13,15 +13,11 @@
     enable = true;
     settings = {
       general = {
-        renice = 10;
+        renice = -10;
         softrealtime = "auto";
         ioprio = 0;
       };
-      gpu = {
-        apply_gpu_optimisations = "accept-responsibility";
-        gpu_device = 0;
-        amd_performance_level = "high";
-      };
+      # gpu block omitted: NVIDIA clock tuning is card-specific (add nv_core_clock_mhz_offset when profiled)
     };
   };
 

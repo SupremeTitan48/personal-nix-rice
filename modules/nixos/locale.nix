@@ -1,5 +1,4 @@
 # modules/nixos/locale.nix
-# PLACEHOLDER: set timeZone to your actual timezone (e.g. "America/New_York", "America/Los_Angeles")
 { config, pkgs, lib, ... }:
 {
   time.timeZone = "America/Chicago";

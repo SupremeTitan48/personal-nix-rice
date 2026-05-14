@@ -1,5 +1,4 @@
 # modules/nixos/network.nix
-# PLACEHOLDER: set hostName to whatever you want (e.g. "nixbox", "desktop")
 { config, pkgs, lib, ... }:
 {
   networking.hostName = "desktop";
