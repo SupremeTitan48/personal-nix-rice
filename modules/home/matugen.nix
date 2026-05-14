@@ -111,5 +111,23 @@ color14  #242836
 color15  #e8e8f0
 EOF
     fi
+    if [ ! -f "$CACHE/gtk-colors.css" ]; then
+      cat > "$CACHE/gtk-colors.css" << 'EOF'
+@define-color accent_color          #5b9cf6;
+@define-color accent_bg_color       #5b9cf6;
+@define-color accent_fg_color       #ffffff;
+@define-color window_bg_color       #181c24;
+@define-color window_fg_color       #e8e8f0;
+@define-color view_bg_color         #242836;
+@define-color view_fg_color         #e8e8f0;
+@define-color headerbar_bg_color    #181c24;
+@define-color headerbar_fg_color    #e8e8f0;
+@define-color popover_bg_color      #242836;
+@define-color card_bg_color         #242836;
+@define-color card_fg_color         #e8e8f0;
+@define-color sidebar_bg_color      #181c24;
+@define-color sidebar_fg_color      #e8e8f0;
+EOF
+    fi
   '';
 }

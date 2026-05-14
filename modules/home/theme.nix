@@ -32,11 +32,11 @@
 
   # Inject matugen accent into GTK3 and GTK4
   xdg.configFile."gtk-3.0/gtk.css".text = ''
-    @import "/home/jkoch/.cache/matugen/gtk-colors.css";
+    @import "${config.home.homeDirectory}/.cache/matugen/gtk-colors.css";
   '';
 
   xdg.configFile."gtk-4.0/gtk.css".text = ''
-    @import "/home/jkoch/.cache/matugen/gtk-colors.css";
+    @import "${config.home.homeDirectory}/.cache/matugen/gtk-colors.css";
   '';
 
   qt = {
@@ -49,7 +49,6 @@
     GTK_THEME = "adw-gtk3-dark";
     XCURSOR_THEME = "Bibata-Modern-Ice";
     XCURSOR_SIZE = "24";
-    QT_QPA_PLATFORMTHEME = "qt6ct";
   };
 
   # Pointer cursor for X11 fallback (xwayland apps)

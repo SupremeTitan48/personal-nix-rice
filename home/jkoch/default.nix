@@ -30,8 +30,6 @@
     curl
     ripgrep
     fd
-    eza
-    bat
     unzip
     zip
     htop
