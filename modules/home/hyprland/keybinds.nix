@@ -17,7 +17,7 @@
       "$mod, F, fullscreen, 0"
       "$mod SHIFT, Space, togglefloating"
       "$mod, P, pseudo"
-      "$mod, J, togglesplit"
+      "$mod, T, togglesplit"
 
       # Focus (vim-style)
       "$mod, H, movefocus, l"
@@ -59,7 +59,7 @@
       "$mod SHIFT, Print, exec, grimblast save area ~/Pictures/screenshots/$(date +%Y%m%d-%H%M%S).png"
 
       # Lock screen
-      "$mod, L, exec, hyprlock"
+      "$mod SHIFT, L, exec, hyprlock"
 
       # Clipboard history
       "$mod, V, exec, cliphist list | rofi -dmenu -p '󰅇 Clipboard' | cliphist decode | wl-copy"
