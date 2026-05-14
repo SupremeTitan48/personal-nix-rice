@@ -105,8 +105,8 @@
         "${pkgs.hyprpolkitagent}/libexec/hyprpolkitagent"
         "nm-applet --indicator"
         "swayosd-server"
-        "wl-paste --type text --watch cliphist store"
-        "wl-paste --type image --watch cliphist store"
+        "wl-paste --type text --watch cliphist --max-items 750 store"
+        "wl-paste --type image --watch cliphist --max-items 750 store"
       ];
     };
   };

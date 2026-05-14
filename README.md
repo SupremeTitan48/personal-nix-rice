@@ -15,7 +15,7 @@ NixOS + Hyprland desktop config. Glassmorphism aesthetic with Material You color
 | Compositor | Hyprland (own flake, latest) |
 | Bar | Waybar — floating glass pill |
 | Launcher | Rofi-wayland — glass panel + wallpaper picker |
-| Terminal | Kitty + Fish + Starship |
+| Terminal | Kitty + Fish + Tide (fish plugin) |
 | Notifications | swaync |
 | Lock screen | Hyprlock |
 | Wallpaper | swww (crossfade transitions) |
@@ -102,6 +102,7 @@ Log out, select the Hyprland session in SDDM, and log back in.
 | `Super + Shift + 1–9` | Move window to workspace |
 | `Super + Ctrl + L` | Lock screen |
 | `Super + V` | Clipboard history |
+| `` Super + ` `` | Workspace overview (hyprexpo) |
 | `Print` | Screenshot (fullscreen) |
 | `Super + Print` | Screenshot (region) |
 
@@ -118,7 +119,7 @@ change-wallpaper.sh <path>
   → waybar, rofi, kitty, swaync, hyprland borders all reload
 ```
 
-The wallpaper picker (`Super+W`) shows everything in `~/Pictures/Wallpapers/` and `~/.config/wallpapers/` via rofi, then calls this script automatically.
+The wallpaper picker (`Super+W`) shows everything in `~/wallpapers/` via rofi, then calls this script automatically.
 
 To change wallpaper manually:
 
@@ -150,7 +151,7 @@ modules/home/                    # Home Manager modules (per-user config)
   hyprlock/                      # lock screen
   matugen/                       # color templates + wallpaper script
   swww/                          # wallpaper daemon autostart
-  terminal.nix                   # kitty + fish + starship
+  terminal.nix                   # kitty + fish + tide (prompt plugin)
   notifications.nix              # swaync
   theme.nix                      # GTK/Qt/cursor/icons
   apps.nix                       # Chrome, VSCodium
@@ -159,6 +160,16 @@ modules/home/                    # Home Manager modules (per-user config)
 home/jkoch/default.nix           # imports all home modules for jkoch
 wallpapers/                      # drop wallpapers here; default.jpg used on first boot
 scripts/change-wallpaper.sh      # wallpaper + recolor pipeline
+```
+
+---
+
+## Updating
+
+```bash
+cd ~/personal-nix-rice
+nix flake update
+nrs
 ```
 
 ---
