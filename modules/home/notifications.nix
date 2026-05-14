@@ -47,6 +47,15 @@
     style = ''
       /* swaync glassmorphism CSS */
 
+      /* Fallback colors — matugen @import below overrides these when cache exists */
+      @define-color accent         #5b9cf6;
+      @define-color accent_fg      #ffffff;
+      @define-color surface        #181c24;
+      @define-color surface_variant #242836;
+      @define-color on_surface     #e8e8f0;
+      @define-color on_surface_variant #9898a8;
+      @define-color outline        rgba(255,255,255,0.10);
+
       * {
         font-family: "JetBrains Mono", sans-serif;
         font-size: 13px;
@@ -55,9 +64,9 @@
 
       .control-center {
         background: rgba(13, 15, 20, 0.75);
-        border: 1px solid rgba(255, 255, 255, 0.10);
+        border: 1px solid @outline;
         border-radius: 16px;
-        color: #e8e8f0;
+        color: @on_surface;
         padding: 8px;
       }
 
@@ -71,7 +80,7 @@
         border: 1px solid rgba(255, 255, 255, 0.08);
         border-radius: 12px;
         padding: 12px;
-        color: #e8e8f0;
+        color: @on_surface;
       }
 
       .notification:hover {
@@ -95,19 +104,19 @@
         background: rgba(255, 255, 255, 0.06);
         border: 1px solid rgba(255, 255, 255, 0.08);
         border-radius: 8px;
-        color: #e8e8f0;
+        color: @on_surface;
         margin: 4px 2px 0;
       }
 
       .notification-action:hover {
-        background: rgba(91, 156, 246, 0.25);
-        border-color: rgba(91, 156, 246, 0.4);
+        background: alpha(@accent, 0.25);
+        border-color: alpha(@accent, 0.4);
       }
 
       .close-button {
         background: rgba(255, 255, 255, 0.06);
         border-radius: 50%;
-        color: #9898a8;
+        color: @on_surface_variant;
         min-height: 24px;
         min-width: 24px;
       }
@@ -120,20 +129,20 @@
       .widget-title label {
         font-size: 14px;
         font-weight: bold;
-        color: #e8e8f0;
+        color: @on_surface;
       }
 
       .widget-title button {
-        background: rgba(91, 156, 246, 0.2);
-        border: 1px solid rgba(91, 156, 246, 0.3);
+        background: alpha(@accent, 0.2);
+        border: 1px solid alpha(@accent, 0.3);
         border-radius: 8px;
-        color: #5b9cf6;
+        color: @accent;
         padding: 4px 10px;
         font-size: 11px;
       }
 
       .widget-title button:hover {
-        background: rgba(91, 156, 246, 0.35);
+        background: alpha(@accent, 0.35);
       }
 
       .widget-dnd trough {
@@ -142,9 +151,12 @@
       }
 
       .widget-dnd trough highlight {
-        background: #5b9cf6;
+        background: @accent;
         border-radius: 12px;
       }
+
+      /* matugen overrides — wins because it comes after the fallback block */
+      @import "${config.home.homeDirectory}/.cache/matugen/swaync-colors.css";
     '';
   };
 }

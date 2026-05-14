@@ -31,6 +31,10 @@ in
     [[templates]]
     input_path = "${config.xdg.configHome}/matugen/templates/gtk-colors.css"
     output_path = "${cacheDir}/gtk-colors.css"
+
+    [[templates]]
+    input_path = "${config.xdg.configHome}/matugen/templates/swaync-colors.css"
+    output_path = "${cacheDir}/swaync-colors.css"
   '';
 
   # Deploy templates into ~/.config/matugen/templates/
@@ -44,6 +48,8 @@ in
     "${templateDir}/kitty-colors.conf";
   xdg.configFile."matugen/templates/gtk-colors.css".source =
     "${templateDir}/gtk-colors.css";
+  xdg.configFile."matugen/templates/swaync-colors.css".source =
+    "${templateDir}/swaync-colors.css";
 
   # Run matugen on first login (generates cache from default wallpaper)
   home.activation.matugenInit = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
@@ -109,6 +115,17 @@ color12  #aec8f5
 color13  #8b8bdc
 color14  #242836
 color15  #e8e8f0
+EOF
+    fi
+    if [ ! -f "$CACHE/swaync-colors.css" ]; then
+      cat > "$CACHE/swaync-colors.css" << 'EOF'
+@define-color accent         #5b9cf6;
+@define-color accent_fg      #ffffff;
+@define-color surface        #181c24;
+@define-color surface_variant #242836;
+@define-color on_surface     #e8e8f0;
+@define-color on_surface_variant #9898a8;
+@define-color outline        rgba(255,255,255,0.10);
 EOF
     fi
     if [ ! -f "$CACHE/gtk-colors.css" ]; then
