@@ -23,7 +23,6 @@
     ../../modules/home/dock.nix
     ../../modules/home/scratchpads.nix
     ../../modules/home/udiskie.nix
-    ../../modules/home/qt.nix
   ];
 
   home.username    = userConfig.username;

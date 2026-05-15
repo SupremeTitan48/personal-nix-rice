@@ -527,7 +527,7 @@ modules/
       default.nix                 # swww daemon autostart
     git.nix                       # git identity (from user-config), delta, ssh, gpg
     terminal.nix                  # kitty, fish, tide prompt, fzf, zoxide, atuin
-    theme.nix                     # GTK theme, cursor, icons
+    theme.nix                     # GTK theme, cursor, icons, Kvantum Qt theming
     notifications.nix             # swaync config + matugen-integrated CSS
     nightlight.nix                # wlsunset (coords from user-config)
     apps.nix                      # Chrome, VSCodium, OBS, KeePassXC, utilities
@@ -540,7 +540,6 @@ modules/
     dock.nix                      # nwg-dock-hyprland pinned apps + style
     scratchpads.nix               # named scratchpads (terminal, Obsidian, monitor)
     udiskie.nix                   # USB auto-mount with tray icon
-    qt.nix                        # Kvantum Qt theming for visual consistency
 
 home/
   user/

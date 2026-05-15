@@ -43,7 +43,12 @@
   qt = {
     enable = true;
     platformTheme.name = "kvantum";
-    style.name = "kvantum-dark";
+    style = {
+      name = "kvantum-dark";
+      # kdePackages provides the Qt6 Kvantum plugin; libsForQt5 (in home.packages)
+      # covers Qt5 apps. HM uses this package to set QT_STYLE_OVERRIDE correctly.
+      package = pkgs.kdePackages.qtstyleplugin-kvantum;
+    };
   };
 
   home.sessionVariables = {
