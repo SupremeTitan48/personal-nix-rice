@@ -57,6 +57,7 @@
     export QT_QPA_PLATFORM=wayland
     export QT_STYLE_OVERRIDE=kvantum
     export QT_QPA_PLATFORMTHEME=kvantum
+    export _JAVA_AWT_WM_NONREPARENTING=1
     export XCURSOR_THEME=Bibata-Modern-Ice
     export XCURSOR_SIZE=24
     export HYPRCURSOR_THEME=Bibata-Modern-Ice
