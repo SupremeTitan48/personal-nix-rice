@@ -24,4 +24,10 @@
     [ "/home/jkoch" ]
     [ config.home.homeDirectory ]
     (builtins.readFile ./style.rasi);
+
+  # Deploy icon grid theme for drun mode
+  xdg.configFile."rofi/grid.rasi".text = builtins.replaceStrings
+    [ "/home/jkoch" ]
+    [ config.home.homeDirectory ]
+    (builtins.readFile ./grid.rasi);
 }

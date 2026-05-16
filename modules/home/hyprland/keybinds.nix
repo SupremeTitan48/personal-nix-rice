@@ -7,7 +7,7 @@
     bind = [
       # Applications
       "$mod, Return, exec, kitty"
-      "$mod, Space, exec, rofi -show drun"
+      "$mod, Space, exec, rofi -show drun -theme ${config.xdg.configHome}/rofi/grid.rasi"
       "$mod, W, exec, rofi -show wallpaper -modi wallpaper:${config.home.homeDirectory}/.local/bin/rofi-wallpaper"
       "$mod, N, exec, swaync-client -t -sw"
       "$mod, E, exec, thunar"
