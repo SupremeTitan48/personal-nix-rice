@@ -11,8 +11,10 @@
     grim
     slurp
     satty              # screenshot annotation tool
+    wf-recorder        # screen recording (toggled via Super+Shift+R)
   ];
 
-  # Ensure screenshots directory exists
+  # Ensure media directories exist
   home.file."Pictures/screenshots/.gitkeep".text = "";
+  home.file."Videos/Recordings/.gitkeep".text = "";
 }

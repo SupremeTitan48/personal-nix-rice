@@ -68,6 +68,18 @@
         touchpad.natural_scroll = false;
       };
 
+      group = {
+        "col.border_active" = "$accent";
+        "col.border_inactive" = "$accent_dim";
+        groupbar = {
+          font_size = 11;
+          font_family = "JetBrains Mono";
+          "col.active" = "$accent";
+          "col.inactive" = "$surface";
+          text_color = "$on_surface";
+        };
+      };
+
       dwindle = {
         preserve_split = true;
       };
@@ -172,9 +184,17 @@
     };
   };
 
-  # Install keybind-help script to ~/.local/bin/
+  # Install helper scripts to ~/.local/bin/
   home.file.".local/bin/keybind-help" = {
     source = ../../../scripts/keybind-help.sh;
+    executable = true;
+  };
+  home.file.".local/bin/toggle-gamemode" = {
+    source = ../../../scripts/toggle-gamemode.sh;
+    executable = true;
+  };
+  home.file.".local/bin/toggle-recording" = {
+    source = ../../../scripts/toggle-recording.sh;
     executable = true;
   };
 
