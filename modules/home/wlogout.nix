@@ -36,6 +36,8 @@
   '';
 
   xdg.configFile."wlogout/style.css".text = ''
+    @import "${config.home.homeDirectory}/.cache/matugen/waybar-colors.css";
+
     * {
       background-image: none;
       box-shadow: none;
@@ -49,8 +51,8 @@
     }
 
     button {
-      color: #e8e8f0;
-      background-color: rgba(36, 40, 54, 0.6);
+      color: @on_surface;
+      background-color: alpha(@surface_variant, 0.6);
       border-radius: 16px;
       margin: 8px;
       border: 1px solid rgba(255, 255, 255, 0.08);
@@ -60,13 +62,13 @@
     }
 
     button:hover {
-      background-color: rgba(91, 156, 246, 0.25);
-      border-color: rgba(91, 156, 246, 0.6);
-      color: #ffffff;
+      background-color: alpha(@accent, 0.25);
+      border-color: alpha(@accent, 0.6);
+      color: @on_accent;
     }
 
     button:active {
-      background-color: rgba(91, 156, 246, 0.45);
+      background-color: alpha(@accent, 0.45);
     }
 
     #lock     { background-image: url("${pkgs.wlogout}/share/wlogout/icons/lock.png"); }
