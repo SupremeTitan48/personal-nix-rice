@@ -90,6 +90,14 @@
       "float, class:(seahorse)"
       "size 60% 65%, class:(seahorse)"
       "center, class:(seahorse)"
+
+      # Workspace auto-assign: apps open on their home workspace silently
+      "workspace 2 silent, class:(google-chrome)"
+      "workspace 2 silent, class:(chromium)"
+      "workspace 2 silent, class:(firefox)"
+      "workspace 3 silent, class:(vesktop)"
+      "workspace 3 silent, class:(discord)"
+      "workspace 5 silent, class:(steam), title:(Steam)"
     ];
 
     workspace = [
