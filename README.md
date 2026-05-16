@@ -13,7 +13,7 @@ A daily-driver NixOS + Hyprland desktop built for stability, rollback safety, an
 | OS | NixOS (unstable channel, flakes) |
 | Compositor | Hyprland + UWSM session management |
 | Bar | Waybar — floating glass pill |
-| Launcher | Rofi-wayland — glass panel + wallpaper picker |
+| Launcher | Rofi-wayland — icon grid (drun) + glass panel + wallpaper picker |
 | Terminal | Kitty + Fish + Tide prompt |
 | Notifications | swaync |
 | Lock screen | Hyprlock |
@@ -25,6 +25,8 @@ A daily-driver NixOS + Hyprland desktop built for stability, rollback safety, an
 | Apps | Google Chrome · VSCodium · Thunar · mpv · imv |
 | Notes | Obsidian |
 | AI | Claude desktop · Claude Code CLI (`claude`) |
+| Music | Sidra — Apple Music client with lossless DRM streaming + MPRIS |
+| Music widget | eww — floating MPRIS popup (album art, controls, matugen-colored) |
 | Dock | nwg-dock-hyprland — auto-hiding bottom dock with pinned apps |
 | Power menu | wlogout — full-screen overlay (lock / logout / suspend / reboot / shutdown) |
 | Secrets / SSH agent | GNOME Keyring — unlocked at login, backs Chrome passwords + SSH keys |
@@ -32,7 +34,7 @@ A daily-driver NixOS + Hyprland desktop built for stability, rollback safety, an
 | Qt theming | Kvantum — Qt apps match the glassmorphism aesthetic |
 | Screen recording | OBS Studio (v4l2loopback virtual camera included) |
 | Printing | CUPS + Avahi — auto-discovers network/AirPrint printers |
-| Password manager | KeePassXC — local encrypted vault |
+| Password manager | Bitwarden |
 | PDF viewer | Zathura — keyboard-driven, dark-themed |
 | Disk management | GNOME Disks — partition, format, SMART health |
 
@@ -53,9 +55,10 @@ per-app color files written to ~/.cache/matugen/
     ├── waybar-colors.css
     ├── rofi-colors.rasi
     ├── kitty-colors.conf
-    ├── hyprland-colors.conf   ← window border accent
+    ├── hyprland-colors.conf   ← window border gradient (primary + tertiary)
     ├── swaync-colors.css
-    └── hyprlock-colors.conf
+    ├── hyprlock-colors.conf
+    └── eww-colors.scss        ← music widget
     │
     ▼
 change-wallpaper.sh reloads each component:
@@ -234,8 +237,10 @@ The config assumes NVIDIA. For AMD or Intel:
 | Key | Action |
 |---|---|
 | `Super + Return` | Terminal (kitty) |
-| `Super + Space` | App launcher (rofi) |
+| `Super + Space` | App launcher (rofi icon grid) |
 | `Super + E` | File manager (thunar) |
+| `Super + M` | Apple Music (Sidra) |
+| `Super + Shift + M` | Music widget toggle (eww MPRIS popup) |
 | `Super + W` | Wallpaper picker → recolors everything |
 | `Super + N` | Notification center toggle |
 | `Super + D` | Toggle app dock |
@@ -378,6 +383,7 @@ general = {
 };
 decoration = {
   rounding = 12;
+  rounding_power = 4;  # squircle shape (requires Hyprland >= v0.42)
 };
 ```
 
@@ -513,9 +519,10 @@ modules/
       style.css                   # floating pill CSS, glassmorphism
     rofi/
       default.nix                 # launcher config
-      style.rasi                  # glass launcher CSS
+      style.rasi                  # glass launcher CSS (wallpaper/window modes)
+      grid.rasi                   # icon grid CSS (drun mode)
     hyprlock/
-      default.nix                 # lock screen (matugen-integrated colors)
+      default.nix                 # lock screen — profile pic, matugen-integrated colors
     matugen/
       templates/                  # per-app color templates
       rofi-wallpaper.sh           # wallpaper picker script for rofi
@@ -526,7 +533,11 @@ modules/
     theme.nix                     # GTK theme, cursor, icons, Kvantum Qt theming
     notifications.nix             # swaync config + matugen-integrated CSS
     nightlight.nix                # wlsunset (coords from user-config)
-    apps.nix                      # Chrome, VSCodium, OBS, KeePassXC, utilities
+    eww/
+      default.nix                 # eww module wiring
+      eww.yuck                    # MPRIS music widget definition
+      eww.scss                    # music widget styles
+    apps.nix                      # Chrome, VSCodium, OBS, Bitwarden, Sidra, utilities
     gaming.nix                    # Heroic, ProtonUp-Qt, MangoHud config
     filemanager.nix               # Thunar + MIME type associations
     clipboard.nix                 # wl-clipboard + cliphist history
