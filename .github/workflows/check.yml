@@ -30,16 +30,14 @@ jobs:
           # Add your own Cachix cache here if you have one:
           # authToken: ${{ secrets.CACHIX_AUTH_TOKEN }}
 
-      # Validate flake structure and Nix syntax.
-      - name: Flake check (syntax + module evaluation)
-        run: nix flake check --no-build --show-trace
-
-      # Fully evaluate the NixOS closure without building any derivations.
-      # This catches option-type errors, missing packages, and import issues.
-      - name: Dry-run build (full evaluation)
+      # Evaluate and build the NixOS closure. Hyprland's flake uses
+      # Import-From-Derivation (reads VERSION during eval), so --no-build
+      # and --dry-run both fail. Using --no-link instead: Cachix substitutes
+      # the pre-built Hyprland binaries so no compilation happens in CI.
+      - name: Build NixOS configuration (substituted from Cachix)
         run: |
           nix build \
             .#nixosConfigurations.desktop.config.system.build.toplevel \
-            --dry-run \
+            --no-link \
             --show-trace \
-            2>&1 | head -100
+            2>&1 | tail -20
