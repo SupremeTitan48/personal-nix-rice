@@ -22,11 +22,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    hypridle = {
-      url = "github:hyprwm/hypridle";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
     # Claude desktop app — not in nixpkgs; community repackage of the official release
     claude-desktop = {
       url = "github:k3d3/claude-desktop-linux-flake";
@@ -34,7 +29,7 @@
     };
   };
 
-  outputs = { self, nixpkgs, home-manager, hyprland, hyprland-plugins, hyprlock, hypridle, claude-desktop, ... }@inputs:
+  outputs = { self, nixpkgs, home-manager, hyprland, hyprland-plugins, hyprlock, claude-desktop, ... }@inputs:
   let
     system = "x86_64-linux";
     pkgs = nixpkgs.legacyPackages.${system};
@@ -73,10 +68,7 @@
           home-manager.useUserPackages = true;
           # userConfig is available in every Home Manager module as a function argument.
           home-manager.extraSpecialArgs = { inherit inputs userConfig; };
-          home-manager.sharedModules = [
-            hyprlock.homeManagerModules.hyprlock
-            hypridle.homeManagerModules.hypridle
-          ];
+          home-manager.sharedModules = [ ];
           home-manager.users.${userConfig.username} = import ./home/user/default.nix;
         }
       ];
