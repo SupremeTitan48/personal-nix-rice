@@ -18,6 +18,8 @@
   '';
 
   xdg.configFile."nwg-dock-hyprland/style.css".text = ''
+    @import "${config.home.homeDirectory}/.cache/matugen/waybar-colors.css";
+
     window {
       background: none;
       border: none;
@@ -42,11 +44,11 @@
     }
 
     button:hover {
-      background-color: rgba(91, 156, 246, 0.2);
+      background-color: alpha(@accent, 0.2);
     }
 
     button:active {
-      background-color: rgba(91, 156, 246, 0.35);
+      background-color: alpha(@accent, 0.35);
     }
 
     image {
@@ -54,7 +56,7 @@
     }
 
     #active-indicator {
-      background-color: rgba(91, 156, 246, 0.8);
+      background-color: alpha(@accent, 0.8);
       border-radius: 2px;
       min-height: 3px;
       min-width: 20px;
