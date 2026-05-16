@@ -112,6 +112,7 @@
         "${pkgs.swaynotificationcenter}/bin/swaync"
         "${pkgs.hyprpolkitagent}/libexec/hyprpolkitagent"
         "nm-applet --indicator"
+        "blueman-applet"
         "swayosd-server"
         "nwg-dock-hyprland -nolauncher -f -i 28 -mb 2"
         "eww daemon"
@@ -182,8 +183,49 @@
   home.packages = with pkgs; [
     hyprpolkitagent
     networkmanagerapplet
+    blueman
     swayosd
     brightnessctl
     # playerctl lives in terminal.nix (already declared there)
   ];
+
+  xdg.configFile."swayosd/style.css".text = ''
+    window {
+      background: transparent;
+      border: none;
+    }
+
+    #osd-window {
+      background-color: rgba(13, 15, 20, 0.75);
+      border: 1px solid rgba(255, 255, 255, 0.10);
+      border-radius: 16px;
+      padding: 12px 20px;
+    }
+
+    progressbar {
+      min-width: 200px;
+      min-height: 6px;
+    }
+
+    progressbar > trough {
+      border-radius: 3px;
+      background-color: rgba(255, 255, 255, 0.12);
+    }
+
+    progressbar > trough > progress {
+      border-radius: 3px;
+      background-color: @accent;
+    }
+
+    progressbar.full > trough > progress {
+      background-color: @error;
+    }
+
+    image {
+      color: @on_surface;
+      padding-right: 12px;
+    }
+
+    @import "${config.home.homeDirectory}/.cache/matugen/waybar-colors.css";
+  '';
 }
