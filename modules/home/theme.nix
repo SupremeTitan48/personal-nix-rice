@@ -56,10 +56,7 @@
   };
 
   # Tell Kvantum to use the MatugenGlass theme (written by matugen)
-  xdg.configFile."Kvantum/kvantum.kvconfig".text = ''
-    [General]
-    theme=MatugenGlass
-  '';
+  xdg.configFile."Kvantum/kvantum.kvconfig".text = "[General]\ntheme=MatugenGlass\n";
 
   # Pointer cursor for X11 fallback (xwayland apps)
   home.pointerCursor = {
