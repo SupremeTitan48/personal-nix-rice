@@ -21,7 +21,7 @@ A daily-driver NixOS + Hyprland desktop built for stability, rollback safety, an
 | Color engine | matugen (Material You from wallpaper) |
 | GTK theme | adw-gtk3-dark + Papirus-Dark + Bibata-Modern-Ice cursor |
 | Night light | wlsunset |
-| Gaming | Steam · Gamemode · Gamescope · MangoHud · Heroic · Lutris |
+| Gaming | Steam · Gamemode · Gamescope · MangoHud · Heroic · Lutris · PrismLauncher |
 | Apps | Google Chrome · VSCodium · Thunar · mpv · imv |
 | Notes | Obsidian |
 | AI | Claude desktop · Claude Code CLI (`claude`) |

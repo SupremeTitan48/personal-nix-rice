@@ -6,6 +6,7 @@
   home.packages = with pkgs; [
     protonup-qt
     heroic
+    prismlauncher
   ];
 
   # MangoHud declarative config
