@@ -65,9 +65,8 @@
       # Mission Center: float when launched as scratchpad
       "float, class:(io.missioncenter.MissionCenter)"
 
-      # KeePassXC: float dialogs, keep main window tiling
-      "float, class:(org.keepassxc.KeePassXC), title:(.*- KeePassXC$)"
-      "float, class:(org.keepassxc.KeePassXC), title:(.*Access Request.*)"
+      # Bitwarden: float unlock/password dialogs
+      "float, class:(Bitwarden), title:(.*Bitwarden.*)"
 
       # GNOME Disk Utility
       "float, class:(gnome-disks)"

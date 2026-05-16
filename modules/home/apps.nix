@@ -21,7 +21,7 @@
     inputs.sidra.packages.${pkgs.stdenv.hostPlatform.system}.default
 
     obs-studio        # screen recording and streaming
-    keepassxc         # local password manager (no cloud dependency)
+    bitwarden-desktop  # password manager
     gnome-disk-utility # GUI disk/partition management and SMART data
 
     imv              # lightweight Wayland image viewer
