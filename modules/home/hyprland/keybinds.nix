@@ -76,9 +76,6 @@
       # Resize submap
       "$mod, R, submap, resize"
 
-      # Workspace overview (hyprexpo)
-      "$mod, grave, hyprexpo:expo, toggle"
-
       # Named scratchpads
       "$mod ALT, T, togglespecialworkspace, term"
       "$mod ALT, O, togglespecialworkspace, obsidian"

@@ -11,9 +11,7 @@
   wayland.windowManager.hyprland = {
     enable = true;
     package = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprland;
-    plugins = [
-      inputs.hyprland-plugins.packages.${pkgs.stdenv.hostPlatform.system}.hyprexpo
-    ];
+    plugins = [ ];
     xwayland.enable = true;
     systemd.enable = false;  # UWSM manages the systemd session instead
 

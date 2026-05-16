@@ -240,7 +240,6 @@ The config assumes NVIDIA. For AMD or Intel:
 | `Super + E` | File manager (thunar) |
 | `Super + W` | Wallpaper picker → recolors everything |
 | `Super + N` | Notification center toggle |
-| `` Super + ` `` | Workspace overview (hyprexpo) |
 | `Super + D` | Toggle app dock |
 | `Super + /` | Keybind cheatsheet (searchable) |
 
