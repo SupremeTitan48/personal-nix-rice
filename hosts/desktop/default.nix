@@ -42,6 +42,9 @@
   # dconf needed by GTK4/libadwaita settings and Home Manager GTK module
   programs.dconf.enable = true;
 
+  # gvfs provides trash, SMB, and MTP support for Thunar
+  services.gvfs.enable = true;
+
   # earlyoom — kill runaway processes before OOM killer kicks in
   services.earlyoom = {
     enable = true;

@@ -32,9 +32,6 @@
     file-roller                  # archive manager integration
   ];
 
-  # Ensure gvfs runs as a user service (tumbler is auto-activated via D-Bus from the package)
-  services.gvfs.enable = true;
-
   xdg.mimeApps = {
     enable = true;
     defaultApplications = {
