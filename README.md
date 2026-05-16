@@ -168,9 +168,7 @@ sudo nixos-rebuild switch --flake /etc/nixos#desktop
 
 ### Continuous integration (GitHub Actions)
 
-Every push and pull request to `main` runs `.github/workflows/check.yml`, which:
-1. Runs `nix flake check --no-build` — catches syntax and module evaluation errors
-2. Runs a dry-run build — fully evaluates the NixOS closure without building any packages
+Every push and pull request to `main` runs `.github/workflows/check.yml`, which builds the full NixOS closure (`nix build --no-link`) using the Hyprland Cachix binary cache for substitution — no compilation happens in CI.
 
 Broken configs are blocked from reaching `main` before they can affect a live system.
 
@@ -477,11 +475,10 @@ Ensure `repoUrl` in `user-config.nix` is set to a **public** GitHub repo. Privat
 user-config.nix                   # ← edit this first (username, git, timezone, monitor, etc.)
 install.sh                        # interactive first-time setup script
 flake.nix                         # flake inputs + NixOS system definition
-flake.lock                        # pinned input versions
 
 .github/
   workflows/
-    check.yml                     # CI: nix flake check + dry-run build on every PR
+    check.yml                     # CI: nix build --no-link (Cachix-substituted) on every push
 
 hosts/
   desktop/
@@ -526,7 +523,8 @@ modules/
       default.nix                 # swww daemon autostart
     git.nix                       # git identity (from user-config), delta, ssh, gpg
     terminal.nix                  # kitty, fish, tide prompt, fzf, zoxide, atuin
-    theme.nix                     # GTK theme, cursor, icons, Kvantum Qt theming
+    theme.nix                     # GTK theme, cursor, icons
+    qt.nix                        # Kvantum Qt theming
     notifications.nix             # swaync config + matugen-integrated CSS
     nightlight.nix                # wlsunset (coords from user-config)
     apps.nix                      # Chrome, VSCodium, OBS, KeePassXC, utilities
