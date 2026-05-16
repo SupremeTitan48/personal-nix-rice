@@ -173,7 +173,7 @@ EOF
       cat > "$HOME/.config/Kvantum/MatugenGlass/MatugenGlass.kvconfig" << 'EOF'
 [General]
 author=MatugenGlass
-comment=Stub — replace by running change-wallpaper
+comment=Stub - replace by running change-wallpaper
 composite=true
 translucent_windows=true
 blurring=true
