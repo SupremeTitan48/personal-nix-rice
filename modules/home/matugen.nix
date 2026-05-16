@@ -104,6 +104,7 @@ EOF
 $accent       = rgba(5b9cf6ff)
 $accent_dim   = rgba(5b9cf6aa)
 $surface      = rgba(181c24ff)
+$accent_secondary = rgba(c792eaff)
 EOF
     fi
     if [ ! -f "$CACHE/kitty-colors.conf" ]; then

@@ -24,7 +24,7 @@
         gaps_in = 6;
         gaps_out = 12;
         border_size = 2;
-        "col.active_border" = "rgba(5b9cf6ff)";   # overwritten by matugen at login
+        "col.active_border" = "$accent $accent_secondary 45deg";
         "col.inactive_border" = "rgba(ffffff1a)";
         resize_on_border = true;
         allow_tearing = true;
