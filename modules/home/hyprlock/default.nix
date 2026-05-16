@@ -32,6 +32,20 @@
         }
       ];
 
+      image = [
+        {
+          monitor = "";
+          path = "${config.home.homeDirectory}/.face";
+          size = 100;
+          rounding = -1;
+          border_size = 2;
+          border_color = "rgb(5b9cf6)";
+          position = "0, 240";
+          halign = "center";
+          valign = "center";
+        }
+      ];
+
       # Large clock centered on screen
       label = [
         {
@@ -42,7 +56,7 @@
           font_family = "JetBrains Mono Bold";
           shadow_passes = 2;
           shadow_size = 4;
-          position = "0, 120";
+          position = "0, 100";
           halign = "center";
           valign = "center";
         }
@@ -52,7 +66,7 @@
           color = "$text_muted";
           font_size = 18;
           font_family = "JetBrains Mono";
-          position = "0, 40";
+          position = "0, 20";
           halign = "center";
           valign = "center";
         }
@@ -81,7 +95,7 @@
           fail_text = ''<i>$FAIL <b>($ATTEMPTS)</b></i>'';
           fail_transition = 300;
           capslock_color = "rgba(251, 188, 5, 1.0)";
-          position = "0, -80";
+          position = "0, -100";
           halign = "center";
           valign = "center";
         }
