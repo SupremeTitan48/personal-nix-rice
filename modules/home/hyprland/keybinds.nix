@@ -13,6 +13,7 @@
       "$mod, E, exec, thunar"
       "$mod, M, exec, sidra"
       "$mod SHIFT, M, exec, eww open --toggle music-popup"
+      "$mod SHIFT, S, exec, eww open --toggle quick-settings-popup"
       "$mod, D, exec, nwg-dock-hyprland -d"
 
       # Power menu
