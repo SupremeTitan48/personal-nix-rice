@@ -23,6 +23,7 @@
     ../../modules/home/dock.nix
     ../../modules/home/scratchpads.nix
     ../../modules/home/udiskie.nix
+    ../../modules/home/eww/default.nix
   ];
 
   home.username    = userConfig.username;

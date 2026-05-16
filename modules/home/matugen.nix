@@ -43,6 +43,10 @@ in
     [[templates]]
     input_path = "${config.xdg.configHome}/matugen/templates/kvantum-colors.kvconfig"
     output_path = "${config.home.homeDirectory}/.config/Kvantum/MatugenGlass/MatugenGlass.kvconfig"
+
+    [[templates]]
+    input_path = "${config.xdg.configHome}/matugen/templates/eww-colors.scss"
+    output_path = "${cacheDir}/eww-colors.scss"
   '';
 
   # Deploy templates into ~/.config/matugen/templates/
@@ -62,6 +66,8 @@ in
     "${templateDir}/hyprlock-colors.conf";
   xdg.configFile."matugen/templates/kvantum-colors.kvconfig".source =
     "${templateDir}/kvantum-colors.kvconfig";
+  xdg.configFile."matugen/templates/eww-colors.scss".source =
+    "${templateDir}/eww-colors.scss";
 
   # Run matugen on first login (generates cache from default wallpaper)
   home.activation.matugenInit = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
@@ -167,6 +173,15 @@ EOF
 @define-color card_fg_color         #e8e8f0;
 @define-color sidebar_bg_color      #181c24;
 @define-color sidebar_fg_color      #e8e8f0;
+EOF
+    fi
+    if [ ! -f "$CACHE/eww-colors.scss" ]; then
+      cat > "$CACHE/eww-colors.scss" << 'EOF'
+$accent: #5b9cf6;
+$surface: #181c24;
+$surface_variant: #242836;
+$on_surface: #e8e8f0;
+$muted: #9898a8;
 EOF
     fi
     mkdir -p "$HOME/.config/Kvantum/MatugenGlass"

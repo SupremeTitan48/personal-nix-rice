@@ -97,6 +97,8 @@
         "ignorezero, gtk-layer-shell"
         "blur, wlogout"
         "ignorezero, wlogout"
+        "blur, eww-music-popup"
+        "ignorezero, eww-music-popup"
       ];
 
       # Autostart — all exec-once entries live here to avoid list-override conflicts.
@@ -112,6 +114,7 @@
         "nm-applet --indicator"
         "swayosd-server"
         "nwg-dock-hyprland -nolauncher -f -i 28 -mb 2"
+        "eww daemon"
         "wl-paste --type text --watch cliphist --max-items 750 store"
         "wl-paste --type image --watch cliphist --max-items 750 store"
         # Scratchpads — pre-spawned silently so first toggle is instant

@@ -13,6 +13,7 @@
   };
 
   home.packages = with pkgs; [
+    eww
     google-chrome
     obsidian           # markdown notes (requires allowUnfree)
     claude-code        # Claude AI CLI — run `claude` in terminal (requires allowUnfree)

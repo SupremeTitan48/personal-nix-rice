@@ -12,6 +12,7 @@
       "$mod, N, exec, swaync-client -t -sw"
       "$mod, E, exec, thunar"
       "$mod, M, exec, sidra"
+      "$mod SHIFT, M, exec, eww open --toggle music-popup"
       "$mod, D, exec, nwg-dock-hyprland -d"
 
       # Power menu
