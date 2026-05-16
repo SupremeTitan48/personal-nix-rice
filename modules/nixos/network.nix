@@ -8,7 +8,7 @@
   services.resolved = {
     enable = true;
     dnssec = "opportunistic";
-    extraConfig = "DNSOverTLS=opportunistic";
+    settings.DNSOverTLS = "opportunistic";
   };
 
   hardware.bluetooth = {
