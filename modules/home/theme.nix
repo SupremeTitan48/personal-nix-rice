@@ -25,8 +25,14 @@
       package = pkgs.bibata-cursors;
       size = 24;
     };
-    gtk3.extraConfig.gtk-application-prefer-dark-theme = true;
-    gtk4.extraConfig.gtk-application-prefer-dark-theme = true;
+    gtk3.extraConfig = {
+      gtk-application-prefer-dark-theme = true;
+      gtk-decoration-layout = ":";
+    };
+    gtk4.extraConfig = {
+      gtk-application-prefer-dark-theme = true;
+      gtk-decoration-layout = ":";
+    };
   };
 
   # Inject matugen accent into GTK3 and GTK4
