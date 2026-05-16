@@ -21,14 +21,22 @@
       # Keybind cheatsheet
       "$mod, slash, exec, bash ${config.home.homeDirectory}/.local/bin/keybind-help"
 
-      # Window manager — Alt+Tab window switcher
-      "ALT, Tab, exec, rofi -show window -show-icons"
+      # Window switcher (moved off Alt+Tab so apps receive Alt+Tab natively)
+      "$mod SHIFT, Tab, exec, rofi -show window -show-icons"
 
       # Window management
       "$mod, Q, killactive"
       "$mod, F, fullscreen, 0"
       "$mod SHIFT, Space, togglefloating"
       "$mod, T, layoutmsg, togglesplit"
+      "$mod, P, pin"
+      "$mod SHIFT, P, pseudo"
+      "$mod, C, centerwindow"
+
+      # Groups (tab-style window stacking)
+      "$mod, G, togglegroup"
+      "$mod SHIFT, G, changegroupactive, f"
+      "$mod ALT, G, changegroupactive, b"
 
       # Focus (vim-style)
       "$mod, H, movefocus, l"
@@ -41,6 +49,11 @@
       "$mod SHIFT, L, movewindow, r"
       "$mod SHIFT, K, movewindow, u"
       "$mod SHIFT, J, movewindow, d"
+
+      # Workspace navigation
+      "$mod, Tab, workspace, previous"
+      "$mod SHIFT, comma, movecurrentworkspacetomonitor, l"
+      "$mod SHIFT, period, movecurrentworkspacetomonitor, r"
 
       # Workspaces
       "$mod, 1, workspace, 1"
@@ -72,8 +85,15 @@
       # Lock screen
       "$mod CTRL, L, exec, hyprlock"
 
-      # Clipboard history
+      # Utilities
+      "$mod SHIFT, C, exec, hyprpicker -a"
       "$mod, V, exec, bash -c 'cliphist list | rofi -dmenu -p \"󰅇 Clipboard\" | cliphist decode | wl-copy'"
+
+      # Game mode (toggle animations/blur/shadows)
+      "$mod, F10, exec, bash ${config.home.homeDirectory}/.local/bin/toggle-gamemode"
+
+      # Screen recording toggle
+      "$mod SHIFT, R, exec, bash ${config.home.homeDirectory}/.local/bin/toggle-recording"
 
       # Resize submap
       "$mod, R, submap, resize"

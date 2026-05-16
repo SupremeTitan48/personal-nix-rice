@@ -3,6 +3,14 @@
 {
   wayland.windowManager.hyprland.settings = {
     windowrule = [
+      # Prevent apps (Steam, Spotify, etc.) from randomly maximizing themselves
+      "suppressevent maximize, class:.*"
+
+      # Picture-in-Picture floating
+      "float, title:(Picture-in-Picture)"
+      "keepaspectratio, title:(Picture-in-Picture)"
+      "pin, title:(Picture-in-Picture)"
+
       # Float file pickers and dialogs
       "float, class:(xdg-desktop-portal)(.*)"
       "float, title:(Open File)(.*)"
