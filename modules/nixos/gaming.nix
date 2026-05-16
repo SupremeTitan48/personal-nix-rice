@@ -1,12 +1,6 @@
 # modules/nixos/gaming.nix
-{ config, pkgs, lib, inputs, ... }:
+{ config, pkgs, lib, ... }:
 {
-  imports = [
-    inputs.nix-gaming.nixosModules.platformOptimizations
-  ];
-
-  nix-gaming.platformOptimizations.enable = true;
-
   programs.steam = {
     enable = true;
     remotePlay.openFirewall = true;
