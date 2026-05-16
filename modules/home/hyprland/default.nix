@@ -162,7 +162,9 @@
     binde = , h, resizeactive, -20 0
     binde = , k, resizeactive, 0 -20
     binde = , j, resizeactive, 0 20
+    bind = , escape, exec, rm -f /tmp/hypr-submap
     bind = , escape, submap, reset
+    bind = , return, exec, rm -f /tmp/hypr-submap
     bind = , return, submap, reset
     submap = reset
   '';

@@ -96,6 +96,7 @@
       "$mod SHIFT, R, exec, bash ${config.home.homeDirectory}/.local/bin/toggle-recording"
 
       # Resize submap
+      "$mod, R, exec, printf resize > /tmp/hypr-submap"
       "$mod, R, submap, resize"
 
       # Named scratchpads

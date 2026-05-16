@@ -16,7 +16,7 @@
       exclusive = true;
       passthrough = false;
 
-      modules-left = [ "hyprland/workspaces" "hyprland/window" ];
+      modules-left = [ "hyprland/workspaces" "custom/submap" "hyprland/window" ];
       modules-center = [ "mpris" "clock" ];
       modules-right = [ "custom/gpu" "memory" "cpu" "temperature" "disk" "pulseaudio" "network" "tray" ];
 
@@ -27,14 +27,35 @@
       };
 
       "hyprland/workspaces" = {
-        format = "{icon}";
-        format-icons = {
-          default = "○";
-          active = "●";
+        format = "{id} {windows}";
+        format-window-separator = " ";
+        window-rewrite-default = "";
+        window-rewrite = {
+          "class<kitty>" = "";
+          "class<google-chrome>" = "󰊯";
+          "class<chromium>" = "󰊯";
+          "class<firefox>" = "";
+          "class<obsidian>" = "󰝴";
+          "class<vesktop>" = "󰙯";
+          "class<discord>" = "󰙯";
+          "class<steam>" = "󰓓";
+          "class<steam_app_.*>" = "󰓓";
+          "class<thunar>" = "󰉋";
+          "class<io.missioncenter.MissionCenter>" = "󰓻";
+          "class<sidra>" = "󰎈";
+          "class<claude>" = "󰚩";
+          "class<code>" = "󰨞";
+          "class<kitty-scratch>" = "";
         };
         on-click = "activate";
         sort-by-number = true;
-        # persistent-workspaces removed — Hyprland workspace rules handle persistence
+      };
+
+      "custom/submap" = {
+        exec = "[ -f /tmp/hypr-submap ] && printf '󰙖 %s' \"$(cat /tmp/hypr-submap | tr a-z A-Z)\" || true";
+        interval = 1;
+        format = "{}";
+        tooltip = false;
       };
 
       "custom/gpu" = {
