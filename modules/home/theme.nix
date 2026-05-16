@@ -7,8 +7,6 @@
     hyprcursor
     papirus-icon-theme
     libsForQt5.qtstyleplugin-kvantum
-    libsForQt5.qt5ct
-    qt6Packages.qt6ct
     qt6Packages.qtstyleplugin-kvantum
   ];
 
@@ -44,7 +42,7 @@
     enable = true;
     platformTheme.name = "kvantum";
     style = {
-      name = "kvantum-dark";
+      name = "kvantum";
       # kdePackages provides the Qt6 Kvantum plugin; libsForQt5 (in home.packages)
       # covers Qt5 apps. HM uses this package to set QT_STYLE_OVERRIDE correctly.
       package = pkgs.kdePackages.qtstyleplugin-kvantum;
@@ -56,6 +54,12 @@
     XCURSOR_THEME = "Bibata-Modern-Ice";
     XCURSOR_SIZE = "24";
   };
+
+  # Tell Kvantum to use the MatugenGlass theme (written by matugen)
+  xdg.configFile."Kvantum/kvantum.kvconfig".text = ''
+    [General]
+    theme=MatugenGlass
+  '';
 
   # Pointer cursor for X11 fallback (xwayland apps)
   home.pointerCursor = {
