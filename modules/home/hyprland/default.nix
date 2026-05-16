@@ -197,6 +197,10 @@
     source = ../../../scripts/toggle-recording.sh;
     executable = true;
   };
+  home.file.".local/bin/cliphist-rofi" = {
+    source = ../../../scripts/cliphist-rofi.sh;
+    executable = true;
+  };
 
   # Packages for exec-once entries
   # Note: swww is in swww/default.nix; wl-clipboard/cliphist in clipboard.nix; matugen in matugen.nix
@@ -206,6 +210,7 @@
     blueman
     swayosd
     brightnessctl
+    imagemagick
     # playerctl lives in terminal.nix (already declared there)
   ];
 

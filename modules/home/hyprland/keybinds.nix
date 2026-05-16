@@ -79,7 +79,7 @@
 
       # Screenshots
       ", Print, exec, grimblast --notify save output"
-      "$mod, Print, exec, bash -c 'grimblast --notify copy area | satty --filename -'"
+      "$mod, Print, exec, bash -c 'hyprctl notify 0 1500 \"rgb(5b9cf6)\" \"fontsize:12  Select region to annotate\" & grimblast copy area | satty --filename -'"
       "$mod SHIFT, Print, exec, grimblast --notify save area ~/Pictures/screenshots/$(date +%Y%m%d-%H%M%S).png"
 
       # Lock screen
@@ -87,7 +87,7 @@
 
       # Utilities
       "$mod SHIFT, C, exec, hyprpicker -a"
-      "$mod, V, exec, bash -c 'cliphist list | rofi -dmenu -p \"󰅇 Clipboard\" | cliphist decode | wl-copy'"
+      "$mod, V, exec, bash ${config.home.homeDirectory}/.local/bin/cliphist-rofi"
 
       # Game mode (toggle animations/blur/shadows)
       "$mod, F10, exec, bash ${config.home.homeDirectory}/.local/bin/toggle-gamemode"
