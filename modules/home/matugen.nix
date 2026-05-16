@@ -39,6 +39,10 @@ in
     [[templates]]
     input_path = "${config.xdg.configHome}/matugen/templates/hyprlock-colors.conf"
     output_path = "${cacheDir}/hyprlock-colors.conf"
+
+    [[templates]]
+    input_path = "${config.xdg.configHome}/matugen/templates/kvantum-colors.kvconfig"
+    output_path = "${config.home.homeDirectory}/.config/Kvantum/MatugenGlass/MatugenGlass.kvconfig"
   '';
 
   # Deploy templates into ~/.config/matugen/templates/
@@ -56,6 +60,8 @@ in
     "${templateDir}/swaync-colors.css";
   xdg.configFile."matugen/templates/hyprlock-colors.conf".source =
     "${templateDir}/hyprlock-colors.conf";
+  xdg.configFile."matugen/templates/kvantum-colors.kvconfig".source =
+    "${templateDir}/kvantum-colors.kvconfig";
 
   # Run matugen on first login (generates cache from default wallpaper)
   home.activation.matugenInit = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
@@ -160,6 +166,48 @@ EOF
 @define-color card_fg_color         #e8e8f0;
 @define-color sidebar_bg_color      #181c24;
 @define-color sidebar_fg_color      #e8e8f0;
+EOF
+    fi
+    mkdir -p "$HOME/.config/Kvantum/MatugenGlass"
+    if [ ! -f "$HOME/.config/Kvantum/MatugenGlass/MatugenGlass.kvconfig" ]; then
+      cat > "$HOME/.config/Kvantum/MatugenGlass/MatugenGlass.kvconfig" << 'EOF'
+[General]
+author=MatugenGlass
+comment=Stub — replace by running change-wallpaper
+composite=true
+translucent_windows=true
+blurring=true
+popup_blurring=true
+reduce_window_opacity=10
+reduce_menu_opacity=15
+dark_titlebar=true
+opaque_colors=false
+animate_states=true
+alt_mnemonic=true
+kinetic_scrolling=true
+transient_scrollbar=true
+left_tabs=true
+
+[GeneralColors]
+window.color=#181c24
+base.color=#242836
+alt.base.color=#242836
+button.color=#242836
+light.color=#242836
+mid.light.color=#181c24
+mid.color=#181c24
+dark.color=#181c24
+shadow.color=#000000
+highlight.color=#5b9cf6
+inactive.highlight.color=#1a3a6e
+text.color=#e8e8f0
+window.text.color=#e8e8f0
+button.text.color=#e8e8f0
+disabled.text.color=#9898a8
+tooltip.text.color=#e8e8f0
+highlight.text.color=#ffffff
+link.color=#5b9cf6
+link.visited.color=#9898a8
 EOF
     fi
   '';
