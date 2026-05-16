@@ -39,7 +39,7 @@
           size = 100;
           rounding = -1;
           border_size = 2;
-          border_color = "rgb(5b9cf6)";
+          border_color = "$accent";
           position = "0, 240";
           halign = "center";
           valign = "center";
@@ -67,6 +67,16 @@
           font_size = 18;
           font_family = "JetBrains Mono";
           position = "0, 20";
+          halign = "center";
+          valign = "center";
+        }
+        {
+          monitor = "";
+          text = "Type password to unlock";
+          color = "$text_muted";
+          font_size = 11;
+          font_family = "JetBrains Mono";
+          position = "0, -160";
           halign = "center";
           valign = "center";
         }
