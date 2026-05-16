@@ -22,9 +22,15 @@
       url = "github:k3d3/claude-desktop-linux-flake";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    # Sidra — Apple Music client for Linux
+    sidra = {
+      url = "github:wimpysworld/sidra";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
-  outputs = { self, nixpkgs, home-manager, hyprland, hyprlock, claude-desktop, ... }@inputs:
+  outputs = { self, nixpkgs, home-manager, hyprland, hyprlock, claude-desktop, sidra, ... }@inputs:
   let
     system = "x86_64-linux";
     pkgs = nixpkgs.legacyPackages.${system};

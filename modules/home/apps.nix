@@ -17,6 +17,7 @@
     obsidian           # markdown notes (requires allowUnfree)
     claude-code        # Claude AI CLI — run `claude` in terminal (requires allowUnfree)
     inputs.claude-desktop.packages.${pkgs.stdenv.hostPlatform.system}.claude-desktop
+    inputs.sidra.packages.${pkgs.stdenv.hostPlatform.system}.default
 
     obs-studio        # screen recording and streaming
     keepassxc         # local password manager (no cloud dependency)

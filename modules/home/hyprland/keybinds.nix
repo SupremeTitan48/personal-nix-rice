@@ -11,6 +11,7 @@
       "$mod, W, exec, rofi -show wallpaper -modi wallpaper:${config.home.homeDirectory}/.local/bin/rofi-wallpaper"
       "$mod, N, exec, swaync-client -t -sw"
       "$mod, E, exec, thunar"
+      "$mod, M, exec, sidra"
       "$mod, D, exec, nwg-dock-hyprland -d"
 
       # Power menu

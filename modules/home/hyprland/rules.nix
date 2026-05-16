@@ -52,6 +52,12 @@
       "opacity 0.97 0.95, class:(claude)"
       "float, class:(claude), title:(.*Preferences.*)"
 
+      # Sidra (Apple Music client)
+      "float, class:(sidra)"
+      "center, class:(sidra)"
+      "size 60% 70%, class:(sidra)"
+      "opacity 0.97 0.93, class:(sidra)"
+
       # nwg-look: float the settings window
       "float, class:(nwg-look)"
       "center, class:(nwg-look)"
