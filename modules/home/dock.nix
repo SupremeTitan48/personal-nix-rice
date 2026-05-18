@@ -27,7 +27,6 @@
 
     #box {
       background-color: rgba(24, 28, 36, 0.75);
-      backdrop-filter: blur(16px);
       border-radius: 16px;
       border: 1px solid rgba(255, 255, 255, 0.08);
       padding: 4px 8px;
