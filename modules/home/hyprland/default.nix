@@ -126,8 +126,8 @@
     layerrule = ignore_alpha 0.01, match:namespace wlogout
     layerrule = blur true, match:namespace eww-music-popup
     layerrule = ignore_alpha 0.01, match:namespace eww-music-popup
-    layerrule = blur true, match:namespace nwg-dock-hyprland
-    layerrule = ignore_alpha 0.01, match:namespace nwg-dock-hyprland
+    layerrule = blur true, match:namespace nwg-dock
+    layerrule = ignore_alpha 0.01, match:namespace nwg-dock
 
     general {
       col.active_border = $accent $accent_secondary 45deg
