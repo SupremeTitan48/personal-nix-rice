@@ -98,7 +98,6 @@
     windowrule = workspace 2 silent, match:class firefox
     windowrule = workspace 3 silent, match:class vesktop
     windowrule = workspace 3 silent, match:class discord
-    windowrule = workspace 5 silent, match:class steam, match:title Steam
 
     # Persistent workspaces
     workspace = 1, persistent:true, default:true
