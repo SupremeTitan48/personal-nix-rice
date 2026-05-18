@@ -8,33 +8,28 @@
 #   O — Obsidian notes
 #   M — system monitor (Mission Center)
 #
-# exec-once pre-spawn entries live in hyprland/default.nix — assigning
-# settings."exec-once" in a second module would overwrite the main list.
+# exec-once pre-spawn entries live in hyprland/default.nix.
 { pkgs, ... }:
 {
-  # mission-center must be installed; it is exec-once'd in hyprland/default.nix
   home.packages = [ pkgs.mission-center ];
 
-  wayland.windowManager.hyprland.settings = {
-    # windowrulev2 required for size/center rules (windowrule only supports float/workspace)
-    windowrulev2 = [
-      # Terminal scratchpad
-      "workspace special:term, class:(kitty-scratch)"
-      "float, class:(kitty-scratch)"
-      "size 70% 65%, class:(kitty-scratch)"
-      "center, class:(kitty-scratch)"
+  wayland.windowManager.hyprland.extraConfig = ''
+    # Terminal scratchpad
+    windowrule = workspace special:term, class:(kitty-scratch)
+    windowrule = float, class:(kitty-scratch)
+    windowrule = size 70% 65%, class:(kitty-scratch)
+    windowrule = center, class:(kitty-scratch)
 
-      # Obsidian scratchpad
-      "workspace special:obsidian, class:(obsidian)"
-      "float, class:(obsidian)"
-      "size 85% 85%, class:(obsidian)"
-      "center, class:(obsidian)"
+    # Obsidian scratchpad
+    windowrule = workspace special:obsidian, class:(obsidian)
+    windowrule = float, class:(obsidian)
+    windowrule = size 85% 85%, class:(obsidian)
+    windowrule = center, class:(obsidian)
 
-      # System monitor scratchpad
-      "workspace special:monitor, class:(io.missioncenter.MissionCenter)"
-      "float, class:(io.missioncenter.MissionCenter)"
-      "size 80% 80%, class:(io.missioncenter.MissionCenter)"
-      "center, class:(io.missioncenter.MissionCenter)"
-    ];
-  };
+    # System monitor scratchpad
+    windowrule = workspace special:monitor, class:(io.missioncenter.MissionCenter)
+    windowrule = float, class:(io.missioncenter.MissionCenter)
+    windowrule = size 80% 80%, class:(io.missioncenter.MissionCenter)
+    windowrule = center, class:(io.missioncenter.MissionCenter)
+  '';
 }
