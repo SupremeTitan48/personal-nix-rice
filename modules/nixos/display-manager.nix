@@ -29,7 +29,7 @@ in
     enable = true;
     wayland.enable = true;
     theme = "sddm-astronaut-theme";
-    package = pkgs.sddm;
+    package = pkgs.kdePackages.sddm;
     extraPackages = [
       pkgs.bibata-cursors
       sddmTheme
