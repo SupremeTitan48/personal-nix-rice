@@ -80,21 +80,22 @@
       };
 
       # Layer blur rules (waybar, rofi, swaync, dock, wlogout get blur from Hyprland)
+      # blur and ignorezero now require an explicit value in newer Hyprland
       layerrule = [
-        "blur, waybar"
-        "ignorezero, waybar"
-        "blur, rofi"
-        "ignorezero, rofi"
-        "blur, swaync-notification-window"
-        "ignorezero, swaync-notification-window"
-        "blur, swaync-control-center"
-        "ignorezero, swaync-control-center"
-        "blur, gtk-layer-shell"      # nwg-dock
-        "ignorezero, gtk-layer-shell"
-        "blur, wlogout"
-        "ignorezero, wlogout"
-        "blur, eww-music-popup"
-        "ignorezero, eww-music-popup"
+        "blur true, waybar"
+        "ignorezero true, waybar"
+        "blur true, rofi"
+        "ignorezero true, rofi"
+        "blur true, swaync-notification-window"
+        "ignorezero true, swaync-notification-window"
+        "blur true, swaync-control-center"
+        "ignorezero true, swaync-control-center"
+        "blur true, gtk-layer-shell"
+        "ignorezero true, gtk-layer-shell"
+        "blur true, wlogout"
+        "ignorezero true, wlogout"
+        "blur true, eww-music-popup"
+        "ignorezero true, eww-music-popup"
       ];
 
       # Autostart — all exec-once entries live here to avoid list-override conflicts.
