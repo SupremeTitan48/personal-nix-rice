@@ -101,22 +101,23 @@
     exec-once = [workspace special:obsidian silent] obsidian
     exec-once = [workspace special:monitor silent] mission-center
 
-    # Layer blur rules — kept in extraConfig to control raw format exactly.
-    # ignorezero was renamed to ignorealpha in newer Hyprland.
-    layerrule = blur, waybar
-    layerrule = ignorealpha 0.01, waybar
-    layerrule = blur, rofi
-    layerrule = ignorealpha 0.01, rofi
-    layerrule = blur, swaync-notification-window
-    layerrule = ignorealpha 0.01, swaync-notification-window
-    layerrule = blur, swaync-control-center
-    layerrule = ignorealpha 0.01, swaync-control-center
-    layerrule = blur, gtk-layer-shell
-    layerrule = ignorealpha 0.01, gtk-layer-shell
-    layerrule = blur, wlogout
-    layerrule = ignorealpha 0.01, wlogout
-    layerrule = blur, eww-music-popup
-    layerrule = ignorealpha 0.01, eww-music-popup
+    # Layer blur rules.
+    # Hyprland 0.47+ format: EFFECT VALUE, match:namespace LAYER_NAMESPACE
+    # ignore_alpha replaces ignorezero/ignorealpha
+    layerrule = blur true, match:namespace waybar
+    layerrule = ignore_alpha 0.01, match:namespace waybar
+    layerrule = blur true, match:namespace rofi
+    layerrule = ignore_alpha 0.01, match:namespace rofi
+    layerrule = blur true, match:namespace swaync-notification-window
+    layerrule = ignore_alpha 0.01, match:namespace swaync-notification-window
+    layerrule = blur true, match:namespace swaync-control-center
+    layerrule = ignore_alpha 0.01, match:namespace swaync-control-center
+    layerrule = blur true, match:namespace gtk-layer-shell
+    layerrule = ignore_alpha 0.01, match:namespace gtk-layer-shell
+    layerrule = blur true, match:namespace wlogout
+    layerrule = ignore_alpha 0.01, match:namespace wlogout
+    layerrule = blur true, match:namespace eww-music-popup
+    layerrule = ignore_alpha 0.01, match:namespace eww-music-popup
 
     general {
       col.active_border = $accent $accent_secondary 45deg

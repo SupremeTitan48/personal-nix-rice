@@ -1,102 +1,105 @@
 # modules/home/hyprland/rules.nix
+# Hyprland 0.47+ windowrule format:
+#   windowrule = EFFECT VALUE, match:PROP REGEX
+# All effects need explicit values; filters use match: prefix.
 { ... }:
 {
   wayland.windowManager.hyprland.extraConfig = ''
-    # Prevent apps (Steam, Spotify, etc.) from randomly maximizing themselves
-    windowrule = suppressevent maximize, class:.*
+    # Prevent apps from randomly maximizing themselves
+    windowrule = suppress_event maximize, match:class .*
 
     # Picture-in-Picture floating
-    windowrule = float, title:(Picture-in-Picture)
-    windowrule = keepaspectratio, title:(Picture-in-Picture)
-    windowrule = pin, title:(Picture-in-Picture)
+    windowrule = float true, match:title Picture-in-Picture
+    windowrule = keep_aspect_ratio true, match:title Picture-in-Picture
+    windowrule = pin true, match:title Picture-in-Picture
 
     # Float file pickers and dialogs
-    windowrule = float, class:(xdg-desktop-portal)(.*)
-    windowrule = float, title:(Open File)(.*)
-    windowrule = float, title:(Select a File)(.*)
-    windowrule = float, title:(Choose wallpaper)(.*)
-    windowrule = float, class:(blueman-manager)
-    windowrule = float, class:(pavucontrol)
+    windowrule = float true, match:class xdg-desktop-portal.*
+    windowrule = float true, match:title Open File.*
+    windowrule = float true, match:title Select a File.*
+    windowrule = float true, match:title Choose wallpaper.*
+    windowrule = float true, match:class blueman-manager
+    windowrule = float true, match:class pavucontrol
 
     # Fix Chrome file picker
-    windowrule = float, class:(google-chrome), title:(Open Files?)
+    windowrule = float true, match:class google-chrome, match:title Open Files?
 
     # Slight transparency for terminals
-    windowrule = opacity 0.95 0.9, class:(kitty)
+    windowrule = opacity 0.95 0.9, match:class kitty
 
     # Gaming: no blur, no rounding for performance
-    windowrule = noblur, class:(steam_app_.*)
-    windowrule = noanim, class:(steam_app_.*)
-    windowrule = noshadow, class:(steam_app_.*)
-    windowrule = norounding, class:(steam_app_.*)
-    windowrule = immediate, class:(steam_app_.*)
+    windowrule = no_blur true, match:class steam_app_.*
+    windowrule = no_anim true, match:class steam_app_.*
+    windowrule = no_shadow true, match:class steam_app_.*
+    windowrule = rounding 0, match:class steam_app_.*
+    windowrule = immediate true, match:class steam_app_.*
 
     # Steam main window
-    windowrule = float, class:(steam), title:(Steam Settings)
-    windowrule = float, class:(steam), title:(Friends List)
+    windowrule = float true, match:class steam, match:title Steam Settings
+    windowrule = float true, match:class steam, match:title Friends List
 
     # Gamescope: fullscreen, no decoration, immediate present
-    windowrule = fullscreen, class:(gamescope)
-    windowrule = noblur, class:(gamescope)
-    windowrule = noshadow, class:(gamescope)
-    windowrule = norounding, class:(gamescope)
-    windowrule = immediate, class:(gamescope)
+    windowrule = fullscreen true, match:class gamescope
+    windowrule = no_blur true, match:class gamescope
+    windowrule = no_shadow true, match:class gamescope
+    windowrule = rounding 0, match:class gamescope
+    windowrule = immediate true, match:class gamescope
 
     # Idle inhibit for fullscreen windows and games
-    windowrule = idleinhibit fullscreen, fullscreen:1
-    windowrule = idleinhibit fullscreen, class:(steam_app_.*)
-    windowrule = idleinhibit fullscreen, class:(gamescope)
+    windowrule = idle_inhibit fullscreen, match:fullscreen 1
+    windowrule = idle_inhibit fullscreen, match:class steam_app_.*
+    windowrule = idle_inhibit fullscreen, match:class gamescope
 
-    # wlogout: fullscreen overlay, no animations, no blur bleed
-    windowrule = float, class:(wlogout)
-    windowrule = fullscreen, class:(wlogout)
-    windowrule = noanim, class:(wlogout)
+    # wlogout: fullscreen overlay, no animations
+    windowrule = float true, match:class wlogout
+    windowrule = fullscreen true, match:class wlogout
+    windowrule = no_anim true, match:class wlogout
 
-    # Obsidian: slight transparency, treat as normal tiling app
-    windowrule = opacity 0.97 0.95, class:(obsidian)
+    # Obsidian: slight transparency
+    windowrule = opacity 0.97 0.95, match:class obsidian
 
     # Claude desktop
-    windowrule = opacity 0.97 0.95, class:(claude)
-    windowrule = float, class:(claude), title:(.*Preferences.*)
+    windowrule = opacity 0.97 0.95, match:class claude
+    windowrule = float true, match:class claude, match:title .*Preferences.*
 
     # Sidra (Apple Music client)
-    windowrule = float, class:(sidra)
-    windowrule = center, class:(sidra)
-    windowrule = size 60% 70%, class:(sidra)
-    windowrule = opacity 0.97 0.93, class:(sidra)
+    windowrule = float true, match:class sidra
+    windowrule = center true, match:class sidra
+    windowrule = size 60% 70%, match:class sidra
+    windowrule = opacity 0.97 0.93, match:class sidra
 
-    # nwg-look: float the settings window
-    windowrule = float, class:(nwg-look)
-    windowrule = center, class:(nwg-look)
+    # nwg-look
+    windowrule = float true, match:class nwg-look
+    windowrule = center true, match:class nwg-look
 
-    # Mission Center: float when launched as scratchpad
-    windowrule = float, class:(io.missioncenter.MissionCenter)
+    # Mission Center
+    windowrule = float true, match:class io.missioncenter.MissionCenter
 
-    # Bitwarden: float unlock/password dialogs
-    windowrule = float, class:(Bitwarden), title:(.*Bitwarden.*)
+    # Bitwarden
+    windowrule = float true, match:class Bitwarden, match:title .*Bitwarden.*
 
     # GNOME Disk Utility
-    windowrule = float, class:(gnome-disks)
-    windowrule = size 70% 70%, class:(gnome-disks)
-    windowrule = center, class:(gnome-disks)
+    windowrule = float true, match:class gnome-disks
+    windowrule = size 70% 70%, match:class gnome-disks
+    windowrule = center true, match:class gnome-disks
 
-    # OBS Studio: float settings/scene/source dialogs
-    windowrule = float, class:(com.obsproject.Studio), title:(.*Properties.*)
-    windowrule = float, class:(com.obsproject.Studio), title:(.*Settings.*)
-    windowrule = float, class:(com.obsproject.Studio), title:(.*Filters.*)
+    # OBS Studio
+    windowrule = float true, match:class com.obsproject.Studio, match:title .*Properties.*
+    windowrule = float true, match:class com.obsproject.Studio, match:title .*Settings.*
+    windowrule = float true, match:class com.obsproject.Studio, match:title .*Filters.*
 
     # Seahorse (keyring manager)
-    windowrule = float, class:(seahorse)
-    windowrule = size 60% 65%, class:(seahorse)
-    windowrule = center, class:(seahorse)
+    windowrule = float true, match:class seahorse
+    windowrule = size 60% 65%, match:class seahorse
+    windowrule = center true, match:class seahorse
 
-    # Workspace auto-assign: apps open on their home workspace silently
-    windowrule = workspace 2 silent, class:(google-chrome)
-    windowrule = workspace 2 silent, class:(chromium)
-    windowrule = workspace 2 silent, class:(firefox)
-    windowrule = workspace 3 silent, class:(vesktop)
-    windowrule = workspace 3 silent, class:(discord)
-    windowrule = workspace 5 silent, class:(steam), title:(Steam)
+    # Workspace auto-assign
+    windowrule = workspace 2 silent, match:class google-chrome
+    windowrule = workspace 2 silent, match:class chromium
+    windowrule = workspace 2 silent, match:class firefox
+    windowrule = workspace 3 silent, match:class vesktop
+    windowrule = workspace 3 silent, match:class discord
+    windowrule = workspace 5 silent, match:class steam, match:title Steam
 
     # Persistent workspaces
     workspace = 1, persistent:true, default:true
