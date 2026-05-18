@@ -23,10 +23,10 @@
   };
 
   home.packages = with pkgs; [
-    xfce.thunar
-    xfce.thunar-archive-plugin
-    xfce.thunar-volman
-    xfce.tumbler                 # thumbnail service
+    thunar
+    thunar-archive-plugin
+    thunar-volman
+    tumbler                      # thumbnail service
     gvfs                         # trash, smb, MTP support
     ffmpegthumbnailer            # video thumbnails
     file-roller                  # archive manager integration
