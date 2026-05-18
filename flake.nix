@@ -28,6 +28,9 @@
       url = "github:wimpysworld/sidra";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    # swww — wallpaper daemon with crossfade transitions (removed from nixpkgs)
+    swww.url = "github:LGFae/swww";
   };
 
   outputs = { self, nixpkgs, home-manager, hyprland, hyprlock, claude-desktop, sidra, ... }@inputs:

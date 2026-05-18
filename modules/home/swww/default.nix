@@ -1,9 +1,9 @@
 # modules/home/swww/default.nix
 # swww handles wallpaper display and crossfade transitions.
 # The actual wallpaper set + matugen pipeline lives in change-wallpaper.sh.
-{ config, pkgs, lib, ... }:
+{ config, pkgs, lib, inputs, ... }:
 {
-  home.packages = [ pkgs.swww ];
+  home.packages = [ inputs.swww.packages.${pkgs.stdenv.hostPlatform.system}.swww ];
 
   # Install change-wallpaper as a user binary
   home.file.".local/bin/change-wallpaper" = {
