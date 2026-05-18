@@ -5,6 +5,8 @@
     enable = true;
     package = pkgs.rofi;
 
+    theme = "${config.xdg.configHome}/rofi/style.rasi";
+
     extraConfig = {
       modi = "drun,run,wallpaper:${config.home.homeDirectory}/.local/bin/rofi-wallpaper";
       show-icons = true;
