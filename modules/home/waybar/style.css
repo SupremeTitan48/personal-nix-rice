@@ -18,7 +18,7 @@
 @import "/home/jkoch/.cache/matugen/waybar-colors.css";
 
 * {
-  font-family: "JetBrains Mono", "Font Awesome 6 Free", monospace;
+  font-family: "JetBrainsMono Nerd Font", "JetBrains Mono", "Font Awesome 6 Free", monospace;
   font-size: 13px;
   min-height: 0;
   border: none;

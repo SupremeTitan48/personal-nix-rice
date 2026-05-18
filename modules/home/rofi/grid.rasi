@@ -80,7 +80,6 @@ element.selected {
 
 element-icon {
     size:             48px;
-    margin:           0 auto;
     horizontal-align: 0.5;
 }
 
