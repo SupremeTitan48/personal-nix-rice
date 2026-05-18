@@ -94,7 +94,6 @@
     windowrule = center true, match:class seahorse
 
     # Workspace auto-assign
-    windowrule = workspace 2 silent, match:class google-chrome
     windowrule = workspace 2 silent, match:class chromium
     windowrule = workspace 2 silent, match:class firefox
     windowrule = workspace 3 silent, match:class vesktop
