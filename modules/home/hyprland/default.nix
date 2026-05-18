@@ -75,26 +75,26 @@
         animate_manual_resizes = false;
       };
 
-      # Fallback color variables — overridden by matugen source at runtime.
-      # Defined here so they exist before any extraConfig block references them.
-      "$accent" = "rgba(5b9cf6ff)";
-      "$accent_dim" = "rgba(5b9cf6aa)";
-      "$accent_secondary" = "rgba(c792eaff)";
-      "$surface" = "rgba(181c24ff)";
-      "$on_surface" = "rgba(e8e8f0ff)";
-
     };
   };
 
   wayland.windowManager.hyprland.extraConfig = ''
-    # Source matugen colors first so $accent/$surface/$on_surface etc. are
-    # defined before any settings that reference them.
+    # Fallback color variables — overridden by the matugen source below.
+    # Must be raw Hyprlang strings (toHyprconf omits spaces around = for $ keys,
+    # which Hyprlang requires for variable definitions to be recognized).
+    $accent = rgba(5b9cf6ff)
+    $accent_dim = rgba(5b9cf6aa)
+    $accent_secondary = rgba(c792eaff)
+    $surface = rgba(181c24ff)
+    $on_surface = rgba(e8e8f0ff)
+
+    # Source matugen colors to override the fallbacks above.
     source = ~/.cache/matugen/hyprland-colors.conf
 
     # Autostart
     exec-once = bash -c 'swww-daemon & swww wait-ready && swww img ${config.home.homeDirectory}/wallpapers/default.jpg --transition-type fade --transition-duration 1 --transition-fps 60'
-    exec-once = ${pkgs.matugen}/bin/matugen image ${config.home.homeDirectory}/wallpapers/default.jpg --mode dark
-    exec-once = ${pkgs.waybar}/bin/waybar
+    # Run matugen then waybar in sequence so waybar never starts with missing color files
+    exec-once = bash -c '${pkgs.matugen}/bin/matugen image ${config.home.homeDirectory}/wallpapers/default.jpg --mode dark && ${pkgs.waybar}/bin/waybar'
     exec-once = ${pkgs.swaynotificationcenter}/bin/swaync
     exec-once = ${pkgs.hyprpolkitagent}/libexec/hyprpolkitagent
     exec-once = nm-applet --indicator
