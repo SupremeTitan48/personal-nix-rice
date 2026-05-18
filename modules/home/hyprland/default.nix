@@ -75,6 +75,13 @@
         animate_manual_resizes = false;
       };
 
+      # Fallback color variables — overridden by matugen source at runtime.
+      # Defined here so they exist before any extraConfig block references them.
+      "$accent" = "rgba(5b9cf6ff)";
+      "$accent_dim" = "rgba(5b9cf6aa)";
+      "$accent_secondary" = "rgba(c792eaff)";
+      "$surface" = "rgba(181c24ff)";
+      "$on_surface" = "rgba(e8e8f0ff)";
 
     };
   };
@@ -134,17 +141,6 @@
         col.inactive = $surface
         text_color = $on_surface
       }
-    }
-
-    plugin:hyprexpo {
-      columns = 3
-      gap_size = 8
-      bg_col = rgb(0d0f14)
-      workspace_method = first 1
-      enable_gesture = true
-      gesture_fingers = 3
-      gesture_distance = 300
-      gesture_positive = true
     }
 
     # Resize submap
