@@ -3,7 +3,7 @@
 {
   programs.rofi = {
     enable = true;
-    package = pkgs.rofi-wayland;
+    package = pkgs.rofi;
 
     extraConfig = {
       modi = "drun,run,wallpaper:${config.home.homeDirectory}/.local/bin/rofi-wallpaper";
