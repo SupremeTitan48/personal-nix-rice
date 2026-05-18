@@ -92,7 +92,8 @@
     source = ~/.cache/matugen/hyprland-colors.conf
 
     # Autostart
-    exec-once = bash -c 'swww-daemon & swww wait-ready && swww img ${config.home.homeDirectory}/wallpapers/default.jpg --transition-type fade --transition-duration 1 --transition-fps 60'
+    exec-once = swww-daemon
+    exec-once = bash -c 'swww wait-ready && swww img ${config.home.homeDirectory}/wallpapers/default.jpg --transition-type fade --transition-duration 1 --transition-fps 60'
     exec-once = ${pkgs.matugen}/bin/matugen image ${config.home.homeDirectory}/wallpapers/default.jpg --mode dark
     exec-once = ${pkgs.waybar}/bin/waybar
     exec-once = ${pkgs.swaynotificationcenter}/bin/swaync
