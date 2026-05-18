@@ -24,8 +24,6 @@
         gaps_in = 6;
         gaps_out = 12;
         border_size = 2;
-        "col.active_border" = "$accent $accent_secondary 45deg";
-        "col.inactive_border" = "rgba(ffffff1a)";
         resize_on_border = true;
         allow_tearing = true;
         layout = "dwindle";
@@ -56,8 +54,6 @@
       cursor = {
         no_hardware_cursors = true;
         use_cpu_buffer = true;
-        theme = "Bibata-Modern-Ice";
-        size = 24;
       };
 
       input = {
@@ -66,18 +62,6 @@
         sensitivity = 0;
         accel_profile = "flat";
         touchpad.natural_scroll = false;
-      };
-
-      group = {
-        "col.border_active" = "$accent";
-        "col.border_inactive" = "$accent_dim";
-        groupbar = {
-          font_size = 11;
-          font_family = "JetBrains Mono";
-          "col.active" = "$accent";
-          "col.inactive" = "$surface";
-          text_color = "$on_surface";
-        };
       };
 
       dwindle = {
@@ -139,7 +123,26 @@
   };
 
   wayland.windowManager.hyprland.extraConfig = ''
+    # Source matugen colors first so $accent/$surface/$on_surface etc. are
+    # defined before any settings that reference them.
     source = ~/.cache/matugen/hyprland-colors.conf
+
+    general {
+      col.active_border = $accent $accent_secondary 45deg
+      col.inactive_border = rgba(ffffff1a)
+    }
+
+    group {
+      col.border_active = $accent
+      col.border_inactive = $accent_dim
+      groupbar {
+        font_size = 11
+        font_family = JetBrains Mono
+        col.active = $accent
+        col.inactive = $surface
+        text_color = $on_surface
+      }
+    }
 
     plugin:hyprexpo {
       columns = 3

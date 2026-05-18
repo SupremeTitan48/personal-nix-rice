@@ -107,10 +107,11 @@ EOF
     fi
     if [ ! -f "$CACHE/hyprland-colors.conf" ]; then
       cat > "$CACHE/hyprland-colors.conf" << 'EOF'
-$accent       = rgba(5b9cf6ff)
-$accent_dim   = rgba(5b9cf6aa)
-$surface      = rgba(181c24ff)
+$accent           = rgba(5b9cf6ff)
+$accent_dim       = rgba(5b9cf6aa)
+$surface          = rgba(181c24ff)
 $accent_secondary = rgba(c792eaff)
+$on_surface       = rgba(e8e8f0ff)
 EOF
     fi
     if [ ! -f "$CACHE/kitty-colors.conf" ]; then
