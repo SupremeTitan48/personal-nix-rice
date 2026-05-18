@@ -18,7 +18,7 @@
     settings = {
       general = {
         gaps_in = 6;
-        gaps_out = 12;
+        gaps_out = "12 12 58 12";
         border_size = 2;
         resize_on_border = true;
         allow_tearing = true;
@@ -126,6 +126,8 @@
     layerrule = ignore_alpha 0.01, match:namespace wlogout
     layerrule = blur true, match:namespace eww-music-popup
     layerrule = ignore_alpha 0.01, match:namespace eww-music-popup
+    layerrule = blur true, match:namespace nwg-dock-hyprland
+    layerrule = ignore_alpha 0.01, match:namespace nwg-dock-hyprland
 
     general {
       col.active_border = $accent $accent_secondary 45deg
