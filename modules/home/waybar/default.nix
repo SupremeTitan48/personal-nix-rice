@@ -10,8 +10,6 @@
       position = "top";
       height = 36;
       margin-top = 8;
-      margin-left = 180;
-      margin-right = 180;
       margin-bottom = 0;
       exclusive = true;
       passthrough = false;
@@ -88,7 +86,7 @@
       };
 
       clock = {
-        format = "%H:%M\n<span size='small'>%a %b %d</span>";
+        format = "{:%H:%M}\n<span size='small'>{:%a %b %d}</span>";
         format-alt = "{:%A, %B %d %Y  %H:%M}";
         tooltip-format = "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>";
       };
