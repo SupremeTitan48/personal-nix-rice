@@ -86,7 +86,7 @@
       };
 
       clock = {
-        format = "{:%H:%M}\n<span size='small'>{:%a %b %d}</span>";
+        format = "{:%H:%M} <span size='small'>{:%a %b %d}</span>";
         format-alt = "{:%A, %B %d %Y  %H:%M}";
         tooltip-format = "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>";
       };
