@@ -79,24 +79,6 @@
         animate_manual_resizes = false;
       };
 
-      # Layer blur rules (waybar, rofi, swaync, dock, wlogout get blur from Hyprland)
-      # blur and ignorezero now require an explicit value in newer Hyprland
-      layerrule = [
-        "blur true, waybar"
-        "ignorezero true, waybar"
-        "blur true, rofi"
-        "ignorezero true, rofi"
-        "blur true, swaync-notification-window"
-        "ignorezero true, swaync-notification-window"
-        "blur true, swaync-control-center"
-        "ignorezero true, swaync-control-center"
-        "blur true, gtk-layer-shell"
-        "ignorezero true, gtk-layer-shell"
-        "blur true, wlogout"
-        "ignorezero true, wlogout"
-        "blur true, eww-music-popup"
-        "ignorezero true, eww-music-popup"
-      ];
 
       # Autostart — all exec-once entries live here to avoid list-override conflicts.
       # Home Manager's Hyprland module merges the settings attrset by key, so a
@@ -127,6 +109,23 @@
     # Source matugen colors first so $accent/$surface/$on_surface etc. are
     # defined before any settings that reference them.
     source = ~/.cache/matugen/hyprland-colors.conf
+
+    # Layer blur rules — kept in extraConfig to control raw format exactly.
+    # ignorezero was renamed to ignorealpha in newer Hyprland.
+    layerrule = blur, waybar
+    layerrule = ignorealpha 0.01, waybar
+    layerrule = blur, rofi
+    layerrule = ignorealpha 0.01, rofi
+    layerrule = blur, swaync-notification-window
+    layerrule = ignorealpha 0.01, swaync-notification-window
+    layerrule = blur, swaync-control-center
+    layerrule = ignorealpha 0.01, swaync-control-center
+    layerrule = blur, gtk-layer-shell
+    layerrule = ignorealpha 0.01, gtk-layer-shell
+    layerrule = blur, wlogout
+    layerrule = ignorealpha 0.01, wlogout
+    layerrule = blur, eww-music-popup
+    layerrule = ignorealpha 0.01, eww-music-popup
 
     general {
       col.active_border = $accent $accent_secondary 45deg
