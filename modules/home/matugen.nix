@@ -12,39 +12,39 @@ in
     [config]
     reload_apps_list = []
 
-    [[templates]]
+    [templates.hyprland-colors]
     input_path = "${config.xdg.configHome}/matugen/templates/hyprland-colors.conf"
     output_path = "${cacheDir}/hyprland-colors.conf"
 
-    [[templates]]
+    [templates.waybar-colors]
     input_path = "${config.xdg.configHome}/matugen/templates/waybar-colors.css"
     output_path = "${cacheDir}/waybar-colors.css"
 
-    [[templates]]
+    [templates.rofi-colors]
     input_path = "${config.xdg.configHome}/matugen/templates/rofi-colors.rasi"
     output_path = "${cacheDir}/rofi-colors.rasi"
 
-    [[templates]]
+    [templates.kitty-colors]
     input_path = "${config.xdg.configHome}/matugen/templates/kitty-colors.conf"
     output_path = "${cacheDir}/kitty-colors.conf"
 
-    [[templates]]
+    [templates.gtk-colors]
     input_path = "${config.xdg.configHome}/matugen/templates/gtk-colors.css"
     output_path = "${cacheDir}/gtk-colors.css"
 
-    [[templates]]
+    [templates.swaync-colors]
     input_path = "${config.xdg.configHome}/matugen/templates/swaync-colors.css"
     output_path = "${cacheDir}/swaync-colors.css"
 
-    [[templates]]
+    [templates.hyprlock-colors]
     input_path = "${config.xdg.configHome}/matugen/templates/hyprlock-colors.conf"
     output_path = "${cacheDir}/hyprlock-colors.conf"
 
-    [[templates]]
+    [templates.kvantum-colors]
     input_path = "${config.xdg.configHome}/matugen/templates/kvantum-colors.kvconfig"
     output_path = "${config.home.homeDirectory}/.config/Kvantum/MatugenGlass/MatugenGlass.kvconfig"
 
-    [[templates]]
+    [templates.eww-colors]
     input_path = "${config.xdg.configHome}/matugen/templates/eww-colors.scss"
     output_path = "${cacheDir}/eww-colors.scss"
   '';
