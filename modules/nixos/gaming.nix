@@ -35,7 +35,7 @@
 
   environment.systemPackages = with pkgs; [
     mangohud
-    lutris
+    # lutris  # temporarily removed - openldap build test failure
   ];
 
   # Allow gamemode to adjust process priorities
