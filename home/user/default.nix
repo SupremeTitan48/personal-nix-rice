@@ -45,6 +45,7 @@
 
   programs.home-manager.enable = true;
   programs.man.enable = false;
+  fonts.fontconfig.enable = false;
 
   # UWSM env vars — propagated to D-Bus activated services under UWSM.
   # Hyprland's own env = [] list does NOT reach D-Bus services.
