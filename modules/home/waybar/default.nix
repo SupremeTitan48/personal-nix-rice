@@ -10,6 +10,8 @@
       position = "top";
       height = 36;
       margin-top = 8;
+      margin-left = 12;
+      margin-right = 12;
       margin-bottom = 0;
       exclusive = true;
       passthrough = false;
