@@ -93,8 +93,8 @@
 
     # Autostart
     exec-once = bash -c 'swww-daemon & swww wait-ready && swww img ${config.home.homeDirectory}/wallpapers/default.jpg --transition-type fade --transition-duration 1 --transition-fps 60'
-    # Run matugen then waybar in sequence so waybar never starts with missing color files
-    exec-once = bash -c '${pkgs.matugen}/bin/matugen image ${config.home.homeDirectory}/wallpapers/default.jpg --mode dark && ${pkgs.waybar}/bin/waybar'
+    exec-once = ${pkgs.matugen}/bin/matugen image ${config.home.homeDirectory}/wallpapers/default.jpg --mode dark
+    exec-once = ${pkgs.waybar}/bin/waybar
     exec-once = ${pkgs.swaynotificationcenter}/bin/swaync
     exec-once = ${pkgs.hyprpolkitagent}/libexec/hyprpolkitagent
     exec-once = nm-applet --indicator
