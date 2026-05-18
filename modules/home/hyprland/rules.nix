@@ -93,17 +93,7 @@
     windowrule = size 60% 65%, match:class seahorse
     windowrule = center true, match:class seahorse
 
-    # Workspace auto-assign
-    windowrule = workspace 2 silent, match:class chromium
-    windowrule = workspace 2 silent, match:class firefox
-    windowrule = workspace 3 silent, match:class vesktop
-    windowrule = workspace 3 silent, match:class discord
-
-    # Persistent workspaces
-    workspace = 1, persistent:true, default:true
-    workspace = 2, persistent:true
-    workspace = 3, persistent:true
-    workspace = 4, persistent:true
-    workspace = 5, persistent:true
+    # Default workspace
+    workspace = 1, default:true
   '';
 }
