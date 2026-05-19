@@ -39,6 +39,12 @@
   # Set to "" to disable auto-upgrade.
   repoUrl = "github:SupremeTitan48/personal-nix-rice";
 
+  # ── SSH ─────────────────────────────────────────────────────────────────────
+  # Public keys allowed to SSH in as username (one full line each).
+  sshPublicKeys = [
+    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPv6UujIPoV9cufqxygEdurjRs+QSjhIsokGq5xFaLM8 jkoch@mac"
+  ];
+
   # ── Development toggles ──────────────────────────────────────────────────────
   # When true, Quickshell config is symlinked from ~/src/quickshell-ii so QML
   # changes can be reloaded without a full NixOS rebuild.
