@@ -98,9 +98,6 @@
     bind = $mod, R, exec, printf resize > /tmp/hypr-submap
     bind = $mod, R, submap, resize
 
-    # Workspace overview (hyprexpo) — Super+` to toggle
-    bind = $mod, grave, hyprexpo:expo, toggle
-
     # Named scratchpads
     bind = $mod ALT, T, togglespecialworkspace, term
     bind = $mod ALT, O, togglespecialworkspace, obsidian

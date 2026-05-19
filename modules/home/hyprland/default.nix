@@ -11,9 +11,7 @@
   wayland.windowManager.hyprland = {
     enable = true;
     package = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprland;
-    plugins = [
-      inputs.hyprland-plugins.packages.${pkgs.stdenv.hostPlatform.system}.hyprexpo
-    ];
+    plugins = [ ];
     xwayland.enable = true;
     systemd.enable = false;  # UWSM manages the systemd session instead
 
@@ -141,20 +139,6 @@
         col.active = $accent
         col.inactive = $surface
         text_color = $on_surface
-      }
-    }
-
-    # hyprexpo — workspace overview (Super+grave to toggle)
-    plugin {
-      hyprexpo {
-        columns = 3
-        gap_size = 6
-        bg_col = rgba(0d0f1499)
-        border_col = rgba(5b9cf6cc)
-        inactive_border_col = rgba(ffffff1a)
-        enable_gesture = true
-        gesture_distance = 300
-        gesture_positive = true
       }
     }
 
