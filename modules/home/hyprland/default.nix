@@ -132,7 +132,7 @@
     general {
       col.active_border = $accent $accent_secondary 45deg
       col.inactive_border = rgba(ffffff1a)
-      gaps_out = 12
+      gaps_out = 12 12 79 12
     }
 
     group {
