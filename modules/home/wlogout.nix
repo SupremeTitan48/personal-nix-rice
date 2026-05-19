@@ -79,7 +79,7 @@
     }
 
     window {
-      background-color: rgba(13, 15, 20, 0.55);
+      background-color: rgba(13, 15, 20, 0.92);
       font-family: "JetBrains Mono", monospace;
     }
 
@@ -109,10 +109,10 @@
       background-color: alpha(@accent, 0.45);
     }
 
-    #lock     { background-image: url("${config.xdg.configHome}/wlogout/icons/lock.svg"); }
-    #logout   { background-image: url("${config.xdg.configHome}/wlogout/icons/logout.svg"); }
-    #suspend  { background-image: url("${config.xdg.configHome}/wlogout/icons/suspend.svg"); }
-    #reboot   { background-image: url("${config.xdg.configHome}/wlogout/icons/reboot.svg"); }
-    #shutdown { background-image: url("${config.xdg.configHome}/wlogout/icons/shutdown.svg"); }
+    #lock     { background-image: image(url("${config.xdg.configHome}/wlogout/icons/lock.svg")); }
+    #logout   { background-image: image(url("${config.xdg.configHome}/wlogout/icons/logout.svg")); }
+    #suspend  { background-image: image(url("${config.xdg.configHome}/wlogout/icons/suspend.svg")); }
+    #reboot   { background-image: image(url("${config.xdg.configHome}/wlogout/icons/reboot.svg")); }
+    #shutdown { background-image: image(url("${config.xdg.configHome}/wlogout/icons/shutdown.svg")); }
   '';
 }
