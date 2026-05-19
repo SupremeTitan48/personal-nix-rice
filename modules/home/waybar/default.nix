@@ -27,7 +27,7 @@
       };
 
       "hyprland/workspaces" = {
-        format = "{id} {windows}";
+        format = "{windows}";
         format-window-separator = " ";
         window-rewrite-default = "";
         window-rewrite = {
