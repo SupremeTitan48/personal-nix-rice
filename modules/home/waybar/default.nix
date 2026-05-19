@@ -124,7 +124,7 @@
         format-icons = {
           default = [ "󰕿" "󰖀" "󰕾" ];
         };
-        on-click = "pavucontrol";
+        on-click = "eww open --toggle quick-settings-popup";
         scroll-step = 5;
       };
 
@@ -135,6 +135,7 @@
         tooltip-format-wifi = "{essid} ({signalStrength}%) via {ifname}";
         tooltip-format-ethernet = "{ifname}: {ipaddr}/{cidr}";
         interval = 5;
+        on-click = "networkmanager-dmenu";
       };
 
       tray = {

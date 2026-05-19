@@ -98,7 +98,6 @@
     exec-once = ${pkgs.waybar}/bin/waybar
     exec-once = ${pkgs.swaynotificationcenter}/bin/swaync
     exec-once = ${pkgs.hyprpolkitagent}/libexec/hyprpolkitagent
-    exec-once = nm-applet --indicator
     exec-once = blueman-applet
     exec-once = swayosd-server
     exec-once = eww daemon
@@ -202,13 +201,16 @@
   # Note: swww is in swww/default.nix; wl-clipboard/cliphist in clipboard.nix; matugen in matugen.nix
   home.packages = with pkgs; [
     hyprpolkitagent
-    networkmanagerapplet
+    networkmanager-dmenu
     blueman
     swayosd
     brightnessctl
     imagemagick
     # playerctl lives in terminal.nix (already declared there)
   ];
+
+  xdg.configFile."networkmanager-dmenu/config.ini".source =
+    ../networkmanager-dmenu.ini;
 
   xdg.configFile."swayosd/style.css".text = ''
     window {
