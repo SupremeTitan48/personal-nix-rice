@@ -124,7 +124,7 @@
         format-icons = {
           default = [ "󰕿" "󰖀" "󰕾" ];
         };
-        on-click = "eww open --toggle quick-settings-popup";
+        on-click = "pavucontrol";
         scroll-step = 5;
       };
 
