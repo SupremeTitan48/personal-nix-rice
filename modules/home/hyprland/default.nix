@@ -164,14 +164,21 @@
     enable = true;
     settings = {
       general = {
-        lock_cmd = "pidof hyprlock || hyprlock";
+        # Wrap in bash so swww repaints the wallpaper after hyprlock exits
+        lock_cmd = "pidof hyprlock || bash -c 'hyprlock; swww img ${config.home.homeDirectory}/wallpapers/default.png --transition-type none'";
         before_sleep_cmd = "loginctl lock-session";
-        after_sleep_cmd = "hyprctl dispatch dpms on";
+        # Re-enable display and repaint wallpaper after waking from suspend
+        after_sleep_cmd = "hyprctl dispatch dpms on; swww img ${config.home.homeDirectory}/wallpapers/default.png --transition-type none";
         ignore_dbus_inhibit = false;
       };
       listener = [
         { timeout = 300; on-timeout = "hyprlock"; }
-        { timeout = 600; on-timeout = "hyprctl dispatch dpms off"; on-resume = "hyprctl dispatch dpms on"; }
+        {
+          timeout = 600;
+          on-timeout = "hyprctl dispatch dpms off";
+          # Repaint wallpaper when monitor wakes from DPMS sleep
+          on-resume = "hyprctl dispatch dpms on; swww img ${config.home.homeDirectory}/wallpapers/default.png --transition-type none";
+        }
       ];
     };
   };
