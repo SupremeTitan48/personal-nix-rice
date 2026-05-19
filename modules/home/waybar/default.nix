@@ -8,7 +8,7 @@
     settings = [{
       layer = "top";
       position = "top";
-      height = 36;
+      height = 40;
       margin-top = 8;
       margin-left = 12;
       margin-right = 12;
@@ -27,7 +27,7 @@
       };
 
       "hyprland/workspaces" = {
-        format = "{windows}";
+        format = "{id}";
         format-window-separator = " ";
         window-rewrite-default = "";
         window-rewrite = {

@@ -22,7 +22,7 @@
       background = [
         {
           monitor = "";
-          path = "${config.home.homeDirectory}/wallpapers/default.jpg";
+          path = "${config.home.homeDirectory}/wallpapers/default.png";
           blur_passes = 3;
           blur_size = 8;
           brightness = 0.5;
@@ -53,7 +53,7 @@
           text = ''cmd[update:1000] echo "<b>$(date +"%H:%M")</b>"'';
           color = "$text";
           font_size = 80;
-          font_family = "JetBrains Mono Bold";
+          font_family = "JetBrainsMono Nerd Font Bold";
           shadow_passes = 2;
           shadow_size = 4;
           position = "0, 100";
@@ -65,7 +65,7 @@
           text = ''cmd[update:60000] echo "$(date +"%A, %B %d")"'';
           color = "$text_muted";
           font_size = 18;
-          font_family = "JetBrains Mono";
+          font_family = "JetBrainsMono Nerd Font";
           position = "0, 20";
           halign = "center";
           valign = "center";
@@ -75,7 +75,7 @@
           text = "Type password to unlock";
           color = "$text_muted";
           font_size = 11;
-          font_family = "JetBrains Mono";
+          font_family = "JetBrainsMono Nerd Font";
           position = "0, -160";
           halign = "center";
           valign = "center";

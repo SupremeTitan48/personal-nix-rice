@@ -15,7 +15,7 @@
     /* Base settings */
     background-color: transparent;
     text-color:       @on-surface;
-    font:             "JetBrains Mono 12";
+    font:             "JetBrainsMono Nerd Font 12";
 }
 
 /* matugen override — wins because it comes after the fallback block */

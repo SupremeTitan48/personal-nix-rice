@@ -105,7 +105,7 @@
       @define-color outline        rgba(255,255,255,0.10);
 
       * {
-        font-family: "JetBrainsMono Nerd Font", "JetBrains Mono", sans-serif;
+        font-family: "JetBrainsMono Nerd Font", "JetBrains Mono", "Font Awesome 6 Free", sans-serif;
         font-size: 13px;
         transition: all 0.2s ease;
       }
