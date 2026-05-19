@@ -43,6 +43,7 @@
   # Public keys allowed to SSH in as username (one full line each).
   # Generate on your Mac:  ssh-keygen -t ed25519
   # Then paste output of:   cat ~/.ssh/id_ed25519.pub
-  # While this list is empty, password login stays enabled for bootstrap.
-  sshPublicKeys = [ ];
+  sshPublicKeys = [
+    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPv6UujIPoV9cufqxygEdurjRs+QSjhIsokGq5xFaLM8 jkoch@mac"
+  ];
 }
