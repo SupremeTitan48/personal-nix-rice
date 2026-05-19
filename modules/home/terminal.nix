@@ -1,49 +1,44 @@
 # modules/home/terminal.nix
 { config, pkgs, lib, ... }:
 {
-  programs.kitty = {
+  programs.foot = {
     enable = true;
-    package = pkgs.kitty;
-
-    font = {
-      name = "JetBrainsMono Nerd Font";
-      size = 13;
-    };
-
+    package = pkgs.foot;
     settings = {
-      # Window
-      window_padding_width = 12;
-      hide_window_decorations = "yes";
-      confirm_os_window_close = 0;
-
-      # Background transparency — wallpaper bleeds through floating terminal
-      background_opacity = "0.85";
-      dynamic_background_opacity = "yes";
-
-      # Performance
-      repaint_delay = 8;
-      sync_to_monitor = "yes";
-
-      # Cursor
-      cursor_shape = "beam";
-      cursor_blink_interval = "0.5";
-
-      # Scrollback
-      scrollback_lines = 10000;
-
-      # Bell
-      enable_audio_bell = "no";
-      visual_bell_duration = "0";
-
-      # Shell integration
-      shell_integration = "enabled";
+      main = {
+        shell = "fish";
+        term = "xterm-256color";
+        title = "foot";
+        font = "JetBrainsMono Nerd Font:size=11";
+        letter-spacing = 0;
+        dpi-aware = "no";
+        pad = "25x25";
+        bold-text-in-bright = "no";
+      };
+      scrollback.lines = 10000;
+      cursor = {
+        style = "beam";
+        blink = "no";
+        beam-thickness = 1.5;
+      };
+      key-bindings = {
+        scrollback-up-page = "Page_Up";
+        scrollback-down-page = "Page_Down";
+        clipboard-copy = "Control+c";
+        clipboard-paste = "Control+v";
+        search-start = "Control+f";
+        font-increase = "Control+plus Control+equal Control+KP_Add";
+        font-decrease = "Control+minus Control+KP_Subtract";
+        font-reset = "Control+0 Control+KP_0";
+      };
+      search-bindings = {
+        cancel = "Escape";
+        find-prev = "Shift+F3";
+        find-next = "F3 Control+G";
+        delete-prev-word = "Control+BackSpace";
+      };
+      text-bindings."\\x03" = "Control+Shift+c";
     };
-
-    # Colors come from matugen — imported at runtime
-    extraConfig = ''
-      # Include matugen-generated color scheme
-      include ${config.home.homeDirectory}/.cache/matugen/kitty-colors.conf
-    '';
   };
 
   programs.fish = {
@@ -51,7 +46,6 @@
     package = pkgs.fish;
 
     plugins = [
-      { name = "tide"; src = pkgs.fishPlugins.tide.src; }
       { name = "fzf-fish"; src = pkgs.fishPlugins.fzf-fish.src; }
       { name = "done"; src = pkgs.fishPlugins.done.src; }
     ];
@@ -63,7 +57,6 @@
       cat = "bat --style=auto";
       nrs = "sudo nixos-rebuild switch --flake $FLAKE_DIR#desktop";
       nrt = "sudo nixos-rebuild test --flake $FLAKE_DIR#desktop";
-      wp = "change-wallpaper";
     };
 
     interactiveShellInit = ''
@@ -72,54 +65,8 @@
       # any-nix-shell: keep fish when entering nix-shell / nix develop
       ${pkgs.any-nix-shell}/bin/any-nix-shell fish --info-right | source
 
-      # --- Tide prompt layout ---
-      set -g tide_left_prompt_items os pwd git
-      set -g tide_right_prompt_items status cmd_duration jobs nix_shell
-      set -g tide_left_prompt_separator_diff_color ""
-      set -g tide_left_prompt_separator_same_color ""
-      set -g tide_left_prompt_prefix ""
-      set -g tide_left_prompt_suffix " "
-      set -g tide_right_prompt_prefix " "
-      set -g tide_right_prompt_suffix ""
-      set -g tide_prompt_add_newline_before true
-      set -g tide_prompt_min_cols 34
-      set -g tide_prompt_pad_items false
-
-      # --- Tide item colors — ANSI names so kitty/matugen remapping applies ---
-      set -g tide_pwd_color_anchors white
-      set -g tide_pwd_color_dirs brblack
-      set -g tide_pwd_color_truncated_dirs brblack
-      set -g tide_pwd_icon ""
-      set -g tide_pwd_truncation_length 3
-
-      set -g tide_git_color_branch magenta
-      set -g tide_git_color_conflicted red
-      set -g tide_git_color_dirty yellow
-      set -g tide_git_color_operation yellow
-      set -g tide_git_color_staged green
-      set -g tide_git_color_stash cyan
-      set -g tide_git_color_untracked brblack
-      set -g tide_git_color_upstream brblack
-      set -g tide_git_icon " "
-      set -g tide_git_truncation_length 24
-
-      set -g tide_cmd_duration_color brblack
-      set -g tide_cmd_duration_decimals 0
-      set -g tide_cmd_duration_threshold 2000
-      set -g tide_cmd_duration_icon ""
-
-      set -g tide_status_color green
-      set -g tide_status_color_failure red
-      set -g tide_status_icon "✔"
-      set -g tide_status_icon_failure "✘"
-
-      set -g tide_nix_shell_color cyan
-      set -g tide_nix_shell_icon " "
-
-      set -g tide_jobs_color brblack
-      set -g tide_jobs_icon "⚙"
-
-      # --- Fish syntax highlighting — ANSI names for matugen remapping ---
+      # Fish syntax highlighting uses ANSI names so generated terminal colors
+      # can remap the palette without rewriting shell config.
       set -g fish_color_command magenta
       set -g fish_color_param normal
       set -g fish_color_keyword yellow
@@ -134,6 +81,43 @@
       set -g fish_color_selection --background=brblack
       set -g fish_pager_color_selected_background --background=brblack
     '';
+  };
+
+  programs.starship = {
+    enable = true;
+    enableFishIntegration = true;
+    settings = {
+      add_newline = true;
+      format = "$os$directory$git_branch$git_status$nix_shell$cmd_duration$line_break$character";
+      os = {
+        disabled = false;
+        style = "bold blue";
+      };
+      directory = {
+        style = "bold cyan";
+        truncation_length = 3;
+      };
+      git_branch = {
+        style = "bold magenta";
+        format = "[$symbol$branch]($style) ";
+      };
+      git_status = {
+        style = "yellow";
+        format = "[$all_status$ahead_behind]($style) ";
+      };
+      nix_shell = {
+        style = "cyan";
+        format = "[$symbol$state]($style) ";
+      };
+      cmd_duration = {
+        min_time = 2000;
+        style = "bright-black";
+      };
+      character = {
+        success_symbol = "[>](bold green)";
+        error_symbol = "[>](bold red)";
+      };
+    };
   };
 
   programs.fzf = {

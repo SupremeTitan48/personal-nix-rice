@@ -96,36 +96,20 @@
     source = ~/.cache/matugen/hyprland-colors.conf
 
     # Autostart
-    exec-once = swww-daemon
-    exec-once = bash -c 'swww wait-ready; swww img ${config.home.homeDirectory}/wallpapers/default.png --transition-type fade --transition-duration 1 --transition-fps 60'
-    exec-once = ${pkgs.matugen}/bin/matugen image ${config.home.homeDirectory}/wallpapers/default.png --mode dark
-    exec-once = ${pkgs.waybar}/bin/waybar
-    exec-once = ${pkgs.swaynotificationcenter}/bin/swaync
     exec-once = ${pkgs.hyprpolkitagent}/libexec/hyprpolkitagent
-    exec-once = swayosd-server
-    exec-once = eww daemon
     exec-once = wl-paste --type text --watch cliphist --max-items 750 store
     exec-once = wl-paste --type image --watch cliphist --max-items 750 store
-    exec-once = [workspace special:term silent] kitty --class=kitty-scratch
+    exec-once = [workspace special:term silent] foot --app-id=foot-scratch
     exec-once = [workspace special:obsidian silent] obsidian
     exec-once = [workspace special:monitor silent] mission-center
-    exec-once = [workspace special:bluetooth silent] kitty --class=kitty-bluetuith bluetuith
 
     # Layer blur rules.
     # Hyprland 0.47+ format: EFFECT VALUE, match:namespace LAYER_NAMESPACE
     # ignore_alpha replaces ignorezero/ignorealpha
-    layerrule = blur true, match:namespace waybar
-    layerrule = ignore_alpha 0.01, match:namespace waybar
-    layerrule = blur true, match:namespace rofi
-    layerrule = ignore_alpha 0.01, match:namespace rofi
-    layerrule = blur true, match:namespace swaync-notification-window
-    layerrule = ignore_alpha 0.01, match:namespace swaync-notification-window
-    layerrule = blur true, match:namespace swaync-control-center
-    layerrule = ignore_alpha 0.01, match:namespace swaync-control-center
+    layerrule = blur true, match:namespace quickshell
+    layerrule = ignore_alpha 0.01, match:namespace quickshell
     layerrule = blur true, match:namespace gtk-layer-shell
     layerrule = ignore_alpha 0.01, match:namespace gtk-layer-shell
-    layerrule = blur true, match:namespace eww-music-popup
-    layerrule = ignore_alpha 0.01, match:namespace eww-music-popup
 
     general {
       col.active_border = $accent $accent_secondary 45deg
@@ -174,34 +158,24 @@
     enable = true;
     settings = {
       general = {
-        # Wrap in bash so swww repaints the wallpaper after hyprlock exits
-        lock_cmd = "pidof hyprlock || bash -c 'hyprlock; swww img ${config.home.homeDirectory}/wallpapers/default.png --transition-type none'";
+        lock_cmd = "bash -c 'if pidof qs quickshell >/dev/null; then hyprctl dispatch global quickshell:lock; else hyprlock; fi'";
         before_sleep_cmd = "loginctl lock-session";
-        # Re-enable display and repaint wallpaper after waking from suspend
-        after_sleep_cmd = "hyprctl dispatch dpms on; swww img ${config.home.homeDirectory}/wallpapers/default.png --transition-type none";
+        after_sleep_cmd = "hyprctl dispatch dpms on; pidof qs quickshell >/dev/null && hyprctl dispatch global quickshell:lockFocus || true";
         ignore_dbus_inhibit = false;
       };
       listener = [
-        { timeout = 300; on-timeout = "hyprlock"; }
+        { timeout = 300; on-timeout = "loginctl lock-session"; }
         {
           timeout = 600;
           on-timeout = "hyprctl dispatch dpms off";
-          # Repaint wallpaper when monitor wakes from DPMS sleep
-          on-resume = "hyprctl dispatch dpms on; swww img ${config.home.homeDirectory}/wallpapers/default.png --transition-type none";
+          on-resume = "hyprctl dispatch dpms on; pidof qs quickshell >/dev/null && hyprctl dispatch global quickshell:lockFocus || true";
         }
+        { timeout = 900; on-timeout = "systemctl suspend || loginctl suspend"; }
       ];
     };
   };
 
   # Install helper scripts to ~/.local/bin/
-  home.file.".local/bin/keybind-help" = {
-    source = ../../../scripts/keybind-help.sh;
-    executable = true;
-  };
-  home.file.".local/bin/power-menu" = {
-    source = ../../../scripts/power-menu.sh;
-    executable = true;
-  };
   home.file.".local/bin/toggle-gamemode" = {
     source = ../../../scripts/toggle-gamemode.sh;
     executable = true;
@@ -210,78 +184,13 @@
     source = ../../../scripts/toggle-recording.sh;
     executable = true;
   };
-  home.file.".local/bin/cliphist-rofi" = {
-    source = ../../../scripts/cliphist-rofi.sh;
-    executable = true;
-  };
-  home.file.".local/bin/waybar-stats" = {
-    source = ../../../scripts/waybar-stats.sh;
-    executable = true;
-  };
-  home.file.".local/bin/usb-eject" = {
-    source = ../../../scripts/usb-eject.sh;
-    executable = true;
-  };
-  # Deploy a fallback avatar for hyprlock. force=false means the user's own
-  # ~/.face (set via Settings or `cp yourphoto.jpg ~/.face`) takes precedence.
-  home.file.".face" = {
-    source = ../../../assets/default-face.png;
-    force = false;
-  };
 
   # Packages for exec-once entries
-  # Note: swww is in swww/default.nix; wl-clipboard/cliphist in clipboard.nix; matugen in matugen.nix
   home.packages = with pkgs; [
     hyprpolkitagent
-    networkmanager_dmenu
-    blueman
-    bluetuith
-    swayosd
+    hyprlock
     brightnessctl
     imagemagick
     # playerctl lives in terminal.nix (already declared there)
   ];
-
-  xdg.configFile."networkmanager-dmenu/config.ini".source =
-    ../networkmanager-dmenu.ini;
-
-  xdg.configFile."swayosd/style.css".text = ''
-    window {
-      background: transparent;
-      border: none;
-    }
-
-    #osd-window {
-      background-color: rgba(13, 15, 20, 0.75);
-      border: 1px solid rgba(255, 255, 255, 0.10);
-      border-radius: 16px;
-      padding: 12px 20px;
-    }
-
-    progressbar {
-      min-width: 200px;
-      min-height: 6px;
-    }
-
-    progressbar > trough {
-      border-radius: 3px;
-      background-color: rgba(255, 255, 255, 0.12);
-    }
-
-    progressbar > trough > progress {
-      border-radius: 3px;
-      background-color: @accent;
-    }
-
-    progressbar.full > trough > progress {
-      background-color: @error;
-    }
-
-    image {
-      color: @on_surface;
-      padding-right: 12px;
-    }
-
-    @import "${config.home.homeDirectory}/.cache/matugen/waybar-colors.css";
-  '';
 }

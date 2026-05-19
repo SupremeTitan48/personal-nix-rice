@@ -23,19 +23,17 @@
   };
 
   home.packages = with pkgs; [
-    thunar
-    thunar-archive-plugin
-    thunar-volman
-    tumbler                      # thumbnail service
+    kdePackages.dolphin
+    kdePackages.ark
+    kdePackages.kio-extras
     gvfs                         # trash, smb, MTP support
     ffmpegthumbnailer            # video thumbnails
-    file-roller                  # archive manager integration
   ];
 
   xdg.mimeApps = {
     enable = true;
     defaultApplications = {
-      "inode/directory"          = [ "thunar.desktop" ];
+      "inode/directory"          = [ "org.kde.dolphin.desktop" ];
       "text/html"                = [ "google-chrome.desktop" ];
       "x-scheme-handler/http"    = [ "google-chrome.desktop" ];
       "x-scheme-handler/https"   = [ "google-chrome.desktop" ];

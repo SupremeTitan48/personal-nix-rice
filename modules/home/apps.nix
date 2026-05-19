@@ -13,7 +13,6 @@
   };
 
   home.packages = with pkgs; [
-    eww
     google-chrome
     obsidian           # markdown notes (requires allowUnfree)
     claude-code        # Claude AI CLI — run `claude` in terminal (requires allowUnfree)
@@ -29,8 +28,6 @@
     wlr-randr          # runtime monitor management
     xdg-utils          # xdg-open, MIME handling
     nwg-look           # GTK theme / cursor / icons GUI (Wayland-compatible)
-    wlogout            # power menu overlay
-
     # VSCodium with Wayland flags
     (vscodium.override {
       commandLineArgs = [

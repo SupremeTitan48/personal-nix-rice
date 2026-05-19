@@ -26,7 +26,7 @@
       # ── Borders (static gradient, no rotating loop) ────────────────────
       animation = border, 1, 10, default
 
-      # ── Layers (rofi, swaync, eww popups) ─────────────────────────────
+      # ── Layers (Quickshell popups and shell surfaces) ─────────────────
       animation = layers,         1, 3, menu_decel, slide
       animation = layersIn,       1, 3, menu_decel, slide
       animation = layersOut,      1, 2, menu_accel

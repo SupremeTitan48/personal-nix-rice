@@ -109,6 +109,7 @@ cat > "${REPO_DIR}/user-config.nix" <<EOF
   monitor     = "${MONITOR}";
   nvidiaOpen  = ${NVIDIA_OPEN};
   repoUrl     = "${REPO_URL}";
+  quickshellDev = true;
 }
 EOF
 success "user-config.nix written."

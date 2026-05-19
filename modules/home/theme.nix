@@ -53,7 +53,7 @@
 
   qt = {
     enable = true;
-    platformTheme.name = "kvantum";
+    platformTheme.name = "kde";
     style = {
       name = "kvantum";
       # kdePackages provides the Qt6 Kvantum plugin; libsForQt5 (in home.packages)

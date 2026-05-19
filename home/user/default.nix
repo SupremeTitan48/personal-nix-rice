@@ -4,24 +4,17 @@
 {
   imports = [
     ../../modules/home/hyprland/default.nix
-    ../../modules/home/waybar/default.nix
-    ../../modules/home/rofi/default.nix
-    ../../modules/home/hyprlock/default.nix
-    ../../modules/home/swww/default.nix
+    ../../modules/home/quickshell/default.nix
     ../../modules/home/matugen.nix
     ../../modules/home/theme.nix
     ../../modules/home/terminal.nix
     ../../modules/home/git.nix
-    ../../modules/home/notifications.nix
     ../../modules/home/filemanager.nix
     ../../modules/home/clipboard.nix
     ../../modules/home/screenshot.nix
     ../../modules/home/apps.nix
     ../../modules/home/gaming.nix
-    ../../modules/home/nightlight.nix
     ../../modules/home/scratchpads.nix
-    ../../modules/home/udiskie.nix
-    ../../modules/home/eww/default.nix
   ];
 
   home.username    = userConfig.username;
@@ -59,7 +52,7 @@
     export MOZ_ENABLE_WAYLAND=1
     export QT_QPA_PLATFORM=wayland
     export QT_STYLE_OVERRIDE=kvantum
-    export QT_QPA_PLATFORMTHEME=kvantum
+    export QT_QPA_PLATFORMTHEME=kde
     export _JAVA_AWT_WM_NONREPARENTING=1
     export XCURSOR_THEME=Bibata-Modern-Ice
     export XCURSOR_SIZE=24

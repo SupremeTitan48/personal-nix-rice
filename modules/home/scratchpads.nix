@@ -5,10 +5,10 @@
 
   wayland.windowManager.hyprland.extraConfig = ''
     # Terminal scratchpad
-    windowrule = workspace special:term, match:class kitty-scratch
-    windowrule = float true, match:class kitty-scratch
-    windowrule = size 70% 65%, match:class kitty-scratch
-    windowrule = center true, match:class kitty-scratch
+    windowrule = workspace special:term, match:class foot-scratch
+    windowrule = float true, match:class foot-scratch
+    windowrule = size 70% 65%, match:class foot-scratch
+    windowrule = center true, match:class foot-scratch
 
     # Obsidian scratchpad
     windowrule = workspace special:obsidian, match:class obsidian

@@ -1,6 +1,7 @@
 name: CI
 
 on:
+  workflow_dispatch:
   push:
     branches: [main]
   pull_request:
@@ -36,6 +37,7 @@ jobs:
       # the pre-built Hyprland binaries so no compilation happens in CI.
       - name: Build NixOS configuration (substituted from Cachix)
         run: |
+          set -o pipefail
           nix build \
             .#nixosConfigurations.desktop.config.system.build.toplevel \
             --no-link \

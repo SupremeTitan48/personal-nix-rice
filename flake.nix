@@ -12,11 +12,6 @@
     hyprland.url = "github:hyprwm/Hyprland";
     hyprland.inputs.nixpkgs.follows = "nixpkgs";
 
-    hyprlock = {
-      url = "github:hyprwm/hyprlock";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
     # Claude desktop app — not in nixpkgs; community repackage of the official release
     claude-desktop = {
       url = "github:k3d3/claude-desktop-linux-flake";
@@ -29,11 +24,20 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    # swww — wallpaper daemon with crossfade transitions (removed from nixpkgs)
-    swww.url = "github:LGFae/swww";
+    # Quickshell — Qt/QML desktop shell used by end-4's illogical-impulse setup
+    quickshell = {
+      url = "github:quickshell-mirror/quickshell/7511545ee20664e3b8b8d3322c0ffe7567c56f7a";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    # end-4's dotfiles are not a flake; consume them as a pinned source tree.
+    end4-dots = {
+      url = "github:end-4/dots-hyprland/c1b37bc4676677f7eeebfb2cf6185b493e38d2cd";
+      flake = false;
+    };
   };
 
-  outputs = { self, nixpkgs, home-manager, hyprland, hyprlock, claude-desktop, sidra, ... }@inputs:
+  outputs = { self, nixpkgs, home-manager, hyprland, claude-desktop, sidra, ... }@inputs:
   let
     system = "x86_64-linux";
     pkgs = nixpkgs.legacyPackages.${system};

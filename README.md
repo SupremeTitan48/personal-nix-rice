@@ -12,25 +12,24 @@ A daily-driver NixOS + Hyprland desktop built for stability, rollback safety, an
 |---|---|
 | OS | NixOS (unstable channel, flakes) |
 | Compositor | Hyprland + UWSM session management |
-| Bar | Waybar — floating glass pill |
-| Launcher | Rofi-wayland — icon grid (drun) + glass panel + wallpaper picker |
-| Terminal | Kitty + Fish + Tide prompt |
-| Notifications | swaync |
-| Lock screen | Hyprlock |
-| Wallpaper daemon | swww (crossfade transitions) |
+| Shell / bar | Quickshell — end-4 illogical-impulse foundation, debloated via Nix |
+| Launcher / overview | Quickshell overview — app search, clipboard prefix, workspace previews |
+| Control center | Quickshell SidebarRight — sliders, WiFi, Bluetooth, notifications, calendar |
+| Terminal | Foot + Fish + Starship prompt |
+| Notifications | Quickshell notifications |
+| Lock screen | Quickshell lock |
+| Wallpaper daemon | Quickshell background service + wallpaper selector |
 | Color engine | matugen (Material You from wallpaper) |
 | GTK theme | adw-gtk3-dark + Papirus-Dark + Bibata-Modern-Ice cursor |
-| Night light | wlsunset |
+| Night light | hyprsunset through Quickshell |
 | Gaming | Steam · Gamemode · Gamescope · MangoHud · Heroic · Lutris · PrismLauncher |
-| Apps | Google Chrome · VSCodium · Thunar · mpv · imv |
+| Apps | Google Chrome · VSCodium · Dolphin · mpv · imv |
 | Notes | Obsidian |
-| AI | Claude desktop · Claude Code CLI (`claude`) |
+| AI | Quickshell SidebarLeft with Claude via OpenRouter and native Anthropic overlay |
 | Music | Sidra — Apple Music client with lossless DRM streaming + MPRIS |
-| Music widget | eww — floating MPRIS popup (album art, controls, matugen-colored) |
-| Dock | nwg-dock-hyprland — auto-hiding bottom dock with pinned apps |
-| Power menu | wlogout — full-screen overlay (lock / logout / suspend / reboot / shutdown) |
+| Music widget | Quickshell media controls overlay |
+| Power menu | Quickshell session screen |
 | Secrets / SSH agent | GNOME Keyring — unlocked at login, backs Chrome passwords + SSH keys |
-| USB auto-mount | udiskie — plug in a drive, it mounts; tray icon to eject |
 | Qt theming | Kvantum — Qt apps match the glassmorphism aesthetic |
 | Screen recording | OBS Studio (v4l2loopback virtual camera included) |
 | Printing | CUPS + Avahi — auto-discovers network/AirPrint printers |
@@ -42,7 +41,7 @@ A daily-driver NixOS + Hyprland desktop built for stability, rollback safety, an
 
 ## How the color pipeline works
 
-Every color on the desktop — window borders, bar, launcher, terminal, lock screen, notifications — is derived from a single wallpaper image at runtime. Changing the wallpaper recolors everything in about one second.
+Every color on the desktop — window borders, Quickshell, GTK, Qt, and Hyprland — is derived from a single wallpaper image at runtime. Changing the wallpaper recolors the shell and apps through matugen.
 
 ```
 wallpaper image
@@ -52,18 +51,14 @@ matugen (Google's Material You algorithm)
     │  generates a tonal palette from dominant hues
     ▼
 per-app color files written to ~/.cache/matugen/
-    ├── waybar-colors.css
-    ├── rofi-colors.rasi
-    ├── kitty-colors.conf
     ├── hyprland-colors.conf   ← window border gradient (primary + tertiary)
-    ├── swaync-colors.css
-    ├── hyprlock-colors.conf
-    └── eww-colors.scss        ← music widget
+    ├── gtk-colors.css
+    ├── Kvantum/MatugenGlass/MatugenGlass.kvconfig
+    └── ~/.local/state/quickshell/user/generated/colors.json
     │
     ▼
-change-wallpaper.sh reloads each component:
-    swww img (crossfade) → matugen → waybar SIGUSR2
-    → hyprctl reload → swaync restart → kitty USR1
+Quickshell wallpaper selector/background service triggers matugen,
+then Quickshell and Hyprland consume the generated colors.
 ```
 
 On first login, before you've ever set a wallpaper, stub color files are written automatically so nothing crashes.
@@ -236,22 +231,23 @@ The config assumes NVIDIA. For AMD or Intel:
 
 | Key | Action |
 |---|---|
-| `Super + Return` | Terminal (kitty) |
-| `Super + Space` | App launcher (rofi icon grid) |
-| `Super + E` | File manager (thunar) |
+| `Super + Return` | Terminal (foot) |
+| `Super + Space` | Quickshell search / launcher |
+| `Super + Tab` | Quickshell workspace overview |
+| `Super + E` | File manager (Dolphin) |
 | `Super + M` | Apple Music (Sidra) |
-| `Super + Shift + M` | Music widget toggle (eww MPRIS popup) |
-| `Super + W` | Wallpaper picker → recolors everything |
-| `Super + N` | Notification center toggle |
-| `Super + D` | Toggle app dock |
-| `Super + /` | Keybind cheatsheet (searchable) |
+| `Super + Shift + M` | Quickshell media controls |
+| `Super + W` | Quickshell wallpaper picker |
+| `Super + N` | Quickshell right sidebar / control center |
+| `Super + A` | Quickshell left sidebar / Claude chat |
+| `Super + /` | Quickshell cheatsheet |
 
 ### Power
 
 | Key | Action |
 |---|---|
-| `Super + Escape` | Power menu (lock / logout / suspend / reboot / shutdown) |
-| `Super + Ctrl + L` | Lock screen immediately |
+| `Super + Escape` | Quickshell session screen |
+| `Super + Ctrl + L` | Quickshell lock screen immediately |
 
 ### Windows
 
@@ -259,7 +255,7 @@ The config assumes NVIDIA. For AMD or Intel:
 |---|---|
 | `Super + Q` | Close window |
 | `Super + F` | Fullscreen |
-| `Super + Shift + Space` | Toggle floating |
+| `Super + Alt + Space` | Toggle floating |
 | `Super + T` | Toggle split direction |
 | `Super + R` | Resize mode (then arrow keys or HJKL, `Esc` to exit) |
 | `Super + mouse drag` | Move floating window |
@@ -281,24 +277,20 @@ The config assumes NVIDIA. For AMD or Intel:
 
 | Key | Action |
 |---|---|
-| `Super + Alt + T` | Terminal scratchpad (kitty, pre-spawned) |
+| `Super + Alt + T` | Terminal scratchpad (foot, pre-spawned) |
 | `Super + Alt + O` | Obsidian notes scratchpad |
 | `Super + Alt + M` | System monitor scratchpad (Mission Center) |
-
-### Window switcher
-
-| Key | Action |
-|---|---|
-| `Alt + Tab` | Window switcher (rofi) |
 
 ### System
 
 | Key | Action |
 |---|---|
-| `Super + V` | Clipboard history (cliphist → rofi) |
-| `Print` | Screenshot fullscreen → saved to `~/Pictures/screenshots/` |
-| `Super + Print` | Screenshot region → open in satty for annotation |
-| `Super + Shift + Print` | Screenshot region → saved directly |
+| `Super + V` | Quickshell clipboard overview |
+| `Super + .` | Quickshell emoji overview |
+| `Print` | Screenshot active monitor → clipboard |
+| `Ctrl + Print` | Screenshot active monitor → file + clipboard |
+| `Super + Shift + S` | Quickshell region screenshot |
+| `Super + Shift + R` | Quickshell region recording |
 
 ### Media & volume
 
@@ -318,20 +310,16 @@ The config assumes NVIDIA. For AMD or Intel:
 
 ### Via the picker (recommended)
 
-`Super + W` opens rofi showing all images in `~/wallpapers/`. Selecting one:
-1. Fades the wallpaper in via swww
+`Super + W` opens the Quickshell wallpaper selector. Selecting one:
+1. Updates the Quickshell background
 2. Runs matugen to generate a new color palette
-3. Reloads waybar, hyprland, kitty, swaync with the new colors
+3. Refreshes Quickshell and Hyprland colors
 
 Total time: ~1 second.
 
 ### From the terminal
 
-```bash
-change-wallpaper ~/Pictures/some-image.jpg
-```
-
-The image doesn't need to live in `~/wallpapers/`. To add it to the picker:
+To add an image to the picker:
 
 ```bash
 cp ~/Pictures/some-image.jpg ~/wallpapers/
@@ -391,9 +379,9 @@ decoration = {
 
 `modules/home/hyprland/animations.nix` — timing curves and durations.
 
-### Waybar layout
+### Quickshell configuration
 
-`modules/home/waybar/default.nix` — `modules-left`, `modules-center`, `modules-right`.
+`modules/home/quickshell/config.nix` — debloated illogical-impulse preset, Claude models, bar behavior, sidebar modules.
 
 ### Adding packages
 
@@ -431,14 +419,14 @@ cursor = {
 
 Both should already be set. Also verify `XCURSOR_THEME` and `XCURSOR_SIZE` are in `~/.config/uwsm/env-hyprland`.
 
-### Waybar not loading / blank bar
+### Quickshell not loading / blank shell
 
 ```bash
-waybar &   # run manually to see errors
-journalctl --user -u waybar
+qs -c ii   # run manually to see errors
+journalctl --user -u quickshell
 ```
 
-Usually a CSS syntax error from a matugen color file. Check `~/.cache/matugen/waybar-colors.css` exists — if not, run `change-wallpaper ~/wallpapers/default.jpg` to regenerate.
+Usually this is a missing Qt/QML runtime dependency, a bad `config.json`, or missing generated colors. Check `~/.local/state/quickshell/user/generated/colors.json` exists. If not, run `matugen image ~/wallpapers/default.jpg --mode dark`.
 
 ### Screen sharing not working
 
@@ -455,6 +443,7 @@ If either is failed: `systemctl --user restart xdg-desktop-portal`
 which matugen
 matugen image ~/wallpapers/default.jpg --mode dark
 ls ~/.cache/matugen/
+ls ~/.local/state/quickshell/user/generated/
 ```
 
 ### Audio not working
@@ -514,48 +503,36 @@ modules/
       rules.nix                   # window rules, workspace assignments
       animations.nix              # animation curves and timings
       monitors.nix                # monitor string (from user-config)
-    waybar/
-      default.nix                 # module layout + config
-      style.css                   # floating pill CSS, glassmorphism
-    rofi/
-      default.nix                 # launcher config
-      style.rasi                  # glass launcher CSS (wallpaper/window modes)
-      grid.rasi                   # icon grid CSS (drun mode)
-    hyprlock/
-      default.nix                 # lock screen — profile pic, matugen-integrated colors
+    quickshell/
+      default.nix                 # programs.quickshell + systemd service
+      package.nix                 # wrapped Quickshell package with Qt deps
+      deps.nix                    # illogical-impulse runtime packages
+      config.nix                  # debloated illogical-impulse config.json
+      dev.nix                     # ~/src/quickshell-ii dev symlink seeding
     matugen/
       templates/                  # per-app color templates
-      rofi-wallpaper.sh           # wallpaper picker script for rofi
-    swww/
-      default.nix                 # swww daemon autostart
     git.nix                       # git identity (from user-config), delta, ssh, gpg
-    terminal.nix                  # kitty, fish, tide prompt, fzf, zoxide, atuin
+    terminal.nix                  # foot, fish, starship, fzf, zoxide, atuin
     theme.nix                     # GTK theme, cursor, icons, Kvantum Qt theming
-    notifications.nix             # swaync config + matugen-integrated CSS
-    nightlight.nix                # wlsunset (coords from user-config)
-    eww/
-      default.nix                 # eww module wiring
-      eww.yuck                    # MPRIS music widget definition
-      eww.scss                    # music widget styles
     apps.nix                      # Chrome, VSCodium, OBS, Bitwarden, Sidra, utilities
     gaming.nix                    # Heroic, ProtonUp-Qt, MangoHud config
-    filemanager.nix               # Thunar + MIME type associations
+    filemanager.nix               # Dolphin + MIME type associations
     clipboard.nix                 # wl-clipboard + cliphist history
-    screenshot.nix                # grimblast + satty annotation
+    screenshot.nix                # grim/slurp/satty/hyprshot runtime deps
     matugen.nix                   # matugen config, templates, activation hook
-    wlogout.nix                   # power menu layout + glassmorphism CSS
-    dock.nix                      # nwg-dock-hyprland pinned apps + style
     scratchpads.nix               # named scratchpads (terminal, Obsidian, monitor)
-    udiskie.nix                   # USB auto-mount with tray icon
+
+overlays/
+  ii/
+    services/
+      Ai.qml                      # patched AI service with Anthropic strategy
+      ai/AnthropicApiStrategy.qml # native Claude Messages API strategy
 
 home/
   user/
     default.nix                   # Home Manager entry point (username from user-config)
 
 wallpapers/                       # created by install.sh — add your images here
-scripts/
-  change-wallpaper.sh             # swww + matugen + component reload pipeline
-  keybind-help.sh                 # searchable keybind reference via rofi (Super+/)
 ```
 
 ---

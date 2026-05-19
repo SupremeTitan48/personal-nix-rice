@@ -38,4 +38,9 @@
   # The auto-upgrade systemd timer pulls from here every hour.
   # Set to "" to disable auto-upgrade.
   repoUrl = "github:SupremeTitan48/personal-nix-rice";
+
+  # ── Development toggles ──────────────────────────────────────────────────────
+  # When true, Quickshell config is symlinked from ~/src/quickshell-ii so QML
+  # changes can be reloaded without a full NixOS rebuild.
+  quickshellDev = true;
 }

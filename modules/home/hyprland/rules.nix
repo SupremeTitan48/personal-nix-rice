@@ -18,14 +18,14 @@
     windowrule = float true, match:title Open File.*
     windowrule = float true, match:title Select a File.*
     windowrule = float true, match:title Choose wallpaper.*
-    windowrule = float true, match:class blueman-manager
-    windowrule = float true, match:class pavucontrol
+    windowrule = float true, match:class bluedevil
+    windowrule = float true, match:class pavucontrol.*
 
     # Fix Chrome file picker
     windowrule = float true, match:class google-chrome, match:title Open Files?
 
     # Slight transparency for terminals
-    windowrule = opacity 0.95 0.9, match:class kitty
+    windowrule = opacity 0.95 0.9, match:class foot.*
 
     # Gaming: no blur, no rounding for performance
     windowrule = no_blur true, match:class steam_app_.*
@@ -49,11 +49,6 @@
     windowrule = idle_inhibit fullscreen, match:fullscreen 1
     windowrule = idle_inhibit fullscreen, match:class steam_app_.*
     windowrule = idle_inhibit fullscreen, match:class gamescope
-
-    # wlogout: fullscreen overlay, no animations
-    windowrule = float true, match:class wlogout
-    windowrule = fullscreen true, match:class wlogout
-    windowrule = no_anim true, match:class wlogout
 
     # Obsidian: slight transparency
     windowrule = opacity 0.97 0.95, match:class obsidian
@@ -92,11 +87,6 @@
     windowrule = float true, match:class seahorse
     windowrule = size 60% 65%, match:class seahorse
     windowrule = center true, match:class seahorse
-
-    # Bluetuith TUI — float, centered, fixed size
-    windowrule = float true,  match:class kitty-bluetuith
-    windowrule = size 700 500, match:class kitty-bluetuith
-    windowrule = center true, match:class kitty-bluetuith
 
     # Default workspace
     workspace = 1, default:true
