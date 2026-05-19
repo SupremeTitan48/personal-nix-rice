@@ -77,5 +77,7 @@
     zip
     htop
     pavucontrol
+    # Cursor Remote SSH cannot use its bundled Node on NixOS; needs node in PATH.
+    nodejs_22
   ];
 }
