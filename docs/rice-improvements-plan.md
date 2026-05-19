@@ -11,13 +11,14 @@
 
 | # | Feature | Priority | Risk |
 |---|---------|----------|------|
-| 1 | `custom/stats` waybar script (CPU% + RAM%) | High | Low |
-| 2 | Blur quality: passes 3, `special`, `popups` | High | Low |
-| 3 | Accent-colored shadows via matugen | Medium | Low |
-| 4 | Bluetuith TUI integration | Medium | Low |
-| 5 | USB eject rofi script | Medium | Low |
-| 6 | Hyprlock: avatar fallback + greeting label | Low | Low |
-| 7 | Fix deprecation warnings | Low | Low |
+| 1 | **Bug: wallpaper disappears after unlock** | Critical | Low |
+| 2 | `custom/stats` waybar script (CPU% + RAM%) | High | Low |
+| 3 | Blur quality: passes 3, `special`, `popups` | High | Low |
+| 4 | Accent-colored shadows via matugen | Medium | Low |
+| 5 | Bluetuith TUI integration | Medium | Low |
+| 6 | USB eject rofi script | Medium | Low |
+| 7 | Hyprlock: avatar fallback + greeting label | Low | Low |
+| 8 | Fix deprecation warnings | Low | Low |
 
 Items deliberately excluded:
 - CPU/GPU **temperatures** — user explicitly removed them
@@ -27,7 +28,73 @@ Items deliberately excluded:
 
 ---
 
-## 1. `custom/stats` — Consolidated Waybar Stats Widget
+## 1. Bug Fix — Wallpaper Disappears After Unlock
+
+### Root cause
+
+Two independent failure points in `modules/home/hyprland/default.nix`:
+
+**A) `lock_cmd` doesn't reapply wallpaper after hyprlock exits.**
+
+Current:
+```nix
+lock_cmd = "pidof hyprlock || hyprlock";
+```
+`hyprlock` runs in the foreground and blocks until the user unlocks. When it exits,
+control returns to the compositor but `swww` doesn't know to redraw — so the
+display shows black/empty.
+
+**B) `on-resume` after DPMS-off only re-enables the display, not the wallpaper.**
+
+Current:
+```nix
+{ timeout = 600; on-timeout = "hyprctl dispatch dpms off"; on-resume = "hyprctl dispatch dpms on"; }
+```
+When the monitor wakes from DPMS sleep, `swww` sometimes doesn't repaint the
+wallpaper on the newly-active output. Same symptom: blank desktop.
+
+### Fix: `modules/home/hyprland/default.nix`
+
+Two targeted changes to the `services.hypridle.settings` block:
+
+```nix
+general = {
+  # Wrap lock in bash so we can reapply wallpaper *after* hyprlock exits
+  lock_cmd = "pidof hyprlock || bash -c 'hyprlock; swww img ${config.home.homeDirectory}/wallpapers/default.png --transition-type none'";
+  before_sleep_cmd = "loginctl lock-session";
+  # After waking from suspend, re-enable display AND reapply wallpaper
+  after_sleep_cmd  = "hyprctl dispatch dpms on; swww img ${config.home.homeDirectory}/wallpapers/default.png --transition-type none";
+  ignore_dbus_inhibit = false;
+};
+listener = [
+  { timeout = 300; on-timeout = "hyprlock"; }
+  {
+    timeout   = 600;
+    on-timeout = "hyprctl dispatch dpms off";
+    # Reapply wallpaper on DPMS resume too
+    on-resume  = "hyprctl dispatch dpms on; swww img ${config.home.homeDirectory}/wallpapers/default.png --transition-type none";
+  }
+];
+```
+
+**Why `--transition-type none`?** The wallpaper is already there — we just want swww
+to repaint it instantly with no visual flash. If the user prefers a brief fade-in,
+`--transition-type fade --transition-duration 0.5` also works.
+
+**Why `;` not `&&` after `hyprlock`?** Using `&&` would only reapply the wallpaper if
+hyprlock exited with code 0 (successful unlock). A semicolon ensures we always
+reapply even if hyprlock exits unexpectedly (e.g., killed by the user). The `&&`
+after `dpms on` is fine since we want the display on before swww paints.
+
+### Implementation steps
+1. Edit `services.hypridle.settings` in `modules/home/hyprland/default.nix`
+2. Change `lock_cmd` to the bash wrapper above
+3. Change `after_sleep_cmd` to include `swww img ...`
+4. Change `on-resume` (DPMS listener) to include `swww img ...`
+
+---
+
+## 2. `custom/stats` — Consolidated Waybar Stats Widget
 
 ### What the top rices do
 
@@ -472,13 +539,14 @@ on NixOS 24.11+ is to leave this unset or true. Check and remove the `= false`.
 Suggested order of commits (each is self-contained and safe to build independently):
 
 ```
-Commit 1: custom/stats script + waybar cleanup (remove dead modules)
-Commit 2: Blur quality (passes=3, popups, special)
-Commit 3: Accent shadow via matugen template
-Commit 4: Bluetuith integration
-Commit 5: USB eject script
-Commit 6: Hyprlock avatar fallback
-Commit 7: Fix deprecation warnings
+Commit 1: Bug fix — wallpaper disappears after unlock (hypridle lock_cmd + on-resume)
+Commit 2: custom/stats script + waybar cleanup (remove dead modules)
+Commit 3: Blur quality (passes=3, ignore_opacity, popups, special)
+Commit 4: Accent shadow via matugen template
+Commit 5: Bluetuith integration
+Commit 6: USB eject script
+Commit 7: Hyprlock avatar fallback
+Commit 8: Fix deprecation warnings
 ```
 
 ---
