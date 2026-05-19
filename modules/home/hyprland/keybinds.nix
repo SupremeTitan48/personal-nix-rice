@@ -88,6 +88,9 @@
     bind = $mod SHIFT, C, exec, hyprpicker -a
     bind = $mod, V, exec, bash ${config.home.homeDirectory}/.local/bin/cliphist-rofi
 
+    # USB safe eject
+    bind = $mod, U, exec, bash ${config.home.homeDirectory}/.local/bin/usb-eject
+
     # Game mode toggle
     bind = $mod, F10, exec, bash ${config.home.homeDirectory}/.local/bin/toggle-gamemode
 

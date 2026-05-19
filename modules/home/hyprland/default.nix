@@ -218,6 +218,10 @@
     source = ../../../scripts/waybar-stats.sh;
     executable = true;
   };
+  home.file.".local/bin/usb-eject" = {
+    source = ../../../scripts/usb-eject.sh;
+    executable = true;
+  };
 
   # Packages for exec-once entries
   # Note: swww is in swww/default.nix; wl-clipboard/cliphist in clipboard.nix; matugen in matugen.nix
