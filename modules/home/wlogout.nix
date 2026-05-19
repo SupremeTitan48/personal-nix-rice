@@ -47,7 +47,6 @@
 
     window {
       background-color: rgba(13, 15, 20, 0.85);
-      backdrop-filter: blur(20px);
     }
 
     button {

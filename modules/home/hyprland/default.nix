@@ -101,7 +101,7 @@
     exec-once = nm-applet --indicator
     exec-once = blueman-applet
     exec-once = swayosd-server
-    exec-once = nwg-dock-hyprland -nolauncher -f -i 28 -mb 2
+    exec-once = nwg-dock-hyprland -nolauncher -i 28 -mb 2
     exec-once = eww daemon
     exec-once = wl-paste --type text --watch cliphist --max-items 750 store
     exec-once = wl-paste --type image --watch cliphist --max-items 750 store
@@ -132,7 +132,7 @@
     general {
       col.active_border = $accent $accent_secondary 45deg
       col.inactive_border = rgba(ffffff1a)
-      gaps_out = 12 12 100 12
+      gaps_out = 12
     }
 
     group {
