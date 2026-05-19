@@ -98,6 +98,7 @@
     exec-once = ${pkgs.waybar}/bin/waybar
     exec-once = ${pkgs.swaynotificationcenter}/bin/swaync
     exec-once = ${pkgs.hyprpolkitagent}/libexec/hyprpolkitagent
+    exec-once = nm-applet
     exec-once = blueman-applet
     exec-once = swayosd-server
     exec-once = eww daemon
@@ -202,6 +203,7 @@
   home.packages = with pkgs; [
     hyprpolkitagent
     networkmanager-dmenu
+    networkmanagerapplet
     blueman
     swayosd
     brightnessctl
