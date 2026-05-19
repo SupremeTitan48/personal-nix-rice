@@ -121,8 +121,6 @@
     layerrule = ignore_alpha 0.01, match:namespace swaync-control-center
     layerrule = blur true, match:namespace gtk-layer-shell
     layerrule = ignore_alpha 0.01, match:namespace gtk-layer-shell
-    layerrule = blur true, match:namespace wlogout
-    layerrule = ignore_alpha 0.01, match:namespace wlogout
     layerrule = blur true, match:namespace eww-music-popup
     layerrule = ignore_alpha 0.01, match:namespace eww-music-popup
 
@@ -181,6 +179,10 @@
   # Install helper scripts to ~/.local/bin/
   home.file.".local/bin/keybind-help" = {
     source = ../../../scripts/keybind-help.sh;
+    executable = true;
+  };
+  home.file.".local/bin/power-menu" = {
+    source = ../../../scripts/power-menu.sh;
     executable = true;
   };
   home.file.".local/bin/toggle-gamemode" = {

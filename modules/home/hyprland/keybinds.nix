@@ -15,7 +15,7 @@
     bind = $mod SHIFT, S, exec, eww open --toggle quick-settings-popup
 
     # Power menu
-    bind = $mod, Escape, exec, wlogout -b 3 -c 20 -r 20 -m 100
+    bind = $mod, Escape, exec, bash ${config.home.homeDirectory}/.local/bin/power-menu
 
     # Keybind cheatsheet
     bind = $mod, slash, exec, bash ${config.home.homeDirectory}/.local/bin/keybind-help
