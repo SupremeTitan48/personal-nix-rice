@@ -18,7 +18,7 @@
 
       modules-left = [ "hyprland/workspaces" "custom/submap" "hyprland/window" ];
       modules-center = [ "mpris" "clock" ];
-      modules-right = [ "custom/gpu" "memory" "cpu" "temperature" "disk" "pulseaudio" "network" "custom/swaync" "tray" ];
+      modules-right = [ "custom/stats" "pulseaudio" "network" "custom/swaync" "tray" ];
 
       "hyprland/window" = {
         format = "{}";
@@ -58,10 +58,10 @@
         tooltip = false;
       };
 
-      "custom/gpu" = {
-        exec = "nvidia-smi --query-gpu=utilization.gpu,temperature.gpu --format=csv,noheader,nounits | awk -F', ' '{printf \" %s%% %s°C\", $1, $2}'";
+      "custom/stats" = {
+        exec = "${config.home.homeDirectory}/.local/bin/waybar-stats";
+        return-type = "json";
         interval = 3;
-        tooltip = false;
         format = "{}";
       };
 
@@ -79,43 +79,10 @@
         ignored-players = [ "firefox" ];
       };
 
-      "memory" = {
-        interval = 5;
-        format = " {}%";
-        tooltip-format = "{used:0.1f}G / {total:0.1f}G";
-        warning = 80;
-        critical = 95;
-      };
-
       clock = {
         format = "{:%H:%M  %a %b %d}";
         format-alt = "{:%A, %B %d %Y  %H:%M}";
         tooltip-format = "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>";
-      };
-
-      cpu = {
-        format = " {usage}%";
-        interval = 2;
-        tooltip = false;
-      };
-
-      temperature = {
-        interval = 5;
-        # AMD Ryzen k10temp — zone 2 is typical for Ryzen on most boards.
-        # If the reading is 0 or wrong, check: cat /sys/class/thermal/thermal_zone*/type
-        # and adjust thermal-zone to match the k10temp entry.
-        thermal-zone = 2;
-        critical-threshold = 85;
-        format-critical = " {temperatureC}°C";
-        format = " {temperatureC}°C";
-        tooltip = true;
-      };
-
-      disk = {
-        interval = 30;
-        format = "󰋊 {percentage_used}%";
-        path = "/";
-        tooltip-format = "{used} / {total}";
       };
 
       pulseaudio = {

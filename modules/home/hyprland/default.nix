@@ -204,6 +204,10 @@
     source = ../../../scripts/cliphist-rofi.sh;
     executable = true;
   };
+  home.file.".local/bin/waybar-stats" = {
+    source = ../../../scripts/waybar-stats.sh;
+    executable = true;
+  };
 
   # Packages for exec-once entries
   # Note: swww is in swww/default.nix; wl-clipboard/cliphist in clipboard.nix; matugen in matugen.nix
