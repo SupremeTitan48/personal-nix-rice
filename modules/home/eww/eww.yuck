@@ -51,30 +51,38 @@
 
 (defwidget quick-settings []
   (box :class "qs-panel" :orientation "v" :space-evenly false :spacing 14
-    (label :class "qs-header" :text "Quick Settings" :halign "start")
+    ; Header row with title and close button
+    (box :orientation "h" :hexpand true :space-evenly false
+      (label :class "qs-header" :text "Quick Settings" :halign "start" :hexpand true)
+      (button :class "qs-close-btn"
+              :onclick "eww close quick-settings-popup"
+              "󰅖"))
+    ; Wi-Fi row
     (box :class "qs-row" :spacing 12 :hexpand true
       (label :class "qs-icon" :text {qs_wifi_ssid != "Disconnected" ? "" : "󰤭"})
       (box :orientation "v" :space-evenly false :hexpand true
         (label :class "qs-title" :text "Wi-Fi" :halign "start")
         (label :class "qs-sub" :text qs_wifi_ssid :halign "start" :limit-width 18))
-      (button :class "qs-toggle ${qs_wifi_ssid != 'Disconnected' ? 'on' : 'off'}"
+      (button :class {"qs-toggle " + {qs_wifi_ssid != "Disconnected" ? "on" : "off"}}
               :onclick "nmcli radio wifi toggle"
               {qs_wifi_ssid != "Disconnected" ? "󰔡" : "󰔠"}))
+    ; Bluetooth row
     (box :class "qs-row" :spacing 12 :hexpand true
       (label :class "qs-icon" :text {qs_bt_powered == "on" ? "󰂱" : "󰂲"})
       (box :orientation "v" :space-evenly false :hexpand true
         (label :class "qs-title" :text "Bluetooth" :halign "start")
         (label :class "qs-sub" :text qs_bt_powered :halign "start"))
-      (button :class "qs-toggle ${qs_bt_powered == 'on' ? 'on' : 'off'}"
-              :onclick "bluetoothctl power ${qs_bt_powered == 'on' ? 'off' : 'on'}"
+      (button :class {"qs-toggle " + {qs_bt_powered == "on" ? "on" : "off"}}
+              :onclick {qs_bt_powered == "on" ? "bluetoothctl power off" : "bluetoothctl power on"}
               {qs_bt_powered == "on" ? "󰔡" : "󰔠"}))
     (box :class "qs-divider")
+    ; Volume row
     (box :class "qs-row" :spacing 12 :hexpand true
-      (button :class "qs-icon-btn ${qs_muted ? 'muted' : ''}"
+      (button :class {"qs-icon-btn " + {qs_muted == "true" ? "muted" : ""}}
               :onclick "pactl set-sink-mute @DEFAULT_SINK@ toggle"
-              {qs_muted ? "󰝟" : "󰕾"})
+              {qs_muted == "true" ? "󰝟" : "󰕾"})
       (scale :class "qs-slider" :hexpand true :min 0 :max 100
-             :value qs_vol
+             :value {qs_vol}
              :onchange "pactl set-sink-volume @DEFAULT_SINK@ {}%"))))
 
 (defwindow quick-settings-popup
@@ -82,5 +90,5 @@
   :geometry (geometry :x "12px" :y "60px" :width "300px" :anchor "top right")
   :stacking "overlay"
   :exclusive false
-  :focusable true
+  :focusable false
   (quick-settings))
