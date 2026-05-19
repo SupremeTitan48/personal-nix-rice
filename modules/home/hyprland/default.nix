@@ -18,7 +18,7 @@
     settings = {
       general = {
         gaps_in = 6;
-        gaps_out = "12 12 58 12";
+        gaps_out = 12;
         border_size = 2;
         resize_on_border = true;
         allow_tearing = true;
@@ -132,6 +132,7 @@
     general {
       col.active_border = $accent $accent_secondary 45deg
       col.inactive_border = rgba(ffffff1a)
+      gaps_out = 12 12 58 12
     }
 
     group {
