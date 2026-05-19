@@ -132,6 +132,13 @@
       gaps_out = 12
     }
 
+    decoration {
+      shadow {
+        color = $accent_shadow
+        color_inactive = rgba(00000033)
+      }
+    }
+
     group {
       col.border_active = $accent
       col.border_inactive = $accent_dim
