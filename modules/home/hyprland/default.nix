@@ -42,9 +42,11 @@
         blur = {
           enabled = true;
           size = 8;
-          passes = 2;
-          xray = true;  # wallpaper bleed-through for glassmorphism
-          ignore_opacity = false;
+          passes = 3;            # was 2 — matches JaKooLit/end-4 quality
+          xray = true;           # wallpaper bleed-through for glassmorphism
+          ignore_opacity = true; # blur shows through semi-transparent layers (JaKooLit)
+          popups = true;         # blur right-click menus and tooltips
+          special = true;        # blur special workspace (scratchpad) background
         };
       };
 
