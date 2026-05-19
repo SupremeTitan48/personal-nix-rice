@@ -10,6 +10,7 @@
     ../../modules/nixos/fonts.nix
     ../../modules/nixos/locale.nix
     ../../modules/nixos/network.nix
+    ../../modules/nixos/openssh.nix
     ../../modules/nixos/portal.nix
     ../../modules/nixos/gaming.nix
     ../../modules/nixos/display-manager.nix

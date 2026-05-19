@@ -38,4 +38,11 @@
   # The auto-upgrade systemd timer pulls from here every hour.
   # Set to "" to disable auto-upgrade.
   repoUrl = "github:SupremeTitan48/personal-nix-rice";
+
+  # ── SSH ─────────────────────────────────────────────────────────────────────
+  # Public keys allowed to SSH in as username (one full line each).
+  # Generate on your Mac:  ssh-keygen -t ed25519
+  # Then paste output of:   cat ~/.ssh/id_ed25519.pub
+  # While this list is empty, password login stays enabled for bootstrap.
+  sshPublicKeys = [ ];
 }

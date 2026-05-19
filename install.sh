@@ -92,6 +92,12 @@ echo "  Leave blank to disable auto-upgrade."
 ask REPO_URL "GitHub repo URL (e.g. github:owner/repo or leave blank)" \
   "github:SupremeTitan48/personal-nix-rice"
 
+echo ""
+info "SSH (optional — for Cursor Remote SSH from another machine)"
+echo "  Paste your public key (ssh-ed25519 AAAA...), or leave blank."
+echo "  Generate one with: ssh-keygen -t ed25519 && cat ~/.ssh/id_ed25519.pub"
+read -rp "$(echo -e "${BOLD}SSH public key (optional): ${RESET}")" SSH_PUBKEY
+
 # ── write user-config.nix ──────────────────────────────────────────────────────
 echo ""
 info "Writing user-config.nix..."
@@ -109,6 +115,20 @@ cat > "${REPO_DIR}/user-config.nix" <<EOF
   monitor     = "${MONITOR}";
   nvidiaOpen  = ${NVIDIA_OPEN};
   repoUrl     = "${REPO_URL}";
+
+  sshPublicKeys = [
+EOF
+
+if [[ -n "$SSH_PUBKEY" ]]; then
+  # Escape double quotes in the key comment field for valid Nix string syntax.
+  ESCAPED_KEY="${SSH_PUBKEY//\"/\\\"}"
+  cat >> "${REPO_DIR}/user-config.nix" <<EOF
+    "${ESCAPED_KEY}"
+EOF
+fi
+
+cat >> "${REPO_DIR}/user-config.nix" <<'EOF'
+  ];
 }
 EOF
 success "user-config.nix written."
