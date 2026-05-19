@@ -36,6 +36,12 @@
   '';
 
   xdg.configFile."wlogout/style.css".text = ''
+    /* Fallback colors — overridden by matugen import if cache exists */
+    @define-color accent         #5b9cf6;
+    @define-color surface_variant #242836;
+    @define-color on_surface     #e8e8f0;
+    @define-color on_accent      #ffffff;
+
     @import "${config.home.homeDirectory}/.cache/matugen/waybar-colors.css";
 
     * {
@@ -47,16 +53,22 @@
 
     window {
       background-color: rgba(13, 15, 20, 0.85);
+      font-family: "JetBrains Mono", monospace;
     }
 
     button {
       color: @on_surface;
       background-color: alpha(@surface_variant, 0.6);
       border-radius: 16px;
-      margin: 8px;
+      margin: 12px;
+      min-width: 160px;
+      min-height: 160px;
       border: 1px solid rgba(255, 255, 255, 0.08);
-      font-family: "JetBrains Mono", monospace;
-      font-size: 14px;
+      font-size: 13px;
+      background-size: 64px;
+      background-repeat: no-repeat;
+      background-position: center 40px;
+      padding-top: 110px;
       transition: background-color 0.2s ease, border-color 0.2s ease;
     }
 
