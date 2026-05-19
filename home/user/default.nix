@@ -43,6 +43,8 @@
 
   programs.home-manager.enable = true;
   programs.man.enable = false;
+  # Fontconfig is managed at the NixOS system level (modules/nixos/fonts.nix).
+  # Disable HM's own fontconfig management to avoid duplicate cache generation.
   fonts.fontconfig.enable = false;
 
   # UWSM env vars — propagated to D-Bus activated services under UWSM.

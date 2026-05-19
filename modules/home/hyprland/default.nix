@@ -101,7 +101,6 @@
     exec-once = ${pkgs.waybar}/bin/waybar
     exec-once = ${pkgs.swaynotificationcenter}/bin/swaync
     exec-once = ${pkgs.hyprpolkitagent}/libexec/hyprpolkitagent
-    exec-once = blueman-applet
     exec-once = swayosd-server
     exec-once = eww daemon
     exec-once = wl-paste --type text --watch cliphist --max-items 750 store
