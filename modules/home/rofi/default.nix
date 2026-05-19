@@ -16,7 +16,7 @@
       display-run = " Run";
       display-wallpaper = " Wallpaper";
       terminal = "kitty";
-      font = "JetBrains Mono 12";
+      font = "JetBrainsMono Nerd Font 12";
     };
 
   };
