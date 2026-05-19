@@ -135,7 +135,7 @@
         tooltip-format-wifi = "{essid} ({signalStrength}%) via {ifname}";
         tooltip-format-ethernet = "{ifname}: {ipaddr}/{cidr}";
         interval = 5;
-        on-click = "networkmanager-dmenu";
+        on-click = "networkmanager_dmenu";
       };
 
       tray = {

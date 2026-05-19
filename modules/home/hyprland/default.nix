@@ -202,7 +202,7 @@
   # Note: swww is in swww/default.nix; wl-clipboard/cliphist in clipboard.nix; matugen in matugen.nix
   home.packages = with pkgs; [
     hyprpolkitagent
-    pkgs."networkmanager-dmenu"
+    networkmanager_dmenu
     networkmanagerapplet
     blueman
     swayosd
