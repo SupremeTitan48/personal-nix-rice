@@ -222,6 +222,12 @@
     source = ../../../scripts/usb-eject.sh;
     executable = true;
   };
+  # Deploy a fallback avatar for hyprlock. force=false means the user's own
+  # ~/.face (set via Settings or `cp yourphoto.jpg ~/.face`) takes precedence.
+  home.file.".face" = {
+    source = ../../../assets/default-face.png;
+    force = false;
+  };
 
   # Packages for exec-once entries
   # Note: swww is in swww/default.nix; wl-clipboard/cliphist in clipboard.nix; matugen in matugen.nix

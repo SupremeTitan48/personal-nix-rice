@@ -72,6 +72,16 @@
         }
         {
           monitor = "";
+          text = ''cmd[update:60000] h=$(date +%H); if [ "$h" -lt 12 ]; then echo "Good morning"; elif [ "$h" -lt 17 ]; then echo "Good afternoon"; else echo "Good evening"; fi'';
+          color = "$text_muted";
+          font_size = 14;
+          font_family = "JetBrainsMono Nerd Font";
+          position = "0, -10";
+          halign = "center";
+          valign = "center";
+        }
+        {
+          monitor = "";
           text = "Type password to unlock";
           color = "$text_muted";
           font_size = 11;
