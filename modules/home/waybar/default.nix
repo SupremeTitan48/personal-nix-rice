@@ -18,7 +18,7 @@
 
       modules-left = [ "hyprland/workspaces" "custom/submap" "hyprland/window" ];
       modules-center = [ "mpris" "clock" ];
-      modules-right = [ "custom/gpu" "memory" "cpu" "temperature" "disk" "pulseaudio" "network" "tray" ];
+      modules-right = [ "custom/gpu" "memory" "cpu" "temperature" "disk" "pulseaudio" "network" "custom/swaync" "tray" ];
 
       "hyprland/window" = {
         format = "{}";
@@ -124,8 +124,28 @@
         format-icons = {
           default = [ "󰕿" "󰖀" "󰕾" ];
         };
-        on-click = "pavucontrol";
+        on-click = "swaync-client -t -sw";
+        on-click-right = "pavucontrol";
         scroll-step = 5;
+      };
+
+      "custom/swaync" = {
+        format = "{icon}";
+        format-icons = {
+          notification = "󱅫";
+          none = "󰂚";
+          dnd-notification = "󱅫";
+          dnd-none = "󰂛";
+          inhibited-notification = "󱅫";
+          inhibited-none = "󰂚";
+          dnd-inhibited-notification = "󱅫";
+          dnd-inhibited-none = "󰂛";
+        };
+        return-type = "json";
+        exec = "swaync-client -swb";
+        on-click = "swaync-client -t -sw";
+        on-click-right = "swaync-client -d -sw";
+        escape = true;
       };
 
       network = {

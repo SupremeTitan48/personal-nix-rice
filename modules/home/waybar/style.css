@@ -150,6 +150,19 @@ window#waybar.hidden {
   color: @muted;
 }
 
+/* Swaync bell */
+#custom-swaync {
+  color: @muted;
+  padding: 0 6px;
+  transition: all 0.15s ease;
+}
+#custom-swaync.notification {
+  color: @accent;
+}
+#custom-swaync:hover {
+  color: @on_surface;
+}
+
 /* Tray */
 #tray > .passive {
   -gtk-icon-effect: dim;
