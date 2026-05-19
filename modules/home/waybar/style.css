@@ -58,10 +58,6 @@ window#waybar.hidden {
   border-radius: 20px;
 }
 
-#workspaces button label {
-  margin: 0 auto;
-}
-
 #workspaces button.active {
   color: @accent;
   font-size: 12px;
