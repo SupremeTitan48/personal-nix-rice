@@ -93,8 +93,8 @@
 
     # Autostart
     exec-once = swww-daemon
-    exec-once = bash -c 'swww wait-ready; swww img ${config.home.homeDirectory}/wallpapers/default.jpg --transition-type fade --transition-duration 1 --transition-fps 60'
-    exec-once = ${pkgs.matugen}/bin/matugen image ${config.home.homeDirectory}/wallpapers/default.jpg --mode dark
+    exec-once = bash -c 'swww wait-ready; swww img ${config.home.homeDirectory}/wallpapers/default.png --transition-type fade --transition-duration 1 --transition-fps 60'
+    exec-once = ${pkgs.matugen}/bin/matugen image ${config.home.homeDirectory}/wallpapers/default.png --mode dark
     exec-once = ${pkgs.waybar}/bin/waybar
     exec-once = ${pkgs.swaynotificationcenter}/bin/swaync
     exec-once = ${pkgs.hyprpolkitagent}/libexec/hyprpolkitagent
@@ -132,7 +132,7 @@
     general {
       col.active_border = $accent $accent_secondary 45deg
       col.inactive_border = rgba(ffffff1a)
-      gaps_out = 12 12 58 12
+      gaps_out = 12 12 100 12
     }
 
     group {
