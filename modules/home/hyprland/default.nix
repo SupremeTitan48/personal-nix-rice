@@ -34,10 +34,9 @@
 
         shadow = {
           enabled = true;
-          range = 30;
-          render_power = 3;
-          # fufexan/dotfiles value — richer than pure black, softer alpha
-          color = "rgba(00000055)";
+          range = 12;
+          render_power = 2;
+          color = "rgba(00000044)";
         };
 
         blur = {
@@ -88,7 +87,7 @@
     # which Hyprlang requires for variable definitions to be recognized).
     $accent = rgba(5b9cf6ff)
     $accent_dim = rgba(5b9cf6aa)
-    $accent_shadow = rgba(5b9cf655)
+    $accent_shadow = rgba(5b9cf622)
     $accent_secondary = rgba(c792eaff)
     $surface = rgba(181c24ff)
     $on_surface = rgba(e8e8f0ff)
