@@ -13,7 +13,6 @@
     bind = $mod, M, exec, sidra
     bind = $mod SHIFT, M, exec, eww open --toggle music-popup
     bind = $mod SHIFT, S, exec, eww open --toggle quick-settings-popup
-    bind = $mod, D, exec, nwg-dock-hyprland -nolauncher -i 28 -mb 2
 
     # Power menu
     bind = $mod, Escape, exec, wlogout -b 5 -c 0 -r 0 -m 2

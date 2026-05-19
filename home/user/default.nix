@@ -20,7 +20,6 @@
     ../../modules/home/gaming.nix
     ../../modules/home/nightlight.nix
     ../../modules/home/wlogout.nix
-    ../../modules/home/dock.nix
     ../../modules/home/scratchpads.nix
     ../../modules/home/udiskie.nix
     ../../modules/home/eww/default.nix

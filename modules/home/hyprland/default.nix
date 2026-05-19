@@ -101,7 +101,6 @@
     exec-once = nm-applet --indicator
     exec-once = blueman-applet
     exec-once = swayosd-server
-    exec-once = nwg-dock-hyprland -nolauncher -i 28 -mb 2
     exec-once = eww daemon
     exec-once = wl-paste --type text --watch cliphist --max-items 750 store
     exec-once = wl-paste --type image --watch cliphist --max-items 750 store
@@ -126,13 +125,11 @@
     layerrule = ignore_alpha 0.01, match:namespace wlogout
     layerrule = blur true, match:namespace eww-music-popup
     layerrule = ignore_alpha 0.01, match:namespace eww-music-popup
-    layerrule = blur true, match:namespace nwg-dock
-    layerrule = ignore_alpha 0.01, match:namespace nwg-dock
 
     general {
       col.active_border = $accent $accent_secondary 45deg
       col.inactive_border = rgba(ffffff1a)
-      gaps_out = 12 12 79 12
+      gaps_out = 12
     }
 
     group {
