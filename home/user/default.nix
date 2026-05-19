@@ -31,6 +31,7 @@
   xdg.userDirs = {
     enable = true;
     createDirectories = true;
+    setSessionVariables = true;  # silence HM 26.05 default-change warning
     desktop = null;
     documents = "${config.home.homeDirectory}/Documents";
     download  = "${config.home.homeDirectory}/Downloads";

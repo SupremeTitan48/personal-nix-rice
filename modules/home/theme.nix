@@ -29,9 +29,16 @@
       gtk-application-prefer-dark-theme = true;
       gtk-decoration-layout = ":";
     };
-    gtk4.extraConfig = {
-      gtk-application-prefer-dark-theme = true;
-      gtk-decoration-layout = ":";
+    gtk4 = {
+      # Silence HM 26.05 warning: default changed from config.gtk.theme to null
+      theme = {
+        name = "adw-gtk3-dark";
+        package = pkgs.adw-gtk3;
+      };
+      extraConfig = {
+        gtk-application-prefer-dark-theme = true;
+        gtk-decoration-layout = ":";
+      };
     };
   };
 

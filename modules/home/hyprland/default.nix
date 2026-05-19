@@ -14,6 +14,7 @@
     plugins = [ ];
     xwayland.enable = true;
     systemd.enable = false;  # UWSM manages the systemd session instead
+    configType = "hyprlang";  # silence HM 26.05 default-change warning (lua is new default)
 
     settings = {
       general = {
@@ -87,6 +88,7 @@
     # which Hyprlang requires for variable definitions to be recognized).
     $accent = rgba(5b9cf6ff)
     $accent_dim = rgba(5b9cf6aa)
+    $accent_shadow = rgba(5b9cf655)
     $accent_secondary = rgba(c792eaff)
     $surface = rgba(181c24ff)
     $on_surface = rgba(e8e8f0ff)
