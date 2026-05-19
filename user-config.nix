@@ -25,7 +25,7 @@
   # Examples:
   #   "DP-1,2560x1440@240,0x0,1"      ← 1440p 240 Hz DisplayPort
   #   "HDMI-A-1,1920x1080@60,0x0,1"   ← 1080p 60 Hz HDMI
-  monitor = "DP-1,2560x1440@240,0x0,1";
+  monitor = ",highres,auto,1";
 
   # ── GPU ─────────────────────────────────────────────────────────────────────
   # Use the NVIDIA open kernel module?

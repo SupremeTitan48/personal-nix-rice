@@ -13,10 +13,9 @@
     bind = $mod, M, exec, sidra
     bind = $mod SHIFT, M, exec, eww open --toggle music-popup
     bind = $mod SHIFT, S, exec, eww open --toggle quick-settings-popup
-    bind = $mod, D, exec, nwg-dock-hyprland -d
 
     # Power menu
-    bind = $mod, Escape, exec, wlogout -b 5 -c 0 -r 0 -m 2
+    bind = $mod, Escape, exec, bash ${config.home.homeDirectory}/.local/bin/power-menu
 
     # Keybind cheatsheet
     bind = $mod, slash, exec, bash ${config.home.homeDirectory}/.local/bin/keybind-help
@@ -89,6 +88,9 @@
     bind = $mod SHIFT, C, exec, hyprpicker -a
     bind = $mod, V, exec, bash ${config.home.homeDirectory}/.local/bin/cliphist-rofi
 
+    # USB safe eject
+    bind = $mod, U, exec, bash ${config.home.homeDirectory}/.local/bin/usb-eject
+
     # Game mode toggle
     bind = $mod, F10, exec, bash ${config.home.homeDirectory}/.local/bin/toggle-gamemode
 
@@ -103,6 +105,7 @@
     bind = $mod ALT, T, togglespecialworkspace, term
     bind = $mod ALT, O, togglespecialworkspace, obsidian
     bind = $mod ALT, M, togglespecialworkspace, monitor
+    bind = $mod ALT, B, togglespecialworkspace, bluetooth
 
     # Legacy generic scratchpad
     bind = $mod ALT, grave, togglespecialworkspace, magic

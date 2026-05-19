@@ -1,95 +1,116 @@
-/* modules/home/waybar/style.css */
-/* Waybar floating pill — glassmorphism style */
-/* Fallbacks defined first; matugen @import overrides them when cache exists.
-   GTK CSS processes @import content before the surrounding file's declarations,
-   so placing @import AFTER @define-color means the import wins. */
+/* modules/home/waybar/style.css
+ *
+ * 3-pill floating layout — informed by JaKooLit/Crystal-Clear-Glass.css
+ * and JaKooLit/Catppuccin-Mocha.css.
+ *
+ * Workspace bounce transition: cubic-bezier(.55,-0.68,.48,1.682) — used
+ * verbatim across hyprdots, JaKooLit Catppuccin, and JaKooLit Modern-Combined.
+ *
+ * Fallback colors defined first; matugen @import overrides them.
+ * GTK CSS processes @import content before surrounding declarations,
+ * so placing @import AFTER @define-color means the import wins.
+ */
 
-/* Fallback colors (used if matugen cache hasn't been written yet) */
-@define-color accent         #5b9cf6;
+@define-color accent           #5b9cf6;
 @define-color accent_container #1a3a6e;
-@define-color on_accent      #ffffff;
-@define-color surface        #181c24;
-@define-color surface_variant #242836;
-@define-color on_surface     #e8e8f0;
-@define-color muted          #9898a8;
-@define-color error          #f28b82;
+@define-color on_accent        #ffffff;
+@define-color surface          #181c24;
+@define-color surface_variant  #242836;
+@define-color on_surface       #e8e8f0;
+@define-color muted            #9898a8;
+@define-color error            #f28b82;
 
-/* matugen overrides — written by activation hook before first login */
 @import "/home/jkoch/.cache/matugen/waybar-colors.css";
 
+/* ── Reset ───────────────────────────────────────────────────────────── */
 * {
-  font-family: "JetBrains Mono", "Font Awesome 6 Free", monospace;
+  font-family: "JetBrainsMono Nerd Font", "JetBrains Mono", monospace;
   font-size: 13px;
   min-height: 0;
   border: none;
   border-radius: 0;
 }
 
+/* ── Bar window — transparent so 3 pills show through blurred desktop ── */
 window#waybar {
-  background: rgba(13, 15, 20, 0.65);
-  border: 1px solid rgba(255, 255, 255, 0.10);
-  border-radius: 30px;
+  background: transparent;
+  border: none;
   color: @on_surface;
-  transition: background 0.3s ease;
 }
 
 window#waybar.hidden {
   opacity: 0.2;
 }
 
+/* ── 3 floating pills ────────────────────────────────────────────────── */
+/* Sourced from JaKooLit Crystal Clear Glass + Catppuccin Mocha patterns:
+   transparent window + per-section background + margin creates the gap */
 .modules-left,
 .modules-center,
 .modules-right {
-  padding: 0 8px;
+  background: rgba(13, 15, 20, 0.78);
+  border: 1px solid rgba(255, 255, 255, 0.10);
+  border-radius: 30px;
+  padding: 0 6px;
+  margin: 2px 6px;
 }
 
-/* Workspaces */
+/* ── Workspaces ──────────────────────────────────────────────────────── */
 #workspaces {
-  padding: 0 4px;
+  padding: 0 2px;
 }
 
 #workspaces button {
-  padding: 4px 6px;
+  padding: 0 8px;
   color: @muted;
   background: transparent;
-  font-size: 10px;
-  transition: color 0.2s ease;
-  min-width: 16px;
+  font-size: 12px;
+  border-radius: 20px;
+  min-width: 28px;
+  /* bounce cubic-bezier from hyprdots/JaKooLit — same curve across all rices */
+  transition: all 0.4s cubic-bezier(.55, -0.68, .48, 1.682);
 }
 
 #workspaces button.active {
   color: @accent;
-  font-size: 12px;
-  border-bottom: 2px solid @accent;
-  background: rgba(91, 156, 246, 0.15);
+  font-size: 13px;
+  font-weight: bold;
+  border: 2px solid @accent;
+  border-radius: 20px;
+  background: rgba(91, 156, 246, 0.12);
+  /* wider padding on active — the expand-on-active pattern from hyprdots */
+  padding: 0 14px;
+  transition: all 0.4s cubic-bezier(.55, -0.68, .48, 1.682);
 }
 
 #workspaces button.empty {
-  color: rgba(255, 255, 255, 0.2);
+  color: rgba(255, 255, 255, 0.18);
+  min-width: 8px;
+  padding: 0 10px;
 }
 
 #workspaces button:hover {
-  background: rgba(255, 255, 255, 0.06);
-  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.07);
   color: @on_surface;
+  border-radius: 20px;
+  transition: all 0.2s ease;
 }
 
-/* Clock */
+/* ── Clock ───────────────────────────────────────────────────────────── */
 #clock {
   font-weight: 600;
   font-size: 14px;
   color: @on_surface;
-  padding: 0 8px;
-
+  padding: 0 10px;
   transition: all 0.15s ease;
 }
 
 #clock:hover {
   background: rgba(255, 255, 255, 0.06);
-  border-radius: 12px;
+  border-radius: 20px;
 }
 
-/* Window title */
+/* ── Window title ────────────────────────────────────────────────────── */
 #window {
   color: @muted;
   font-size: 12px;
@@ -97,14 +118,22 @@ window#waybar.hidden {
   font-style: italic;
 }
 
-/* Media player */
+/* ── Media player ────────────────────────────────────────────────────── */
 #mpris {
   color: @on_surface;
   padding: 0 8px;
   font-size: 12px;
 }
 
-/* Right modules — shared style */
+/* ── Submap indicator ────────────────────────────────────────────────── */
+#custom-submap {
+  color: @accent;
+  font-size: 11px;
+  padding: 0 6px;
+  font-weight: bold;
+}
+
+/* ── Right modules (shared base) ─────────────────────────────────────── */
 #custom-gpu,
 #cpu,
 #memory,
@@ -112,6 +141,7 @@ window#waybar.hidden {
 #disk,
 #pulseaudio,
 #network,
+#custom-swaync,
 #tray {
   color: @muted;
   padding: 0 6px;
@@ -128,24 +158,27 @@ window#waybar.hidden {
   color: @on_surface;
 }
 
-#memory.warning {
+/* ── State-based colors ──────────────────────────────────────────────── */
+#memory.warning,
+#memory.critical,
+#temperature.critical {
   color: @error;
 }
 
 #memory.critical {
-  color: @error;
   font-weight: bold;
-}
-
-#temperature.critical {
-  color: @error;
 }
 
 #pulseaudio.muted {
   color: @muted;
 }
 
-/* Tray */
+/* ── Swaync bell ─────────────────────────────────────────────────────── */
+#custom-swaync.notification {
+  color: @accent;
+}
+
+/* ── Tray ────────────────────────────────────────────────────────────── */
 #tray > .passive {
   -gtk-icon-effect: dim;
 }
@@ -154,4 +187,18 @@ window#waybar.hidden {
   -gtk-icon-effect: highlight;
   background-color: @accent_container;
   border-radius: 8px;
+}
+
+/* ── Tooltips ────────────────────────────────────────────────────────── */
+/* Sourced from JaKooLit Half-Moon.css and Modern-Combined.css */
+tooltip {
+  background: rgba(13, 15, 20, 0.95);
+  border: 1px solid rgba(255, 255, 255, 0.10);
+  border-radius: 12px;
+  color: @on_surface;
+}
+
+tooltip label {
+  color: @on_surface;
+  padding: 2px 4px;
 }

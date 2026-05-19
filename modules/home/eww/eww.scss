@@ -32,6 +32,15 @@
   font-size: 13px;
   font-weight: bold;
 }
+.qs-close-btn {
+  background: transparent;
+  border: none;
+  color: #9898a8;
+  font-size: 14px;
+  padding: 0 2px;
+  border-radius: 6px;
+}
+.qs-close-btn:hover { color: #e8e8f0; background: rgba(255,255,255,0.08); }
 .qs-row { padding: 4px 0; }
 .qs-icon {
   color: #e8e8f0;

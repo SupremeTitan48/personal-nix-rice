@@ -8,17 +8,17 @@
     settings = [{
       layer = "top";
       position = "top";
-      height = 36;
+      height = 40;
       margin-top = 8;
-      margin-left = 180;
-      margin-right = 180;
+      margin-left = 12;
+      margin-right = 12;
       margin-bottom = 0;
       exclusive = true;
       passthrough = false;
 
       modules-left = [ "hyprland/workspaces" "custom/submap" "hyprland/window" ];
       modules-center = [ "mpris" "clock" ];
-      modules-right = [ "custom/gpu" "memory" "cpu" "temperature" "disk" "pulseaudio" "network" "tray" ];
+      modules-right = [ "custom/stats" "pulseaudio" "network" "custom/swaync" "tray" ];
 
       "hyprland/window" = {
         format = "{}";
@@ -27,7 +27,7 @@
       };
 
       "hyprland/workspaces" = {
-        format = "{id} {windows}";
+        format = "{id}";
         format-window-separator = " ";
         window-rewrite-default = "";
         window-rewrite = {
@@ -46,6 +46,7 @@
           "class<claude>" = "󰚩";
           "class<code>" = "󰨞";
           "class<kitty-scratch>" = "";
+          "class<kitty-bluetuith>" = "󰂯";
         };
         on-click = "activate";
         sort-by-number = true;
@@ -58,10 +59,10 @@
         tooltip = false;
       };
 
-      "custom/gpu" = {
-        exec = "nvidia-smi --query-gpu=utilization.gpu,temperature.gpu --format=csv,noheader,nounits | awk -F', ' '{printf \" %s%% %s°C\", $1, $2}'";
+      "custom/stats" = {
+        exec = "${config.home.homeDirectory}/.local/bin/waybar-stats";
+        return-type = "json";
         interval = 3;
-        tooltip = false;
         format = "{}";
       };
 
@@ -79,43 +80,10 @@
         ignored-players = [ "firefox" ];
       };
 
-      "memory" = {
-        interval = 5;
-        format = " {}%";
-        tooltip-format = "{used:0.1f}G / {total:0.1f}G";
-        warning = 80;
-        critical = 95;
-      };
-
       clock = {
-        format = "%H:%M\n<span size='small'>%a %b %d</span>";
+        format = "{:%H:%M  %a %b %d}";
         format-alt = "{:%A, %B %d %Y  %H:%M}";
         tooltip-format = "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>";
-      };
-
-      cpu = {
-        format = " {usage}%";
-        interval = 2;
-        tooltip = false;
-      };
-
-      temperature = {
-        interval = 5;
-        # AMD Ryzen k10temp — zone 2 is typical for Ryzen on most boards.
-        # If the reading is 0 or wrong, check: cat /sys/class/thermal/thermal_zone*/type
-        # and adjust thermal-zone to match the k10temp entry.
-        thermal-zone = 2;
-        critical-threshold = 85;
-        format-critical = " {temperatureC}°C";
-        format = " {temperatureC}°C";
-        tooltip = true;
-      };
-
-      disk = {
-        interval = 30;
-        format = "󰋊 {percentage_used}%";
-        path = "/";
-        tooltip-format = "{used} / {total}";
       };
 
       pulseaudio = {
@@ -124,8 +92,28 @@
         format-icons = {
           default = [ "󰕿" "󰖀" "󰕾" ];
         };
-        on-click = "pavucontrol";
+        on-click = "swaync-client -t -sw";
+        on-click-right = "pavucontrol";
         scroll-step = 5;
+      };
+
+      "custom/swaync" = {
+        format = "{icon}";
+        format-icons = {
+          notification = "󱅫";
+          none = "󰂚";
+          dnd-notification = "󱅫";
+          dnd-none = "󰂛";
+          inhibited-notification = "󱅫";
+          inhibited-none = "󰂚";
+          dnd-inhibited-notification = "󱅫";
+          dnd-inhibited-none = "󰂛";
+        };
+        return-type = "json";
+        exec = "swaync-client -swb";
+        on-click = "swaync-client -t -sw";
+        on-click-right = "swaync-client -d -sw";
+        escape = true;
       };
 
       network = {
@@ -135,6 +123,7 @@
         tooltip-format-wifi = "{essid} ({signalStrength}%) via {ifname}";
         tooltip-format-ethernet = "{ifname}: {ipaddr}/{cidr}";
         interval = 5;
+        on-click = "networkmanager_dmenu";
       };
 
       tray = {

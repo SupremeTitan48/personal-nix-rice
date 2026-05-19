@@ -19,8 +19,6 @@
     ../../modules/home/apps.nix
     ../../modules/home/gaming.nix
     ../../modules/home/nightlight.nix
-    ../../modules/home/wlogout.nix
-    ../../modules/home/dock.nix
     ../../modules/home/scratchpads.nix
     ../../modules/home/udiskie.nix
     ../../modules/home/eww/default.nix
@@ -45,6 +43,8 @@
 
   programs.home-manager.enable = true;
   programs.man.enable = false;
+  # Fontconfig is managed at the NixOS system level (modules/nixos/fonts.nix).
+  # Disable HM's own fontconfig management to avoid duplicate cache generation.
   fonts.fontconfig.enable = false;
 
   # UWSM env vars — propagated to D-Bus activated services under UWSM.

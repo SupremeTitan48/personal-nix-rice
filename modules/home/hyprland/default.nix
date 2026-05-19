@@ -33,17 +33,20 @@
 
         shadow = {
           enabled = true;
-          range = 20;
+          range = 30;
           render_power = 3;
-          color = "rgba(00000066)";
+          # fufexan/dotfiles value — richer than pure black, softer alpha
+          color = "rgba(00000055)";
         };
 
         blur = {
           enabled = true;
           size = 8;
-          passes = 2;
-          xray = true;  # wallpaper bleed-through for glassmorphism
-          ignore_opacity = false;
+          passes = 3;            # was 2 — matches JaKooLit/end-4 quality
+          xray = true;           # wallpaper bleed-through for glassmorphism
+          ignore_opacity = true; # blur shows through semi-transparent layers (JaKooLit)
+          popups = true;         # blur right-click menus and tooltips
+          special = true;        # blur special workspace (scratchpad) background
         };
       };
 
@@ -93,21 +96,19 @@
 
     # Autostart
     exec-once = swww-daemon
-    exec-once = bash -c 'swww wait-ready && swww img ${config.home.homeDirectory}/wallpapers/default.jpg --transition-type fade --transition-duration 1 --transition-fps 60'
-    exec-once = ${pkgs.matugen}/bin/matugen image ${config.home.homeDirectory}/wallpapers/default.jpg --mode dark
+    exec-once = bash -c 'swww wait-ready; swww img ${config.home.homeDirectory}/wallpapers/default.png --transition-type fade --transition-duration 1 --transition-fps 60'
+    exec-once = ${pkgs.matugen}/bin/matugen image ${config.home.homeDirectory}/wallpapers/default.png --mode dark
     exec-once = ${pkgs.waybar}/bin/waybar
     exec-once = ${pkgs.swaynotificationcenter}/bin/swaync
     exec-once = ${pkgs.hyprpolkitagent}/libexec/hyprpolkitagent
-    exec-once = nm-applet --indicator
-    exec-once = blueman-applet
     exec-once = swayosd-server
-    exec-once = nwg-dock-hyprland -nolauncher -f -i 28 -mb 2
     exec-once = eww daemon
     exec-once = wl-paste --type text --watch cliphist --max-items 750 store
     exec-once = wl-paste --type image --watch cliphist --max-items 750 store
     exec-once = [workspace special:term silent] kitty --class=kitty-scratch
     exec-once = [workspace special:obsidian silent] obsidian
     exec-once = [workspace special:monitor silent] mission-center
+    exec-once = [workspace special:bluetooth silent] kitty --class=kitty-bluetuith bluetuith
 
     # Layer blur rules.
     # Hyprland 0.47+ format: EFFECT VALUE, match:namespace LAYER_NAMESPACE
@@ -122,14 +123,20 @@
     layerrule = ignore_alpha 0.01, match:namespace swaync-control-center
     layerrule = blur true, match:namespace gtk-layer-shell
     layerrule = ignore_alpha 0.01, match:namespace gtk-layer-shell
-    layerrule = blur true, match:namespace wlogout
-    layerrule = ignore_alpha 0.01, match:namespace wlogout
     layerrule = blur true, match:namespace eww-music-popup
     layerrule = ignore_alpha 0.01, match:namespace eww-music-popup
 
     general {
       col.active_border = $accent $accent_secondary 45deg
       col.inactive_border = rgba(ffffff1a)
+      gaps_out = 12
+    }
+
+    decoration {
+      shadow {
+        color = $accent_shadow
+        color_inactive = rgba(00000033)
+      }
     }
 
     group {
@@ -166,14 +173,21 @@
     enable = true;
     settings = {
       general = {
-        lock_cmd = "pidof hyprlock || hyprlock";
+        # Wrap in bash so swww repaints the wallpaper after hyprlock exits
+        lock_cmd = "pidof hyprlock || bash -c 'hyprlock; swww img ${config.home.homeDirectory}/wallpapers/default.png --transition-type none'";
         before_sleep_cmd = "loginctl lock-session";
-        after_sleep_cmd = "hyprctl dispatch dpms on";
+        # Re-enable display and repaint wallpaper after waking from suspend
+        after_sleep_cmd = "hyprctl dispatch dpms on; swww img ${config.home.homeDirectory}/wallpapers/default.png --transition-type none";
         ignore_dbus_inhibit = false;
       };
       listener = [
         { timeout = 300; on-timeout = "hyprlock"; }
-        { timeout = 600; on-timeout = "hyprctl dispatch dpms off"; on-resume = "hyprctl dispatch dpms on"; }
+        {
+          timeout = 600;
+          on-timeout = "hyprctl dispatch dpms off";
+          # Repaint wallpaper when monitor wakes from DPMS sleep
+          on-resume = "hyprctl dispatch dpms on; swww img ${config.home.homeDirectory}/wallpapers/default.png --transition-type none";
+        }
       ];
     };
   };
@@ -181,6 +195,10 @@
   # Install helper scripts to ~/.local/bin/
   home.file.".local/bin/keybind-help" = {
     source = ../../../scripts/keybind-help.sh;
+    executable = true;
+  };
+  home.file.".local/bin/power-menu" = {
+    source = ../../../scripts/power-menu.sh;
     executable = true;
   };
   home.file.".local/bin/toggle-gamemode" = {
@@ -195,18 +213,36 @@
     source = ../../../scripts/cliphist-rofi.sh;
     executable = true;
   };
+  home.file.".local/bin/waybar-stats" = {
+    source = ../../../scripts/waybar-stats.sh;
+    executable = true;
+  };
+  home.file.".local/bin/usb-eject" = {
+    source = ../../../scripts/usb-eject.sh;
+    executable = true;
+  };
+  # Deploy a fallback avatar for hyprlock. force=false means the user's own
+  # ~/.face (set via Settings or `cp yourphoto.jpg ~/.face`) takes precedence.
+  home.file.".face" = {
+    source = ../../../assets/default-face.png;
+    force = false;
+  };
 
   # Packages for exec-once entries
   # Note: swww is in swww/default.nix; wl-clipboard/cliphist in clipboard.nix; matugen in matugen.nix
   home.packages = with pkgs; [
     hyprpolkitagent
-    networkmanagerapplet
+    networkmanager_dmenu
     blueman
+    bluetuith
     swayosd
     brightnessctl
     imagemagick
     # playerctl lives in terminal.nix (already declared there)
   ];
+
+  xdg.configFile."networkmanager-dmenu/config.ini".source =
+    ../networkmanager-dmenu.ini;
 
   xdg.configFile."swayosd/style.css".text = ''
     window {

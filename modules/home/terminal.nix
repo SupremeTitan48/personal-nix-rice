@@ -6,7 +6,7 @@
     package = pkgs.kitty;
 
     font = {
-      name = "JetBrains Mono";
+      name = "JetBrainsMono Nerd Font";
       size = 13;
     };
 
@@ -56,8 +56,7 @@
       { name = "done"; src = pkgs.fishPlugins.done.src; }
     ];
 
-    # Abbreviations expand inline — better than aliases for discoverability
-    shellAbbrs = {
+    shellAliases = {
       ls = "eza --icons --color=always --group-directories-first";
       ll = "eza -la --icons --color=always --group-directories-first";
       lt = "eza --tree --icons --color=always --level 2";
