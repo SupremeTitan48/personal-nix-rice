@@ -46,6 +46,7 @@
           "class<claude>" = "󰚩";
           "class<code>" = "󰨞";
           "class<kitty-scratch>" = "";
+          "class<kitty-bluetuith>" = "󰂯";
         };
         on-click = "activate";
         sort-by-number = true;

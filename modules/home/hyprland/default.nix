@@ -109,6 +109,7 @@
     exec-once = [workspace special:term silent] kitty --class=kitty-scratch
     exec-once = [workspace special:obsidian silent] obsidian
     exec-once = [workspace special:monitor silent] mission-center
+    exec-once = [workspace special:bluetooth silent] kitty --class=kitty-bluetuith bluetuith
 
     # Layer blur rules.
     # Hyprland 0.47+ format: EFFECT VALUE, match:namespace LAYER_NAMESPACE
@@ -224,6 +225,7 @@
     hyprpolkitagent
     networkmanager_dmenu
     blueman
+    bluetuith
     swayosd
     brightnessctl
     imagemagick

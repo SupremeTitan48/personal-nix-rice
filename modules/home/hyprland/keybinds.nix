@@ -102,6 +102,7 @@
     bind = $mod ALT, T, togglespecialworkspace, term
     bind = $mod ALT, O, togglespecialworkspace, obsidian
     bind = $mod ALT, M, togglespecialworkspace, monitor
+    bind = $mod ALT, B, togglespecialworkspace, bluetooth
 
     # Legacy generic scratchpad
     bind = $mod ALT, grave, togglespecialworkspace, magic

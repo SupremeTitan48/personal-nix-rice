@@ -93,6 +93,11 @@
     windowrule = size 60% 65%, match:class seahorse
     windowrule = center true, match:class seahorse
 
+    # Bluetuith TUI — float, centered, fixed size
+    windowrule = float true,  match:class kitty-bluetuith
+    windowrule = size 700 500, match:class kitty-bluetuith
+    windowrule = center true, match:class kitty-bluetuith
+
     # Default workspace
     workspace = 1, default:true
   '';
